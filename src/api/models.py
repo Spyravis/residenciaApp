@@ -9,7 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
-    residents = db.relationship("Resident", secondary="user_has_resident", backref="users" )
+    residents = db.relationship("Resident", secondary="user_has_resident", backref="User" )
     is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)
     role_user_id = db.Column(db.Integer, db.ForeignKey('role_user.id'), nullable=False)      
     messages = db.relationship("Message", backref="User")
@@ -49,7 +49,6 @@ class Resident(db.Model):
         }
 
 user_has_resident= db.Table("user_has_resident",
-    db.Column("id",db.Integer, primary_key=True),
     db.Column("resident_id", db.Integer, db.ForeignKey('resident.id'),nullable=False , primary_key=True),
     db.Column("user_id",db.Integer, db.ForeignKey('user.id'),nullable=False , primary_key=True)
 )
@@ -88,7 +87,7 @@ class Calendar_booking(db.Model):
 class User_has_booking(db.Model):
     id = db.Column(db.Integer, primary_key=True),
     is_online = db.Column(db.Boolean(), unique=False, nullable=False)
-    url = db.Column(db.String(250), unique=True, nullable=False)
+    url = db.Column(db.String(250), unique=True, nullable=True)
     resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'),nullable=False , primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     calendar_booking_id = db.Column(db.Integer, db.ForeignKey('calendar_booking.id'),nullable=False , primary_key=True)
