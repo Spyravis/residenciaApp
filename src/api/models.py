@@ -10,10 +10,11 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
     residents = db.relationship("Resident", secondary="user_has_resident", backref="users" )
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    role_user_id = db.Column(db.Integer, db.ForeignKey('role_user.id'), nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)
+    role_user_id = db.Column(db.Integer, db.ForeignKey('role_user.id'), nullable=False)      
     messages = db.relationship("Message", backref="User")
     reports = db.relationship("Night_report", backref="User")
+    bookings = db.relationship("User_has_booking", backref="User")
 
 
     def __repr__(self):
@@ -33,6 +34,9 @@ class Resident(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     surname = db.Column(db.String(120), unique=False, nullable=False)
+    reports = db.relationship("Night_report", backref="Resident")
+    messages = db.relationship("Message", backref="Resident")
+    bookings = db.relationship("User_has_booking", backref="Resident")
 
     def __repr__(self):
         return f'<Resident {self.name}>'
@@ -56,7 +60,7 @@ class Role_user(db.Model):
     users = db.relationship("User", backref="Role_user" )
 
     def __repr__(self):
-        return f'<Role_user {self.name}>'
+        return self.name
 
     def serialize(self):
         return {
@@ -68,6 +72,11 @@ class Calendar_booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hour_start = db.Column(db.DateTime, unique=False, nullable=False)
     hour_end = db.Column(db.DateTime, unique=False, nullable=False)
+    bookings = db.relationship("User_has_booking", backref="Calendar_booking")
+    
+
+    def __repr__(self):
+        return f'{self.hour_start} to {self.hour_end}'
 
     def serialize(self):
         return {
@@ -76,13 +85,14 @@ class Calendar_booking(db.Model):
             "hour_end": self.hour_end,
         }
 
-user_has_booking = db.Table("user_has_booking",
-    db.Column("id", db.Integer, primary_key=True),
-    db.Column("is_online", db.Boolean(), unique=False, nullable=False),
-    db.Column("url", db.String(250), unique=True, nullable=False),
-    db.Column("resident_id", db.Integer, db.ForeignKey('resident.id'),nullable=False , primary_key=True),
-    db.Column("calendar_booking_id", db.Integer, db.ForeignKey('calendar_booking.id'),nullable=False , primary_key=True)
-)
+class User_has_booking(db.Model):
+    id = db.Column(db.Integer, primary_key=True),
+    is_online = db.Column(db.Boolean(), unique=False, nullable=False)
+    url = db.Column(db.String(250), unique=True, nullable=False)
+    resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'),nullable=False , primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+    calendar_booking_id = db.Column(db.Integer, db.ForeignKey('calendar_booking.id'),nullable=False , primary_key=True)
+
 
 
 class Night_report(db.Model):
@@ -109,6 +119,9 @@ class Message(db.Model):
     message = db.Column(db.String(250), unique=False, nullable=True)
     url_attached = db.Column(db.String(250), unique=False, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'), nullable=False)
+    
+    
 
     def serialize(self):
         return {
