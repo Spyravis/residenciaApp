@@ -9,7 +9,7 @@ export const Navbar = () => {
           <span className="navbar-brand mb-0 h1">ACA VA EL LOGO</span>
         </Link>
         <div
-          class="btn-toolbar"
+          className="btn-toolbar"
           role="toolbar"
           aria-label="Toolbar with button groups"
         >
