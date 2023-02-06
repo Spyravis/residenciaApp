@@ -20,3 +20,10 @@ def user_login():
     token = create_access_token(identity=user.id)
 
     return jsonify({"response": "Hola", "token": token}), 200
+
+@api.route('/user', methods=['GET'])
+@jwt_required()
+def current_user_email():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    return jsonify({"response": "Hola", "email": user.email}), 200
