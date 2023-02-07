@@ -23,7 +23,8 @@ def user_login():
 
 @api.route('/user', methods=['GET'])
 @jwt_required()
-def current_user_email():
+def current_user():
     user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-    return jsonify({"response": "Hola", "email": user.email}), 200
+    user = User.query.filter_by(id = user_id)
+    #return jsonify({"id":user.id, "email": user.email}), 200
+    return jsonify({"response": x.serialize() for x in user}), 200
