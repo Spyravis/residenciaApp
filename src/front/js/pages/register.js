@@ -43,12 +43,12 @@ export const Register = () => {
     };
 
     useEffect(() => {
-        if(password==confirmPassword && email.includes("@")){
+        if(password==confirmPassword && email.includes("@") && name != "" && surname != "" && phone != "" && phone.length >9 && phone.length < 12 ){
             setValidateInfo(true)
         }else{
             setValidateInfo(false)
         }
-    },[name, surname, password, confirmPassword, email])
+    },[name, surname, password, confirmPassword, email, phone])
 
     return (
         <div className="container-md d-flex  justify-content-center  mt-5">
