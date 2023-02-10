@@ -11,6 +11,16 @@ from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
+@api.route('/login', methods=['POST'])
+def user_login():
+    body_email = request.json.get("email")
+    body_password = request.json.get("password")
+    user = User.query.filter_by(email= body_email, password=body_password).first()
+    if not user:
+        return jsonify({"Error": "Invalid credentials"}), 401
+    token = create_access_token(identity=user.id)
+
+    return jsonify({"response": "Hola", "token": token}), 200
 
 @api.route('/register', methods=['POST'])
 def user_register():
@@ -26,3 +36,12 @@ def user_register():
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"response": "User registered successfully"}), 200 
+
+
+@api.route('/user', methods=['GET'])
+@jwt_required()
+def current_user_email():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    return jsonify({"response": "Hola", "email": user.email}), 200
+
