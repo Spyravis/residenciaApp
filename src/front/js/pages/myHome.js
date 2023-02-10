@@ -7,10 +7,20 @@ export const MyHome = () => {
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
 
+    if (store.userdata.role_user == 1) {
+        return
+    }
+
     return (
         <div className="text-center mt-5">
-            {store.userdata.role_user == 1 ? "Familiar" : "Trabajador"}
-            HOLA : {store.userdata.name}
+            {store.userdata.role_user == 1 ? "Familiar"
+
+
+
+                : "Trabajador"} {store.userdata.name}
+
+
+
         </div>
     );
 };
