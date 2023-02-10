@@ -15,7 +15,7 @@ export const Login = () => {
 
   const sendLoginCredential = async () => {
     const response = await fetch(
-      "https://3001-spyravis-residenciaapp-a54c0x6wdii.ws-eu85.gitpod.io/api/login",
+      "https://3001-spyravis-residenciaapp-a54c0x6wdii.ws-eu86.gitpod.io/api/login",
       {
         method: "POST",
         headers: {
@@ -28,43 +28,43 @@ export const Login = () => {
       }
     );
     if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("token", data.token);
-        await actions.getCurrentUserEmail();
-        navigate("/");
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      await actions.getCurrentUserEmail();
+      navigate("/");
     } else {
-        setError(true);
+      setError(true);
     }
   };
 
   return (
     <div className="container d-flex  justify-content-center  mt-5">
-        <div className="border rounded p-2">
-            <img className="img-fluid" src={logo} alt="logo" width="300" />
-        </div>
-        <div className="border rounded p-2 bg-secondary bg-gradient bg-opacity-75">
-            <h2 className="text-center m-3">Login </h2>
-            <div className="row my-3">
-                <label className="col-sm-2 col-form-label" htmlFor="email">
-                     Email:{" "}
-                </label>
-            <div className="col-sm-10">
-                <input
-                className="form-control"
-                name="email"
-                placeholder="email"
-                value={email}
-                onChange={(e) => {
-                    setError(false);
-                    setEmail(e.target.value);
-                }}
-                ></input>
+      <div className="border rounded p-2">
+        <img className="img-fluid" src={logo} alt="logo" width="300" />
+      </div>
+      <div className="border rounded p-2 bg-secondary bg-gradient bg-opacity-75">
+        <h2 className="text-center m-3">Login </h2>
+        <div className="row my-3">
+          <label className="col-sm-2 col-form-label" htmlFor="email">
+            Email:{" "}
+          </label>
+          <div className="col-sm-10">
+            <input
+              className="form-control"
+              name="email"
+              placeholder="email"
+              value={email}
+              onChange={(e) => {
+                setError(false);
+                setEmail(e.target.value);
+              }}
+            ></input>
           </div>
         </div>
         <div className="row my-3">
-            <label className="col-sm-2 col-form-label" htmlFor="password">
-                Password:{" "}
-            </label>
+          <label className="col-sm-2 col-form-label" htmlFor="password">
+            Password:{" "}
+          </label>
           <div className="col-sm-10">
             <input
               className="form-control"
