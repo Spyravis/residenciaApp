@@ -19,6 +19,7 @@ export const Navbar = () => {
           role="toolbar"
           aria-label="Toolbar with button groups"
         >
+
           {store.currentUserEmail ? 
 						<button type="button" className="btn btn-danger" onClick={async () => {
 							if(await actions.logout()){
@@ -26,6 +27,7 @@ export const Navbar = () => {
 							}
 						}}>Logout</button> :
             <>
+
           <div className="btn-group me-2" role="group" aria-label="First group">
             <Link to="/aboutUs">
               <button className="btn btn-warning">About Us</button>
@@ -49,6 +51,7 @@ export const Navbar = () => {
               </button>
             </Link>
           </div>
+
           </>  
         }
         </div>
@@ -57,3 +60,4 @@ export const Navbar = () => {
     </nav>
   );
 };
+
