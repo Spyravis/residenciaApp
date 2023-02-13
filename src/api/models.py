@@ -15,6 +15,7 @@ class User(db.Model):
     messages = db.relationship("Message", backref="User")
     reports = db.relationship("Night_report", backref="User")
     bookings = db.relationship("User_has_booking", backref="User")
+    quincenal_id = db.relationship("Quincenal", backref="User")
 
 
     def __repr__(self):
@@ -30,6 +31,7 @@ class User(db.Model):
             "role_user": self.role_user,
         }
 
+
 class Resident(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
@@ -37,6 +39,7 @@ class Resident(db.Model):
     reports = db.relationship("Night_report", backref="Resident")
     messages = db.relationship("Message", backref="Resident")
     bookings = db.relationship("User_has_booking", backref="Resident")
+    quincenal_id = db.relationship("Quincenal", backref="Resident")
 
     def __repr__(self):
         return f'<Resident {self.name}>'
@@ -130,3 +133,30 @@ class Message(db.Model):
             "url_attached": self.url_attached,
             "user_id": self.user_id,            
         }
+
+class Quincenal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)           
+    date = db.Column(db.DateTime , unique=False, nullable=False)
+    incidences = db.Column(db.Boolean(), unique=False, nullable=False)
+    comments = db.Column(db.String(250), unique=False, nullable=True)
+    resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'),nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+    def __repr__(self):
+        return f'<Quincenal {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "date": self.date,
+            "incidences": self.incidences,
+            "comments": self.comments,
+            "resident_id": self.resident_id,
+            "user_id": self.user_id,            
+        }
+quincenal_has_resident= db.Table("quincenal_has_resident",
+    db.Column("quincenal_id", db.Integer, db.ForeignKey('quincenal.id'),nullable=False , primary_key=True),
+    db.Column("resident_id",db.Integer, db.ForeignKey('resident.id'),nullable=False , primary_key=True),
+    db.Column("user_id",db.Integer, db.ForeignKey('user.id'),nullable=False , primary_key=True)
+)
+
+
