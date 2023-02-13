@@ -15,7 +15,7 @@ export const Login = () => {
 
   const sendLoginCredential = async () => {
     const response = await fetch(
-      "https://3001-spyravis-residenciaapp-k74o53xjsg1.ws-eu86.gitpod.io/api/login",
+        process.env.BACKEND_URL + "/api/login",
       {
         method: "POST",
         headers: {

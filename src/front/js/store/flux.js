@@ -16,9 +16,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (response.ok) {
           setStore({ currentUserEmail: data.response.email });
           localStorage.setItem("user", data.response);
-          setStore({ userdata: data.response });
         }
       },
+
       logout: () => {
         try {
           localStorage.removeItem("token");

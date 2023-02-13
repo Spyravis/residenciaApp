@@ -9,6 +9,7 @@ export const Register = () => {
   const { store, actions } = useContext(Context);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
+  const [photo, setPhoto] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,7 +21,7 @@ export const Register = () => {
   const sendRegisterCredentials = async () => {
     if (password == confirmPassword) {
       const response = await fetch(
-        "https://3001-spyravis-residenciaapp-a54c0x6wdii.ws-eu85.gitpod.io/api/register",
+        process.env.BACKEND_URL + "/api/register",
         {
           method: "POST",
           headers: {
@@ -29,6 +30,7 @@ export const Register = () => {
           body: JSON.stringify({
             name: name,
             surname: surname,
+            photo: photo,
             email: email,
             password: password,
             phone: phone,
@@ -48,10 +50,11 @@ export const Register = () => {
     if (
       password == confirmPassword &&
       email.includes("@") &&
+      photo != "" &&
       name != "" &&
       surname != "" &&
       phone != "" &&
-      phone.length > 9 &&
+      phone.length > 8 &&
       phone.length < 12
     ) {
       setValidateInfo(true);
@@ -94,6 +97,23 @@ export const Register = () => {
               onChange={(e) => {
                 setError(false);
                 setSurname(e.target.value);
+              }}
+            ></input>
+          </div>
+        </div>
+        <div className="row my-3">
+          <label className=" col-form-label" htmlFor="photo">
+            Photo:{" "}
+          </label>
+          <div className="col">
+            <input
+              className="form-control"
+              name="photo"
+              placeholder="Photo URL"
+              
+              onChange={(e) => {
+                setError(false);
+                setPhoto(e.target.value);
               }}
             ></input>
           </div>
