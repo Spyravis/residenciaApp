@@ -65,3 +65,23 @@ def change_user_data():
     db.session.commit()
 
     return jsonify({"msg": "profile changed successfully"}), 200
+
+
+@api.route("/update_password", methods=["PUT"])
+@jwt_required()
+def update_password():
+    user_id = get_jwt_identity()
+    update_password = request.json["newPassword"]
+    actual_password = request.json["password"]
+
+
+    if not (update_password):
+        return jsonify({"error": "Invalid"}), 400
+
+    user = User.query.get(user_id)
+
+    user.password = update_password
+
+    db.session.commit()
+
+    return jsonify({"msg": "password changed successfully"}), 200
