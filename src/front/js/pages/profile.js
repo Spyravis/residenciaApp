@@ -13,14 +13,10 @@ export const Profile = () => {
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
 
-
-
-  useEffect(() => {
-    actions.getCurrentUserEmail();
-  }, [name, surname, photo, email, phone])
-  
+   
 
   const modifyProfile = async () => {
+    
     const response = await fetch(
       process.env.BACKEND_URL + "/api/profile",
       {
@@ -39,11 +35,8 @@ export const Profile = () => {
       }
     );
     const data = await response.json();
-    if (response.ok) {
-        navigate("/");
-      } else {
-        setError(data.response);
-      }
+
+    
 };
 
   return (
@@ -79,7 +72,7 @@ export const Profile = () => {
                   Photo:
               </label>
                 <div className="card" style={{width: "18rem"}}>
-                    <img src={store.userdata.photo} className="card-img-top" alt="..."/>
+                    <img src={photo} className="card-img-top" alt="..."/>
                 </div>
               <div className="col">
                   <input
