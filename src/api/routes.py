@@ -53,17 +53,13 @@ def change_user_data():
     update_photo = request.json["photo"]
     update_email = request.json["email"]
     update_phone = request.json["phone"]
-
     if not (update_email and update_phone and update_photo):
         return jsonify({"error": "Invalid"}), 400
-
     user = User.query.get(user_id)
-
     user.photo = update_photo
     user.email = update_email
     user.phone = update_phone
     db.session.commit()
-
     return jsonify({"msg": "profile changed successfully"}), 200
 
 
@@ -73,15 +69,9 @@ def update_password():
     user_id = get_jwt_identity()
     update_password = request.json["newPassword"]
     actual_password = request.json["password"]
-
-
     if not (update_password):
         return jsonify({"error": "Invalid"}), 400
-
     user = User.query.get(user_id)
-
     user.password = update_password
-
     db.session.commit()
-
     return jsonify({"msg": "password changed successfully"}), 200

@@ -7,20 +7,21 @@ import "../../styles/home.css";
 export const Profile = () => {
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
-    const [name, setName] = useState(store.userdata.name)
-    const [surname, setsurname] = useState(store.userdata.surname)
-    const [photo, setPhoto] = useState(store.userdata.photo)
+    const [name, setName] = useState(store.userdata?.name)
+    const [surname, setsurname] = useState(store.userdata?.surname)
+    const [photo, setPhoto] = useState(store.userdata?.photo)
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
 
-    const [password, setPassword] = useState(store.userdata.password)
+    const [password, setPassword] = useState(store.userdata?.password)
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmnewPassword] = useState("");
 
-   
+  
 
-    const modifyProfile = async () => {
-    
+    const modifyProfile = async (e) => {
+        e.preventDefault();
+
         const response = await fetch(
         process.env.BACKEND_URL + "/api/profile",
         {
@@ -39,6 +40,7 @@ export const Profile = () => {
         }
         );
         const data = await response.json();
+  
     };
 
     const updatePassword = async () => {
@@ -58,12 +60,16 @@ export const Profile = () => {
                 }
             );
             const data = await response.json();
+            // ACA AGREGAR CONDICIONAL PARA EL PASSWORD MODIFICADO O INCORRECTO
         };
     }
 
   return (
-      <div className="container text-center mt-5">
-          <div className="row my-3">
+
+      <div className="container  mt-5">
+        <div className="col  border rounded p-2 bg-secondary bg-gradient bg-opacity-25">
+        <h2 className="text-center mt-5">Modificar Perfil</h2>
+          <div className="row my-3 ">
               <label className=" col-form-label" htmlFor="name">
                   Name:
               </label>
@@ -71,7 +77,7 @@ export const Profile = () => {
                   <input
                       className="form-control"
                       name="name"
-                      placeholder={store.userdata.name}
+                      placeholder={store.userdata?.name}
                       disabled
                   ></input>
               </div>
@@ -84,7 +90,7 @@ export const Profile = () => {
                   <input
                       className="form-control"
                       name="surname"
-                      placeholder={store.userdata.surname}
+                      placeholder={store.userdata?.surname}
                       disabled
                   ></input>
               </div>
@@ -93,9 +99,9 @@ export const Profile = () => {
               <label className=" col-form-label" htmlFor="photo">
                   Photo:
               </label>
-                <div className="card" style={{width: "18rem"}}>
-                    <img src={photo} className="card-img-top" alt="..."/>
-                </div>
+              <div>              
+                <img src={photo} className="card-img-top" style={{width: "12rem"}} alt="..."/>
+              </div>
               <div className="col">
                   <input
                       className="form-control"
@@ -138,84 +144,89 @@ export const Profile = () => {
                   ></input>
               </div>
           </div>
-          <div>
+          <div className="my-2">
               <button
-                  className="btn btn-success btn-lg"
+                  className="btn btn-success btn-lg my-2"
                   onClick={modifyProfile}
               >
                   Modify Profile
               </button>
           </div>
+        </div>      
 
-        <h2 className="mt-5">Cambiar Contraseña</h2>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="password">
-            Actual Password:
-          </label>
-          <div className="col">
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              placeholder="Password"
-              minLength="8"
-              maxLength="20"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            ></input>
-          </div>
-        </div>
+              {/* ACA EMPIEZA EL CAMBIO DE CONTRASEÑA*/}
 
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="password">
-            Password:
-          </label>
-          <div className="col">
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              placeholder="New password"
-              minLength="8"
-              maxLength="20"
-              onChange={(e) => {
-                setNewPassword(e.target.value);
-              }}
-            ></input>
+        <div className="col border rounded p-2 bg-secondary bg-gradient bg-opacity-25 mt-5">
+          <h2 className="mt-5">Cambiar Contraseña</h2>
+          <div className="row my-3">
+            <label className=" col-form-label" htmlFor="password">
+              Actual Password:
+            </label>
+            <div className="col">
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                placeholder="Password"
+                minLength="8"
+                maxLength="20"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              ></input>
+            </div>
           </div>
+
+          <div className="row my-3">
+            <label className=" col-form-label" htmlFor="password">
+              Password:
+            </label>
+            <div className="col">
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                placeholder="New password"
+                minLength="8"
+                maxLength="20"
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                }}
+              ></input>
+            </div>
+          </div>
+          <div className="row my-3">
+            <label className=" col-form-label" htmlFor="Confirm new password">
+              Confirm Password:{" "}
+            </label>
+            <div className="col">
+              <input
+                type="password"
+                className="form-control"
+                name="Confirm new password"
+                placeholder="Confirm new password"
+                minLength="8"
+                maxLength="20"
+                onChange={(e) => {
+                  setConfirmnewPassword(e.target.value);
+                  if (
+                    newPassword.slice(0, e.target.value.length) != e.target.value
+                  ) {
+                    alert("Las contraseñas no coinciden");
+                  }
+                }}
+              ></input>
+            </div>
+            <div className="my-2">
+                <button
+                    className="btn btn-success btn-lg my-2"
+                    onClick={updatePassword}
+                >
+                    Update Password
+                </button>
+            </div>
+          </div> 
         </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="Confirm new password">
-            Confirm Password:{" "}
-          </label>
-          <div className="col">
-            <input
-              type="password"
-              className="form-control"
-              name="Confirm new password"
-              placeholder="Confirm new password"
-              minLength="8"
-              maxLength="20"
-              onChange={(e) => {
-                setConfirmnewPassword(e.target.value);
-                if (
-                  newPassword.slice(0, e.target.value.length) != e.target.value
-                ) {
-                  alert("Las contraseñas no coinciden");
-                }
-              }}
-            ></input>
-          </div>
-          <div>
-              <button
-                  className="btn btn-success btn-lg"
-                  onClick={updatePassword}
-              >
-                  Update Password
-              </button>
-          </div>
-        </div> 
       </div>
       
   );
