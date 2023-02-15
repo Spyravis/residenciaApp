@@ -19,6 +19,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ userdata: data.response });
         }
       },
+      logout: () => {
+        try {
+          localStorage.removeItem("token");
+          setStore({ currentUserEmail: null });
+          return true;
+        } catch (e) {
+          console.log(e);
+          return false;
+        }
+      }
     },
   };
 };
