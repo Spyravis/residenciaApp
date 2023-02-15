@@ -12,17 +12,9 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
 
-  /*Si ya esta logueado te manda a la home-logueado*/
-  useEffect(() => {
-    if (store.currentUserEmail) {
-      navigate("/myHome");
-    }
-  }, []);
-
-  /*Buscar credenciales: MODIFICAR URL DE BACKEND PARA PRUEBAS*/
   const sendLoginCredential = async () => {
     const response = await fetch(
-      "https://3001-spyravis-residenciaapp-k74o53xjsg1.ws-eu85.gitpod.io/api/login",
+      "https://3001-spyravis-residenciaapp-k74o53xjsg1.ws-eu86.gitpod.io/api/login",
       {
         method: "POST",
         headers: {

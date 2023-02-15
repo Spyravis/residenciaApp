@@ -1,12 +1,12 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      currentUserEmail: null,
-      userdata: null
+      currentUserEmail: {},
+      userdata: {},
     },
     actions: {
       getCurrentUserEmail: async () => {
-        const response = await fetch("https://3001-spyravis-residenciaapp-k74o53xjsg1.ws-eu85.gitpod.io/api/user",
+        const response = await fetch(process.env.BACKEND_URL + "/api/user",
           {
             headers: {
               "Authorization": "Bearer " + localStorage.getItem("token"),
@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await response.json();
         if (response.ok) {
           setStore({ currentUserEmail: data.response.email });
+          localStorage.setItem("user", data.response);
           setStore({ userdata: data.response });
         }
       },
