@@ -33,6 +33,8 @@ export const Login = () => {
       navigate("/myHome");
     } else {
       setError(true);
+      setEmail("")
+      setPassword("");
     }
   };
 
