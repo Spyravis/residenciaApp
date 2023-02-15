@@ -185,6 +185,7 @@ export const Profile = () => {
                 maxLength="20"
                 onChange={(e) => {
                   setPassword(e.target.value);
+                  setError(false)
                 }}
               ></input>
             </div>
