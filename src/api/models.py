@@ -122,8 +122,6 @@ class Message(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'), nullable=False)
     
-    
-
     def serialize(self):
         return {
             "id": self.id,

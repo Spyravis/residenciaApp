@@ -13,9 +13,11 @@ export const Profile = () => {
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
 
-    const [password, setPassword] = useState(store.userdata?.password)
+    const [password, setPassword] = useState("")
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmnewPassword] = useState("");
+    const [success, setSuccess] = useState(false)
+    const [error, setError] = useState(false);
 
   
 
@@ -56,10 +58,20 @@ export const Profile = () => {
                 },
                 body: JSON.stringify({
                     newPassword: newPassword,
+                    password: password,
                 }),
                 }
             );
-            const data = await response.json();
+            const data = await response.json()
+            if (response.ok){
+              setSuccess(true);
+
+            } else{
+              setError(true);
+              setPassword("");
+              setNewPassword("");
+              setConfirmnewPassword("");
+            };
             // ACA AGREGAR CONDICIONAL PARA EL PASSWORD MODIFICADO O INCORRECTO
         };
     }
@@ -164,6 +176,7 @@ export const Profile = () => {
             </label>
             <div className="col">
               <input
+                value={password}
                 type="password"
                 className="form-control"
                 name="password"
@@ -179,10 +192,11 @@ export const Profile = () => {
 
           <div className="row my-3">
             <label className=" col-form-label" htmlFor="password">
-              Password:
+              New Password:
             </label>
             <div className="col">
               <input
+                value={newPassword}
                 type="password"
                 className="form-control"
                 name="password"
@@ -201,6 +215,7 @@ export const Profile = () => {
             </label>
             <div className="col">
               <input
+                value={confirmNewPassword}
                 type="password"
                 className="form-control"
                 name="Confirm new password"
@@ -224,6 +239,12 @@ export const Profile = () => {
                 >
                     Update Password
                 </button>
+                {success ? (
+              <p className="alert alert-warning">Contraseña modificada</p>
+            ) : null}
+                {error ? (
+              <p className="alert alert-warning">Contraseña actual incorrecta</p>
+            ) : null}
             </div>
           </div> 
         </div>

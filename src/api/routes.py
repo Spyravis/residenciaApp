@@ -68,10 +68,13 @@ def change_user_data():
 def update_password():
     user_id = get_jwt_identity()
     update_password = request.json["newPassword"]
-    actual_password = request.json["password"]
+    current_password = request.json["password"]
     if not (update_password):
         return jsonify({"error": "Invalid"}), 400
     user = User.query.get(user_id)
-    user.password = update_password
-    db.session.commit()
-    return jsonify({"msg": "password changed successfully"}), 200
+    if user.password == current_password:
+        user.password = update_password
+        db.session.commit()
+        return jsonify({"msg": "password changed successfully"}), 200
+    else:
+        return jsonify({"error": "current password invalid "}), 400
