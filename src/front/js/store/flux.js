@@ -1,20 +1,23 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      currentUserEmail: null,
+      currentUserEmail: {},
+      userdata: {},
     },
     actions: {
       getCurrentUserEmail: async () => {
-        const response = await fetch(
-          "https://3001-spyravis-residenciaapp-a54c0x6wdii.ws-eu86.gitpod.io/api/user",
+        const response = await fetch(process.env.BACKEND_URL + "/api/user",
           {
             headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
+              "Authorization": "Bearer " + localStorage.getItem("token"),
             },
-          }
-        );
+          });
         const data = await response.json();
-        if (response.ok) setStore({ currentUserEmail: data.email });
+        if (response.ok) {
+          setStore({ currentUserEmail: data.response.email });
+          localStorage.setItem("user", data.response);
+          setStore({ userdata: data.response });
+        }
       },
       logout: () => {
         try {
@@ -25,7 +28,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(e);
           return false;
         }
-      },
+      }
     },
   };
 };

@@ -15,7 +15,7 @@ export const Login = () => {
 
   const sendLoginCredential = async () => {
     const response = await fetch(
-      "https://3001-spyravis-residenciaapp-a54c0x6wdii.ws-eu86.gitpod.io/api/login",
+      "https://3001-spyravis-residenciaapp-k74o53xjsg1.ws-eu86.gitpod.io/api/login",
       {
         method: "POST",
         headers: {
@@ -31,7 +31,7 @@ export const Login = () => {
       const data = await response.json();
       localStorage.setItem("token", data.token);
       await actions.getCurrentUserEmail();
-      navigate("/");
+      navigate("/myHome");
     } else {
       setError(true);
     }

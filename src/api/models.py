@@ -27,7 +27,7 @@ class User(db.Model):
             "surname": self.surname,
             "email": self.email,
             "phone": self.phone,
-            "role_user": self.role_user,
+            "role_user": self.role_user_id,
         }
 
 class Resident(db.Model):
