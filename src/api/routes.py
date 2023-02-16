@@ -43,8 +43,11 @@ def user_register():
 @jwt_required()
 def current_user():
     user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-    return jsonify({"response": user.serialize(), "email": user.email}), 200
+    #user = User.query.get(user_id)
+    user = User.query.filter_by(id = user_id)
+    #return jsonify({"id":user.id, "email": user.email}), 200
+    return jsonify({"response": x.serialize() for x in user}), 200
+    
 
 @api.route("/profile", methods=["PUT"])
 @jwt_required()
@@ -60,7 +63,7 @@ def change_user_data():
     user.email = update_email
     user.phone = update_phone
     db.session.commit()
-    return jsonify({"msg": "profile changed successfully"}), 200
+    return jsonify({"response": "profile changed successfully"}), 200
 
 
 @api.route("/update_password", methods=["PUT"])
