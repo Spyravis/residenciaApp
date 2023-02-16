@@ -15,7 +15,7 @@ class User(db.Model):
     messages = db.relationship("Message", backref="User")
     reports = db.relationship("Night_report", backref="User")
     bookings = db.relationship("User_has_booking", backref="User")
-    quincenal_id = db.relationship("Quincenal", backref="User")
+    quincenales = db.relationship("Quincenal", backref="User")
 
 
     def __repr__(self):
@@ -39,7 +39,7 @@ class Resident(db.Model):
     reports = db.relationship("Night_report", backref="Resident")
     messages = db.relationship("Message", backref="Resident")
     bookings = db.relationship("User_has_booking", backref="Resident")
-    quincenal_id = db.relationship("Quincenal", backref="Resident")
+    quincenales = db.relationship("Quincenal", backref="Resident")
 
     def __repr__(self):
         return f'<Resident {self.name}>'
@@ -153,10 +153,4 @@ class Quincenal(db.Model):
             "resident_id": self.resident_id,
             "user_id": self.user_id,            
         }
-quincenal_has_resident= db.Table("quincenal_has_resident",
-    db.Column("quincenal_id", db.Integer, db.ForeignKey('quincenal.id'),nullable=False , primary_key=True),
-    db.Column("resident_id",db.Integer, db.ForeignKey('resident.id'),nullable=False , primary_key=True),
-    db.Column("user_id",db.Integer, db.ForeignKey('user.id'),nullable=False , primary_key=True)
-)
-
 
