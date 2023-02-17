@@ -80,11 +80,52 @@ export const Profile = () => {
     }
   };
 
+  const checkPassword = (data) => {
+    const passClass = document.getElementsByClassName("pass-check");
+    const lowerCase = new RegExp("(?=.*[a-z])");
+    const upperCase = new RegExp("(?=.*[A-Z])");
+    const number = new RegExp("(?=.*[0-9])");
+    const specialChar = new RegExp("(?=.*[!@#$%&*])");
+    const eightChar = new RegExp("(?=.{8,})");
+
+    if (eightChar.test(data)) {
+      passClass[0].style.color = "green";
+    } else {
+      passClass[0].style.color = "grey";
+    }
+    if (lowerCase.test(data)) {
+      passClass[1].style.color = "green";
+    } else {
+      passClass[1].style.color = "grey";
+    }
+    if (upperCase.test(data)) {
+      passClass[2].style.color = "green";
+    } else {
+      passClass[2].style.color = "grey";
+    }
+    if (specialChar.test(data)) {
+      passClass[3].style.color = "green";
+    } else {
+      passClass[3].style.color = "grey";
+    }
+    if (number.test(data)) {
+      passClass[4].style.color = "green";
+    } else {
+      passClass[4].style.color = "grey";
+    }
+  };
+
   useEffect(() => {
+    const passClass = document.getElementsByClassName("pass-check");
     if (
       newPassword == confirmNewPassword &&
       newPassword.length >= 8 &&
-      newPassword.length <= 20
+      newPassword.length <= 20 &&
+      passClass[0].style.color &&
+      passClass[1].style.color &&
+      passClass[2].style.color &&
+      passClass[3].style.color &&
+      passClass[4].style.color == "green"
     ) {
       setValidatePassword(true);
     } else {
@@ -230,6 +271,7 @@ export const Profile = () => {
               maxLength="20"
               onChange={(e) => {
                 setNewPassword(e.target.value);
+                checkPassword(e.target.value);
               }}
             ></input>
           </div>
@@ -257,11 +299,21 @@ export const Profile = () => {
               }}
             ></input>
             <p className="d-flex flex-column mt-2">
-              <label className="">At least 8 characters</label>
-              <label className="">At least 1 lower case characters</label>
-              <label className="">At least 1 Upper case characters</label>
-              <label className="">At least 1 especial characters</label>
-              <label className="">At least 1 numerical characters</label>
+              <label className="pass-check fw-semibold">
+                At least 8 characters
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 lower case characters
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 Upper case characters
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 especial characters ( !, @, #, $, %, & ,* )
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 numerical characters
+              </label>
             </p>
           </div>
           <div className="my-2">

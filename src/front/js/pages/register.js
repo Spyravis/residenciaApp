@@ -17,6 +17,7 @@ export const Register = () => {
   const [error, setError] = useState(false);
 
   const [validateInfo, setValidateInfo] = useState(false);
+  const [validatePassword, setValidatePassword] = useState(false);
 
   const sendRegisterCredentials = async () => {
     if (password == confirmPassword) {
@@ -42,6 +43,59 @@ export const Register = () => {
       }
     }
   };
+
+  const checkPassword = (data) => {
+    const passClass = document.getElementsByClassName("pass-check");
+    const lowerCase = new RegExp("(?=.*[a-z])");
+    const upperCase = new RegExp("(?=.*[A-Z])");
+    const number = new RegExp("(?=.*[0-9])");
+    const specialChar = new RegExp("(?=.*[!@#$%&*])");
+    const eightChar = new RegExp("(?=.{8,})");
+
+    if (eightChar.test(data)) {
+      passClass[0].style.color = "green";
+    } else {
+      passClass[0].style.color = "grey";
+    }
+    if (lowerCase.test(data)) {
+      passClass[1].style.color = "green";
+    } else {
+      passClass[1].style.color = "grey";
+    }
+    if (upperCase.test(data)) {
+      passClass[2].style.color = "green";
+    } else {
+      passClass[2].style.color = "grey";
+    }
+    if (specialChar.test(data)) {
+      passClass[3].style.color = "green";
+    } else {
+      passClass[3].style.color = "grey";
+    }
+    if (number.test(data)) {
+      passClass[4].style.color = "green";
+    } else {
+      passClass[4].style.color = "grey";
+    }
+  };
+
+  useEffect(() => {
+    const passClass = document.getElementsByClassName("pass-check");
+    if (
+      password == confirmPassword &&
+      password.length >= 8 &&
+      password.length <= 20 &&
+      passClass[0].style.color &&
+      passClass[1].style.color &&
+      passClass[2].style.color &&
+      passClass[3].style.color &&
+      passClass[4].style.color == "green"
+    ) {
+      setValidatePassword(true);
+    } else {
+      setValidatePassword(false);
+    }
+  }, [password, confirmPassword]);
 
   useEffect(() => {
     if (
@@ -115,6 +169,24 @@ export const Register = () => {
           </div>
         </div>
         <div className="row my-3">
+          <label className=" col-form-label" htmlFor="phone">
+            Phone:{" "}
+          </label>
+          <div className="col">
+            <input
+              className="form-control"
+              name="phone"
+              placeholder="phone"
+              maxLength="12"
+              value={phone}
+              onChange={(e) => {
+                setError(false);
+                setPhone(e.target.value);
+              }}
+            ></input>
+          </div>
+        </div>
+        <div className="row my-3">
           <label className=" col-form-label" htmlFor="email">
             Email:{" "}
           </label>
@@ -139,7 +211,7 @@ export const Register = () => {
           </label>
           <div className="col">
             <input
-              type="text"
+              type="password"
               className="form-control"
               name="password"
               placeholder="password"
@@ -149,6 +221,7 @@ export const Register = () => {
               onChange={(e) => {
                 setError(false);
                 setPassword(e.target.value);
+                checkPassword(e.target.value);
               }}
             ></input>
           </div>
@@ -159,7 +232,7 @@ export const Register = () => {
           </label>
           <div className="col">
             <input
-              type="text"
+              type="password"
               className="form-control"
               name="confirm password"
               placeholder="confirm password"
@@ -176,24 +249,23 @@ export const Register = () => {
                 }
               }}
             ></input>
-          </div>
-        </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="phone">
-            Phone:{" "}
-          </label>
-          <div className="col">
-            <input
-              className="form-control"
-              name="phone"
-              placeholder="phone"
-              maxLength="12"
-              value={phone}
-              onChange={(e) => {
-                setError(false);
-                setPhone(e.target.value);
-              }}
-            ></input>
+            <p className="d-flex flex-column mt-2">
+              <label className="pass-check fw-semibold">
+                At least 8 characters
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 lower case characters
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 Upper case characters
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 especial characters ( !, @, #, $, %, & ,* )
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 numerical characters
+              </label>
+            </p>
           </div>
         </div>
         <div>
