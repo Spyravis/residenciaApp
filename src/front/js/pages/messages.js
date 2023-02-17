@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { LoggedMenu } from "../component/logged-menu";
 import { NewMessage } from "../component/newMessage";
 import "../../styles/home.css";
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 export const Messages = () => {
     const navigate = useNavigate();
