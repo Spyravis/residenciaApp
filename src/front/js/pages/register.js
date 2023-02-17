@@ -19,22 +19,19 @@ export const Register = () => {
 
   const sendRegisterCredentials = async () => {
     if (password == confirmPassword) {
-      const response = await fetch(
-        "https://3001-spyravis-residenciaapp-a54c0x6wdii.ws-eu85.gitpod.io/api/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: name,
-            surname: surname,
-            email: email,
-            password: password,
-            phone: phone,
-          }),
-        }
-      );
+      const response = await fetch(process.env.BACKEND_URL + "/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          surname: surname,
+          email: email,
+          password: password,
+          phone: phone,
+        }),
+      });
       const data = await response.json();
       if (response.ok) {
         navigate("/login");
