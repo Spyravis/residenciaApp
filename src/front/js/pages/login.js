@@ -27,7 +27,7 @@ export const Login = () => {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      await actions.getCurrentUserEmail();
+      await actions.getCurrentUser();
       navigate("/myHome");
     } else {
       setError(true);

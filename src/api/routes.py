@@ -3,7 +3,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Role_user
+from api.models import db, User, Role_user, User_has_booking, Calendar_booking 
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -43,5 +43,13 @@ def user_register():
 def current_user():
     user_id = get_jwt_identity()
     user = User.query.filter_by(id = user_id)
-    #return jsonify({"id":user.id, "email": user.email}), 200
     return jsonify({"response": x.serialize() for x in user}), 200
+
+
+@api.route('/schuddle', methods=['GET'])
+@jwt_required()
+def current_schuddle():
+    user_id = get_jwt_identity()
+    user_schuddle = Calendar_booking.query.filter_by(user_id=user_id)
+    schuddle_serialized = [x.serialize() for x in user_schuddle]
+    return jsonify({"response": schuddle_serialized}), 200

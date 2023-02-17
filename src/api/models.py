@@ -91,7 +91,7 @@ class User_has_booking(db.Model):
     resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'),nullable=False , primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     calendar_booking_id = db.Column(db.Integer, db.ForeignKey('calendar_booking.id'),nullable=False , primary_key=True)
-
+    
 
 
 class Night_report(db.Model):
