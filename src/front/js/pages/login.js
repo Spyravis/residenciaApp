@@ -13,8 +13,7 @@ export const Login = () => {
   const [error, setError] = useState(false);
 
   const sendLoginCredential = async () => {
-    const response = await fetch(
-      "https://3001-spyravis-residenciaapp-k74o53xjsg1.ws-eu86.gitpod.io/api/login",
+    const response = await fetch(process.env.BACKEND_URL + "/api/login",
       {
         method: "POST",
         headers: {
@@ -29,7 +28,7 @@ export const Login = () => {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      await actions.getCurrentUserEmail();
+      await actions.getCurrentUser();
       navigate("/myHome");
     } else {
       setError(true);

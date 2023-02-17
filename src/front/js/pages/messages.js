@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { LoggedMenu } from "../component/logged-menu";
 import { NewMessage } from "../component/newMessage";
 import "../../styles/home.css";
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 export const Messages = () => {
     const navigate = useNavigate();
@@ -30,11 +31,30 @@ export const Messages = () => {
             <div className="row">
                 <h3>Mis Mensajes</h3>
 
-                {Object.keys(store.messages).map((x, index) => {
-                    return (
-                        <p key={index}>{x + " " + store.messages[x]}</p>
-                    );
-                })}
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Asunto</th>
+                            <th scope="col">Mensaje</th>
+                            <th scope="col">Residente</th>
+                        </tr>
+                    </thead>
+                    <tbody className="table-group-divider">
+                        {Object.keys(store.messages).map((message, index) => {
+                            return (
+                                <Fragment key={index}><tr>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{store.messages[message].subject}</td>
+                                    <td>{store.messages[message].message}</td>
+                                    <td>{store.messages[message].resident.name}</td>
+                                </tr></Fragment>
+                            );
+                        })}
+                    </tbody>
+                </table>
+
+
             </div>
 
             <div className="col-12 m-2">

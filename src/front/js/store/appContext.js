@@ -19,7 +19,7 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			state.actions.getCurrentUserEmail();
+			state.actions.getCurrentUser();
 		}, []);
 
 		return (

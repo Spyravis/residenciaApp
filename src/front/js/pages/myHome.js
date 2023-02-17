@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { LoggedMenu } from "../component/logged-menu";
@@ -7,17 +7,14 @@ import "../../styles/home.css";
 export const MyHome = () => {
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
-    /*
-        if (store.userdata == null) {
-            console.log("VACIOOO");
-            localStorage.getItem("user");
-            actions.getCurrentUserEmail();
-        } else {
-            console.log(store.userdata);
-            console.log(localStorage.getItem("user").email);
-        }
-    */
 
+    /*useEffect(() => {
+        if (!store.userdata.email) {
+            alert("no logueado");
+            navigate("/");
+        }
+    }, []);
+*/
     return (
 
         <div className="container text-center mt-5">

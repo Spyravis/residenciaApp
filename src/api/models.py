@@ -123,10 +123,12 @@ class Message(db.Model):
     
 
     def serialize(self):
+        resident = Resident.query.get(self.resident_id)
         return {
             "id": self.id,
             "subject": self.subject,
             "message": self.message,
             "url_attached": self.url_attached,
-            "user_id": self.user_id,            
+            "user_id": self.user_id,
+            "resident" : resident.serialize(),
         }
