@@ -14,7 +14,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await response.json();
         if (response.ok) {
           setStore({ currentUserEmail: data.response.email });
-          localStorage.setItem("user", data.response);
         }
       },
 

@@ -85,10 +85,10 @@ export const Register = () => {
       password == confirmPassword &&
       password.length >= 8 &&
       password.length <= 20 &&
-      passClass[0].style.color &&
-      passClass[1].style.color &&
-      passClass[2].style.color &&
-      passClass[3].style.color &&
+      passClass[0].style.color == "green" &&
+      passClass[1].style.color == "green" &&
+      passClass[2].style.color == "green" &&
+      passClass[3].style.color == "green" &&
       passClass[4].style.color == "green"
     ) {
       setValidatePassword(true);
