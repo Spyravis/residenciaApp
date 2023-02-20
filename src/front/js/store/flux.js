@@ -38,7 +38,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         );
         const data = await response.json();
         if (response.ok) {
-          localStorage.setItem("calendar_booking", data.response);
           setStore({ schuddle: data.response });
         }
       },

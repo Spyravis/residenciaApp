@@ -28,6 +28,7 @@ class User(db.Model):
             "email": self.email,
             "phone": self.phone,
             "role_user": self.role_user_id,
+            "residents" : [resident.serialize() for resident in self.residents]
         }
 
 class Resident(db.Model):
@@ -92,7 +93,15 @@ class User_has_booking(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     calendar_booking_id = db.Column(db.Integer, db.ForeignKey('calendar_booking.id'),nullable=False , primary_key=True)
     
-
+    def serialize(self):
+        return {
+            "id": self.id,
+            "is_online": self.is_online,
+            "url": self.url,
+            "resident_id": self.resident_id,
+            "user_id": self.user_id,
+            "calendar_booking_id": self.calendar_booking_id
+        }
 
 class Night_report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -128,5 +137,6 @@ class Message(db.Model):
             "subject": self.subject,
             "message": self.message,
             "url_attached": self.url_attached,
-            "user_id": self.user_id,            
+            "user_id": self.user_id, 
+            "resident" : resident.serialize(),
         }
