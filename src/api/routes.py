@@ -37,4 +37,14 @@ def get_messages():
     messages_by_user = Message.query.filter_by(user_id = user_id)
     messages_serialized = [x.serialize() for x in messages_by_user]
     return jsonify({"response" : messages_serialized}), 200
-    
+
+@api.route('/messages/send', methods=['POST'])
+def new_message():
+    user_id = request.json.get("user_id")
+    subject = request.json.get("subject")
+    message = request.json.get("message")
+    url_attached = request.json.get("url_attached")
+    resident_id = request.json.get("resident_id")
+    db.session.add(Message (user_id=user_id, subject=subject, message=message, url_attached=url_attached,resident_id=resident_id ))
+    db.session.commit()
+    return jsonify({"response": "Message sent successfully"}), 200  

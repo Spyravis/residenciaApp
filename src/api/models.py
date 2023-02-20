@@ -28,6 +28,7 @@ class User(db.Model):
             "email": self.email,
             "phone": self.phone,
             "role_user": self.role_user_id,
+            "residents" : [resident.serialize() for resident in self.residents]
         }
 
 class Resident(db.Model):
