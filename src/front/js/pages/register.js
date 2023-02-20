@@ -120,7 +120,7 @@ export const Register = () => {
         <h2 className="text-center m-3">Register </h2>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="name">
-            Name:{" "}
+            Name:
           </label>
           <div className="col">
             <input
@@ -137,7 +137,7 @@ export const Register = () => {
         </div>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="surname">
-            Surname:{" "}
+            Surname:
           </label>
           <div className="col">
             <input
@@ -154,7 +154,7 @@ export const Register = () => {
         </div>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="photo">
-            Photo:{" "}
+            Photo:
           </label>
           <div className="col">
             <input
@@ -170,7 +170,7 @@ export const Register = () => {
         </div>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="phone">
-            Phone:{" "}
+            Phone:
           </label>
           <div className="col">
             <input
@@ -188,7 +188,7 @@ export const Register = () => {
         </div>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="email">
-            Email:{" "}
+            Email:
           </label>
           <div className="col">
             <input
@@ -207,7 +207,7 @@ export const Register = () => {
         </div>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="password">
-            Password:{" "}
+            Password:
           </label>
           <div className="col">
             <input
@@ -228,7 +228,7 @@ export const Register = () => {
         </div>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="password">
-            Confirm Password:{" "}
+            Confirm Password:
           </label>
           <div className="col">
             <input
