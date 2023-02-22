@@ -5,46 +5,139 @@ import { Context } from "../store/appContext";
 
 export const ShuddleVisit = () => {
   const { store, actions } = useContext(Context);
+  const [resident, setResident] = useState("");
+  const [url, setUrl] = useState("");
+  const [online, setOnline] = useState(false);
+  const [user, setUser] = useState("");
+  const [day, setDay] = useState("");
+  const [hourStart, setHourStart] = useState("");
+  const [hourEnd, setHourEnd] = useState("");
 
-  const [visitDay, setVisitDay] = useState("");
-  const [visitHour, setVisitHour] = useState("");
-
-  useEffect(() => {
-    actions.getUserSchuddle();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="">
       <LoggedMenu />
       <div className="container col-6 mt-5 border rounded bg-warning bg-opacity-50">
         <h2 className="my-2 text-center">Agendar visita</h2>
-        <div className="row my-3">
-          {Object.keys(store.schuddle).map((x, i) => {
-            return <p key={i}>{x}</p>;
-          })}
-        </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="day">
-            Día de visita
+
+        <div className="col">
+          <label className=" col-form-label" htmlFor="online">
+            Modalidad:
           </label>
-          <div className="col">
-            <input className="form-control" name="day" type="date"></input>
-          </div>
-        </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="hourStart">
-            Hora de visita
-          </label>
-          <div className="col">
+          <div className="col px-5">
             <input
-              className="form-control"
-              name="hourStart"
-              type="time"
-            ></input>
+              type="radio"
+              id="online"
+              name="online"
+              onChange={(e) => {
+                e.preventDefault();
+                setOnline(true);
+                console.log(online);
+              }}
+            />
+            <label htmlFor="online">Online</label>
+            <input
+              type="radio"
+              id="presencial"
+              name="online"
+              onChange={(e) => {
+                setOnline(false);
+                console.log(online);
+              }}
+            />
+            <label htmlFor="presencial">Presencial</label>
           </div>
         </div>
-        <div className="my-2">
-          <button className="btn btn-primary">Agendar Visita</button>
+        <div className="col">
+          <label className=" col-form-label" htmlFor="url">
+            URL:
+          </label>
+          <input
+            className="form-control"
+            name="url"
+            placeholder="www.example.com"
+            value={url}
+            onChange={(e) => {
+              setError(false);
+              setName(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="col">
+          <label className=" col-form-label" htmlFor="resident">
+            Resident:
+          </label>
+          <input
+            className="form-control"
+            name="resident"
+            placeholder=""
+            value={resident}
+            onChange={(e) => {
+              setError(false);
+              setName(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="col">
+          <label className=" col-form-label" htmlFor="user">
+            User:
+          </label>
+          <input
+            className="form-control"
+            name="user"
+            placeholder=""
+            value={user}
+            onChange={(e) => {
+              setError(false);
+              setName(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="col">
+          <label className=" col-form-label" htmlFor="day">
+            Day:
+          </label>
+          <input
+            className="form-control"
+            name="day"
+            placeholder=""
+            value={day}
+            onChange={(e) => {
+              setError(false);
+              setName(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="col">
+          <label className=" col-form-label" htmlFor="hourStart">
+            Hora Inicio:
+          </label>
+          <input
+            className="form-control"
+            name="hourStart"
+            placeholder=""
+            value={hourStart}
+            onChange={(e) => {
+              setError(false);
+              setName(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="col my-2">
+          <label className=" col-form-label" htmlFor="hourEnd">
+            Hora Fin:
+          </label>
+          <input
+            className="form-control"
+            name="hourEnd"
+            placeholder=""
+            value={hourEnd}
+            onChange={(e) => {
+              setError(false);
+              setName(e.target.value);
+            }}
+          ></input>
         </div>
       </div>
     </div>
