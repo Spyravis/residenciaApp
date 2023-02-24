@@ -31,6 +31,30 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ messages: data.response });
         }
       },
+      getCurrentUserResidentMessages: async () => {
+        const response = await fetch(process.env.BACKEND_URL + "/api/residentmessages",
+          {
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("token"),
+            },
+          });
+        const data = await response.json();
+        if (response.ok) {
+          setStore({ messages: data.response });
+        }
+      },
+      delteMessage: async (message) => {
+        const response = await fetch(process.env.BACKEND_URL + "/api/messages/delete/" + message,
+
+          {
+            method: "DELETE",
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("token"),
+            },
+          });
+        const actions = getActions();
+        if (response.ok) actions.getCurrentUserMessages();
+      }
     },
   };
 };

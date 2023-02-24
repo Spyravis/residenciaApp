@@ -1,10 +1,16 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/index.css";
 
 export const LoggedMenu = () => {
+    const { store, actions } = useContext(Context);
     return (
+
         <div className="row justify-content-md-center">
+            <div className="row">
+                <h2>{store.userdata.role_user == 1 ? "Familiar" : "Trabajador"} {store.userdata.name}</h2>
+            </div>
             <div className="myMenu bg-light p-5 col-6">
                 <div className="btn-group m-2" role="group" aria-label="First group">
                     <Link to="/pacientes">
@@ -12,12 +18,12 @@ export const LoggedMenu = () => {
                     </Link>
                 </div>
                 <div className="btn-group m-2" role="group" aria-label="First group">
-                    <Link to="/pacientes">
+                    <Link to="/perfil">
                         <button className="btn btn-info p-5">Perfil</button>
                     </Link>
                 </div>
                 <div className="btn-group m-2" role="group" aria-label="First group">
-                    <Link to="/pacientes">
+                    <Link to="/partes">
                         <button className="btn btn-success p-5">Partes</button>
                     </Link>
                 </div>

@@ -1,16 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/index.css";
 export const NewMessage = (showInput) => {
-    const [subject, setsubject] = useState("");
-    const [message, setmessage] = useState("");
-    const [error, setError] = useState(false);
+    const [subject, setSubject] = useState("");
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
     const { store, actions } = useContext(Context);
 
+    const firstResident = store.userdata.residents[0].id;
+    const [resident, setResident] = useState(firstResident);
+
     const sendMessage = async () => {
-        if (subject.length < 3 && message.length < 10) {
-            const response = await fetch(process.env.BACKEND_URL + "/api/register",
+        if (subject.length > 3 && message.length > 10) {
+            const response = await fetch(process.env.BACKEND_URL + "/api/messages/send",
                 {
                     method: "POST",
                     headers: {
@@ -27,26 +30,33 @@ export const NewMessage = (showInput) => {
             );
             const data = await response.json();
             if (response.ok) {
-                alert("mensaje enviado correctamente");
-            } else {
-                setError(data.response);
+                setError(<p className="alert alert-success">Mensaje enviado correctamente</p>)
             }
         }
+        else {
+            setError(<p className="alert alert-warning">Error al enviar el mensaje</p>);
+        }
     };
+    useEffect(() => {
+        actions.getCurrentUserMessages();
+    }, [error]);
     if (showInput) {
         return (
             <div className="row newMessage">
-                <div className="border rounded p-2 bg-secondary bg-gradient bg-opacity-75">
+                <div className="border rounded bg-light bg-gradient bg-opacity-75">
                     <h2 className="text-center m-3">Nuevo</h2>
                     <div className="row my-3">
                         <label className="col-sm-2 col-form-label" htmlFor="resident">
                             Residente:{" "}
                         </label>
                         <div className="col-sm-10">
-                            <select className="form-select" name="resident">
+                            <select className="form-select" name="resident" onChange={(e) => {
+                                setError(false);
+                                setResident(e.target.value);
+                            }}>
                                 {store.userdata.residents.map((resident, index) => {
                                     return (
-                                        <option key={index} value={resident.id}>{resident.name} {resident.surname}</option>
+                                        <option key={index} value={resident.id} >{resident.name} {resident.surname}</option>
                                     )
                                 })}
                             </select>
@@ -59,7 +69,7 @@ export const NewMessage = (showInput) => {
                         <div className="col-sm-10">
                             <input className="form-control" name="subject" placeholder="subject" value={subject} onChange={(e) => {
                                 setError(false);
-                                setsubject(e.target.value);
+                                setSubject(e.target.value);
                             }}
                             ></input>
                         </div>
@@ -69,19 +79,24 @@ export const NewMessage = (showInput) => {
                             Mensaje:{" "}
                         </label>
                         <div className="col-sm-10">
-                            <input className="form-control" name="message" placeholder="message" type="text" value={message} onChange={(e) => {
+                            <textarea className="form-control" name="message" placeholder="message" type="text" value={message} onChange={(e) => {
                                 setError(false);
-                                setmessage(e.target.value);
+                                setMessage(e.target.value);
                             }}
-                            ></input>
+                            ></textarea>
                         </div>
-                        <div className="text-center mt-3 p-3 ">
-                            <button className="btn btn-primary btn-lg" onClick={() => sendMessage()}>
-                                Enviar
-                            </button>
-                            {error ? (
-                                <p className="alert alert-warning">Error en crendenciales</p>
-                            ) : null}
+                        <div className="row my-3">
+                            <div className="col-sm-2">
+
+                            </div>
+                            <div className="col-sm-2">
+                                <button className="btn btn-success my-3" onClick={() => sendMessage()}>
+                                    Enviar
+                                </button>
+                            </div>
+                            <div className="col-sm-6 text-center">
+                                {error}
+                            </div>
                         </div>
                     </div>
                 </div>
