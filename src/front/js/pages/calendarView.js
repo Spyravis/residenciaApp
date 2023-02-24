@@ -11,7 +11,7 @@ export const CalendarView = () => {
 
   return (
     <div className=" text-center">
-      <Calendar></Calendar>
+      <Calendar />
     </div>
   );
 };
