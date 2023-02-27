@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
+
       userdata: {},
       schuddle: {},
     },
@@ -17,6 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ userdata: data.response });
         }
       },
+
       logout: () => {
         try {
           localStorage.removeItem("token");

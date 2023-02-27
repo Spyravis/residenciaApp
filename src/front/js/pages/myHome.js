@@ -9,6 +9,7 @@ export const MyHome = () => {
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
 
+
   useEffect(() => {
     if (!store.userdata.id) {
       navigate("/");
@@ -25,6 +26,7 @@ export const MyHome = () => {
         </h2>
       </div>
       {store.userdata.role_user == 1 ? <Schuddle /> : null}
+
     </div>
   );
 };
