@@ -133,6 +133,7 @@ class Message(db.Model):
     resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'), nullable=False)
     
     def serialize(self):
+        resident = Resident.query.get(self.resident_id)
         return {
             "id": self.id,
             "subject": self.subject,

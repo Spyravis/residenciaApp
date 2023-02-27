@@ -19,7 +19,7 @@ const injectContext = (PassedComponent) => {
     );
 
 
-    useEffect(() => {}, []);
+    useEffect(() => { }, []);
 
 
     return (

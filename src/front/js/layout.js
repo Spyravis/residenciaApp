@@ -9,6 +9,7 @@ import { Profile } from "./pages/profile";
 import { AboutUs } from "./pages/aboutUs";
 import { ContactUs } from "./pages/contactUs";
 import { MyHome } from "./pages/myHome";
+import { Messages } from "./pages/messages";
 import { ShuddleVisit } from "./pages/schuddleVisit";
 import injectContext from "./store/appContext";
 
@@ -35,6 +36,7 @@ const Layout = () => {
             <Route element={<Home />} path="/" />
             <Route element={<Login />} path="/login" />
             <Route element={<MyHome />} path="/myHome" />
+            <Route element={<Messages />} path="/messages" />
             <Route element={<ShuddleVisit />} path="/schuddleVisit" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
