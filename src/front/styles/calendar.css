@@ -41,7 +41,7 @@ header .icons span:last-child {
   padding: 0;
 }
 .calendar .days {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .calendar .weeks li {
   font-weight: 500;
@@ -53,7 +53,7 @@ header .icons span:last-child {
 .calendar .days li {
   z-index: 1;
   cursor: pointer;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 .days li.inactive {
   color: #aaa;

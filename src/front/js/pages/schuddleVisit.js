@@ -4,7 +4,7 @@ import { Calendar } from "../component/calendar";
 import { LoggedMenu } from "../component/logged-menu";
 import { Context } from "../store/appContext";
 
-export const ShuddleVisit = (selectDate) => {
+export const ShuddleVisit = () => {
   const { store, actions } = useContext(Context);
   const [resident, setResident] = useState("");
   const [url, setUrl] = useState("");
@@ -13,13 +13,14 @@ export const ShuddleVisit = (selectDate) => {
   const [day, setDay] = useState("");
   const [hourStart, setHourStart] = useState("");
   const [hourEnd, setHourEnd] = useState("");
+  const [selectDate, setSelectDate] = useState("");
 
   return (
     <div className="container-fluid">
       <LoggedMenu />
       <div className="mt-5 border rounded bg-danger bg-opacity-50 ">
         <div className="col">
-          <Calendar />
+          <Calendar selectDate={selectDate} setSelectDate={setSelectDate} />
         </div>
         <div className="container align-item-center justify-content-center mt-5">
           <h2 className="my-2 text-center">Agendar visita</h2>
@@ -103,8 +104,9 @@ export const ShuddleVisit = (selectDate) => {
             <input
               className="form-control"
               name="day"
-              placeholder=""
-              value={day}
+              disabled="disabled"
+              placeholder="Select day from calendar"
+              value={selectDate}
               onClick={(e) => {
                 setDay(selectDate);
                 console.log(day);
