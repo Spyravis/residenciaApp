@@ -5,6 +5,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import { Register } from "./pages/register";
 import { Login } from "./pages/login";
+import { Profile } from "./pages/profile";
 import { AboutUs } from "./pages/aboutUs";
 import { ContactUs } from "./pages/contactUs";
 import { MyHome } from "./pages/myHome";
@@ -28,6 +29,7 @@ const Layout = () => {
           <Routes>
             <Route element={<Register />} path="/register" />
             <Route element={<Login />} path="/login" />
+            <Route element={<Profile />} path="/profile" />
             <Route element={<AboutUs />} path="/aboutUs" />
             <Route element={<ContactUs />} path="/contactUs" />
             <Route element={<Home />} path="/" />
