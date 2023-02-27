@@ -70,7 +70,7 @@ class Role_user(db.Model):
 
 class Calendar_booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    visit_day = db.Column(db.String(120), unique=False, nullable=False)
+    visit_day = db.Column(db.String(120), unique=False, nullable=True)
     hour_start = db.Column(db.DateTime, unique=False, nullable=False)
     hour_end = db.Column(db.DateTime, unique=False, nullable=False)
     bookings = db.relationship("User_has_booking", backref="Calendar_booking")

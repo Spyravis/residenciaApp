@@ -18,11 +18,11 @@ export const ShuddleVisit = () => {
   return (
     <div className="container-fluid">
       <LoggedMenu />
-      <div className="mt-5 border rounded bg-danger bg-opacity-50 ">
+      <div className="my-5 border rounded bg-warning bg-opacity-25 ">
         <div className="col">
           <Calendar selectDate={selectDate} setSelectDate={setSelectDate} />
         </div>
-        <div className="container align-item-center justify-content-center mt-5">
+        <div className="container align-item-center justify-content-center my-5">
           <h2 className="my-2 text-center">Agendar visita</h2>
           <div className="">
             <label className=" col-form-label" htmlFor="online">

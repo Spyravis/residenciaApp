@@ -1,6 +1,6 @@
 .calendar-container {
   width: 500px;
-  background: lightgoldenrodyellow;
+  background: #b5e8f1;
   border-radius: 10px;
 }
 .calendar-container header {
@@ -10,7 +10,7 @@
   justify-content: space-around;
 }
 header .current-date {
-  font-size: 1.45rem;
+  font-size: 2rem;
   font-weight: 500;
 }
 header .icons span {
@@ -45,6 +45,7 @@ header .icons span:last-child {
 }
 .calendar .weeks li {
   font-weight: 500;
+  font-size: 1.2rem;
 }
 .calendar ul li {
   position: relative;
