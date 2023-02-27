@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import "../../styles/calendar.css";
 import calendario from "../../img/calendario.jpg";
 
-export const Calendar = () => {
+export const Calendar = ({}) => {
   let date = new Date();
   const [currentYear, setCurrentYear] = useState(date.getFullYear());
   const [actualMonth, setActualMonth] = useState(date.getMonth());
   const [actualMonthNumber, setActualMonthNumber] = useState(date.getMonth());
   const [daysNames, setDaysNames] = useState([]);
   const [monthDays, setMonthDays] = useState([]);
+  const [selectDate, setSelectDate] = useState("");
+  const [day, setDay] = useState(new Date().toLocaleDateString());
   const locale = "en";
 
   const getMonths = () => {
@@ -45,7 +47,7 @@ export const Calendar = () => {
         <li
           onClick={() => {
             //  console.log(i + " " + month  + " " + year);
-            console.log(new Date(year, month, i, 10));
+            setSelectDate(new Date(year, month, i).toLocaleDateString());
           }}
         >
           {i}
@@ -89,7 +91,7 @@ export const Calendar = () => {
 
   return (
     <div className="container d-flex align-item-center justify-content-center mt-5">
-      <div className="wrapper">
+      <div className="calendar-container">
         <header>
           <div className="icons d-flex p-2">
             <span
@@ -132,11 +134,25 @@ export const Calendar = () => {
         <div className="calendar">
           <ul className="weeks">
             {daysNames.map((e, index) => {
-              return <li key={index}>{e}</li>;
+              return <li key={index}>{e.slice(0, 3)}</li>;
             })}
           </ul>
           <ul className="days">{monthDays}</ul>
         </div>
+      </div>
+      <div className="mt-5">
+        <label className=" col-form-label" htmlFor="day">
+          Day:
+        </label>
+        <input
+          className="form-control"
+          name="day"
+          placeholder=""
+          value={selectDate}
+          onClick={() => {
+            setDay(selectDate);
+          }}
+        ></input>
       </div>
     </div>
   );
