@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+  const { store, actions } = useContext(Context);
+
   return (
     <nav className="navbar navbar-light bg-light p-3">
       <div className="container">
@@ -13,29 +18,51 @@ export const Navbar = () => {
           role="toolbar"
           aria-label="Toolbar with button groups"
         >
-          <div className="btn-group me-2" role="group" aria-label="First group">
-            <Link to="/aboutUs">
-              <button className="btn btn-warning">About Us</button>
-            </Link>
-          </div>
-          <div
-            className="btn-group me-2"
-            role="group"
-            aria-label="Second group"
-          >
-            <Link to="/contactUs">
-              <button type="button" className="btn btn-success">
-                Contact Us
-              </button>
-            </Link>
-          </div>
-          <div className="btn-group" role="group" aria-label="Third group">
-            <Link to="/login">
-              <button type="button" className="btn btn-primary">
-                Área Personal
-              </button>
-            </Link>
-          </div>
+
+          {store.userdata.email ? (
+
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={async () => {
+                if (await actions.logout()) {
+                  navigate("/");
+                }
+              }}
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <div
+                className="btn-group me-2"
+                role="group"
+                aria-label="First group"
+              >
+                <Link to="/aboutUs">
+                  <button className="btn btn-warning">About Us</button>
+                </Link>
+              </div>
+              <div
+                className="btn-group me-2"
+                role="group"
+                aria-label="Second group"
+              >
+                <Link to="/contactUs">
+                  <button type="button" className="btn btn-success">
+                    Contact Us
+                  </button>
+                </Link>
+              </div>
+              <div className="btn-group" role="group" aria-label="Third group">
+                <Link to="/login">
+                  <button type="button" className="btn btn-primary">
+                    Área Personal
+                  </button>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </nav>
