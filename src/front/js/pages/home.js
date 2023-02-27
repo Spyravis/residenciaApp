@@ -1,12 +1,20 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+
+
 import { Context } from "../store/appContext";
+
 /*import bannerImage from "https://picsum.photos/1024/500";
 import headingImage from "https://picsum.photos/300";
 ejemplo importar con {headingImage}
 */
+
 import "../../styles/home.css";
 
+
+
 export const Home = () => {
+
 	const { store, actions } = useContext(Context);
 
 	return (
