@@ -134,11 +134,10 @@ export const Profile = () => {
   }, [newPassword, confirmNewPassword]);
 
   return (
-    <div className="container  mt-5">
-      <div className="my-3 text-center mt-5">
-        <LoggedMenu />
-      </div>
-      <div className="col  border rounded p-2 bg-secondary bg-gradient bg-opacity-25">
+    <div className="container-fluid ">
+      <LoggedMenu />
+
+      <div className="container col  border rounded p-2 bg-secondary bg-gradient bg-opacity-25 mt-2">
         <h2 className="text-center mt-5">Modificar Perfil</h2>
         <div className="row my-3 ">
           <label className=" col-form-label" htmlFor="name">

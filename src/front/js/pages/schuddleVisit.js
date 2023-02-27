@@ -16,7 +16,7 @@ export const ShuddleVisit = () => {
   const [selectDate, setSelectDate] = useState("");
 
   return (
-    <div className="container-fluid">
+    <div className="row d-flex justify-content-center">
       <LoggedMenu />
       <div className="my-5 border rounded bg-warning bg-opacity-25 ">
         <div className="col">
