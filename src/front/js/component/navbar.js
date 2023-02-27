@@ -18,7 +18,9 @@ export const Navbar = () => {
           role="toolbar"
           aria-label="Toolbar with button groups"
         >
-          {store.currentUserEmail ? (
+
+          {store.userdata.email ? (
+
             <button
               type="button"
               className="btn btn-danger"

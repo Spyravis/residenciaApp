@@ -1,11 +1,12 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      currentUserEmail: null,
+
       userdata: {},
+      schuddle: {},
     },
     actions: {
-      getCurrentUserEmail: async () => {
+      getCurrentUser: async () => {
         const response = await fetch(process.env.BACKEND_URL + "/api/user", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -13,18 +14,33 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         const data = await response.json();
         if (response.ok) {
-          setStore({ currentUserEmail: data.response.email });
+          localStorage.setItem("user", data.response);
+          setStore({ userdata: data.response });
         }
       },
 
       logout: () => {
         try {
           localStorage.removeItem("token");
-          setStore({ currentUserEmail: null });
+          setStore({ userdata: {} });
           return true;
         } catch (e) {
           console.log(e);
           return false;
+        }
+      },
+      getUserSchuddle: async () => {
+        const response = await fetch(
+          process.env.BACKEND_URL + "/api/schuddle",
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
+        const data = await response.json();
+        if (response.ok) {
+          setStore({ schuddle: data.response });
         }
       },
     },
