@@ -50,6 +50,11 @@ def current_user():
 @jwt_required()
 def current_schuddle():
     user_id = get_jwt_identity()
+    body_url = request.json.get("url")
+    body_resident = request.json.get("resident")
+    body_user = request.json.get("user")
+    body_hour_start = request.json.get("hour_start")
     user_schuddle = Calendar_booking.query.filter_by(user_id=user_id)
     schuddle_serialized = [x.serialize() for x in user_schuddle]
     return jsonify({"response": schuddle_serialized}), 200
+

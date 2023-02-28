@@ -9,11 +9,43 @@ export const ShuddleVisit = () => {
   const [resident, setResident] = useState("");
   const [url, setUrl] = useState("");
   const [online, setOnline] = useState(false);
-  const [user, setUser] = useState("");
-  const [day, setDay] = useState("");
+  const [user, setUser] = useState(
+    store.userdata?.name,
+    store.userdata?.surname
+  );
+  const [selectDate, setSelectDate] = useState("");
   const [hourStart, setHourStart] = useState("");
   const [hourEnd, setHourEnd] = useState("");
-  const [selectDate, setSelectDate] = useState("");
+
+  console.log(store.userdata.resident[0]);
+  useEffect(() => {
+    actions.getCurrentUser();
+  }, []);
+
+  const sendSchuddleVisit = async () => {
+    const response = await fetch(process.env.BACKEND_URL + "/api/shchuddle", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        online: online,
+        url: url,
+        user: user,
+        hourStart:
+          selectDate.toLocaleDateString() +
+          " " +
+          selectDate.toLocaleTimeString(),
+        hourEnd: hourEnd,
+      }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+    } else {
+      setError(true);
+    }
+  };
 
   return (
     <div className="container-fluid">
@@ -60,10 +92,9 @@ export const ShuddleVisit = () => {
               className="form-control"
               name="url"
               placeholder="www.example.com"
-              value={url}
               onChange={(e) => {
                 setError(false);
-                setName(e.target.value);
+                setUrl(e.target.value);
               }}
             ></input>
           </div>
@@ -77,8 +108,7 @@ export const ShuddleVisit = () => {
               placeholder=""
               value={resident}
               onChange={(e) => {
-                setError(false);
-                setName(e.target.value);
+                setResident(e.target.value);
               }}
             ></input>
           </div>
@@ -90,10 +120,9 @@ export const ShuddleVisit = () => {
               className="form-control"
               name="user"
               placeholder=""
-              value={user}
+              value={store.userdata?.surname}
               onChange={(e) => {
-                setError(false);
-                setName(e.target.value);
+                setUser(e.target.value);
               }}
             ></input>
           </div>
@@ -107,10 +136,6 @@ export const ShuddleVisit = () => {
               disabled="disabled"
               placeholder="Select day from calendar"
               value={selectDate}
-              onClick={(e) => {
-                setDay(selectDate);
-                console.log(day);
-              }}
             ></input>
           </div>
           <div className="">
@@ -118,13 +143,12 @@ export const ShuddleVisit = () => {
               Hora Inicio:
             </label>
             <input
+              type="time"
               className="form-control"
               name="hourStart"
               placeholder=""
-              value={hourStart}
               onChange={(e) => {
-                setError(false);
-                setName(e.target.value);
+                setHourStart(e.target.value);
               }}
             ></input>
           </div>
@@ -133,16 +157,18 @@ export const ShuddleVisit = () => {
               Hora Fin:
             </label>
             <input
+              type="time"
               className="form-control"
               name="hourEnd"
               placeholder=""
-              value={hourEnd}
               onChange={(e) => {
-                setError(false);
-                setName(e.target.value);
+                setHourEnd(e.target.value);
               }}
             ></input>
           </div>
+          <button className="btn btn-primary" onClick={sendSchuddleVisit}>
+            Confirmar Cita
+          </button>
         </div>
       </div>
     </div>
