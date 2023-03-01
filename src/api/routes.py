@@ -136,18 +136,22 @@ def update_password():
         return jsonify({"error": "current password invalid "}), 400
 
 
-@api.route('/user/<int:user_id>/image', methods=['POST'])
-def handle_upload(user_id):
-
+@api.route('/upload', methods=['POST'])
+@jwt_required()
+def handle_upload():
+    print("hola1")
+    user_id = get_jwt_identity()
     # validate that the front-end request was built correctly
     if 'profile_image' in request.files:
         # upload file to uploadcare
         result = cloudinary.uploader.upload(request.files['profile_image'])
-
+        print("hola2")
         # fetch for the user
         user1 = User.query.get(user_id)
+        print("hola3")
         # update the user with the given cloudinary image URL
         user1.photo= result['secure_url']
+        print("hola4")
 
         db.session.add(user1)
         db.session.commit()

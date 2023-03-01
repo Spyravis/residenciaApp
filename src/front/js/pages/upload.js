@@ -18,10 +18,13 @@ export const UploadView = (props) => {
     const options = {
       body,
       method: "POST",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     };
     // you need to have the user_id in the localStorage
     const currentUserId = localStorage.getItem("user_id");
-    fetch(`${process.env.BACKEND_URL}/user/${currentUserId}/image`, options)
+    fetch(process.env.BACKEND_URL + "/api/upload", options)
       .then((resp) => resp.json())
       .then((data) => console.log("Success!!!!", data))
       .catch((error) => console.error("ERRORRRRRR!!!", error));
