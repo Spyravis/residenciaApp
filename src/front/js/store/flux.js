@@ -1,10 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-
       userdata: {},
       schuddle: {},
-      messages: {}
+      messages: {},
     },
     actions: {
       getCurrentUser: async () => {
@@ -15,43 +14,49 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         const data = await response.json();
         if (response.ok) {
-          localStorage.setItem("user", data.response);
+          localStorage.setItem("user_id", data.response.id);
           setStore({ userdata: data.response });
         }
       },
       getCurrentUserMessages: async () => {
-        const response = await fetch(process.env.BACKEND_URL + "/api/messages",
+        const response = await fetch(
+          process.env.BACKEND_URL + "/api/messages",
           {
             headers: {
-              "Authorization": "Bearer " + localStorage.getItem("token"),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          });
+          }
+        );
         const data = await response.json();
         if (response.ok) {
           setStore({ messages: data.response });
         }
       },
       getCurrentUserResidentMessages: async () => {
-        const response = await fetch(process.env.BACKEND_URL + "/api/residentmessages",
+        const response = await fetch(
+          process.env.BACKEND_URL + "/api/residentmessages",
           {
             headers: {
-              "Authorization": "Bearer " + localStorage.getItem("token"),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          });
+          }
+        );
         const data = await response.json();
         if (response.ok) {
           setStore({ messages: data.response });
         }
       },
       delteMessage: async (message) => {
-        const response = await fetch(process.env.BACKEND_URL + "/api/messages/delete/" + message,
+        const response = await fetch(
+          process.env.BACKEND_URL + "/api/messages/delete/" + message,
 
           {
             method: "DELETE",
             headers: {
-              "Authorization": "Bearer " + localStorage.getItem("token"),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          });
+          }
+        );
         const actions = getActions();
         if (response.ok) actions.getCurrentUserMessages();
       },

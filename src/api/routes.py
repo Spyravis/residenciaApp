@@ -8,6 +8,8 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+import cloudinary
+import cloudinary.uploader
 
 api = Blueprint('api', __name__)
 
@@ -133,3 +135,23 @@ def update_password():
     else:
         return jsonify({"error": "current password invalid "}), 400
 
+
+@api.route('/user/<int:user_id>/image', methods=['POST'])
+def handle_upload(user_id):
+
+    # validate that the front-end request was built correctly
+    if 'profile_image' in request.files:
+        # upload file to uploadcare
+        result = cloudinary.uploader.upload(request.files['profile_image'])
+
+        # fetch for the user
+        user1 = User.query.get(user_id)
+        # update the user with the given cloudinary image URL
+        user1.photo= result['secure_url']
+
+        db.session.add(user1)
+        db.session.commit()
+
+        return jsonify(user1.serialize()), 200
+    else:
+        raise APIException('Missing profile_image on the FormData')
