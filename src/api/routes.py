@@ -2,8 +2,8 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Role_user, User_has_booking, Calendar_booking , Message
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
+from api.models import db, User, Role_user, User_has_booking, Calendar_booking , Message as InternalMessages
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -53,7 +53,7 @@ def current_user():
 @jwt_required()
 def get_messages():
     user_id = get_jwt_identity()    
-    messages_by_user = Message.query.filter_by(user_id = user_id)
+    messages_by_user = InternalMessages.query.filter_by(user_id = user_id)
     messages_serialized = [x.serialize() for x in messages_by_user]
     print(messages_serialized)
     return jsonify({"response" : messages_serialized}), 200
@@ -67,7 +67,7 @@ def get_resident_messages():
     userdata_serialized = [x.serialize() for x in userdata]    
     messages_serialized = []
     for i in (userdata_serialized[0]["residents"]):
-        messages_by_resident = Message.query.filter_by(resident_id = i["id"])
+        messages_by_resident = InternalMessages.query.filter_by(resident_id = i["id"])
         messages_serialized.extend([x.serialize() for x in messages_by_resident])
     print(messages_serialized)
     return jsonify({"response" : messages_serialized}), 200
@@ -79,13 +79,13 @@ def new_message():
     message = request.json.get("message")
     url_attached = request.json.get("url_attached")
     resident_id = request.json.get("resident_id")
-    db.session.add(Message (user_id=user_id, subject=subject, message=message, url_attached=url_attached,resident_id=resident_id ))
+    db.session.add(InternalMessages (user_id=user_id, subject=subject, message=message, url_attached=url_attached,resident_id=resident_id ))
     db.session.commit()
     return jsonify({"response": "Message sent successfully"}), 200
 
 @api.route('/messages/delete/<id>', methods=['DELETE'])
 def delete_message(id):
-    message =  Message.query.get(id)
+    message =  InternalMessages.query.get(id)
     db.session.delete(message)
     print(message)
     db.session.commit()
@@ -134,21 +134,27 @@ def update_password():
     else:
         return jsonify({"error": "current password invalid "}), 400
 
+
 # ENVIO DE EMAILS : INSTALAR: pip install Flask-Mail
 
-
 @api.route("/send_email", methods=['POST'])
-def seding_email():
-    mail = Mail(api)
-    api.config['MAIL_SERVER']='smtp.gmail.com'
-    api.config['MAIL_PORT'] = 465
-    api.config['MAIL_USERNAME'] = 'yourId@gmail.com'
-    api.config['MAIL_PASSWORD'] = '*****'
-    api.config['MAIL_USE_TLS'] = False
-    api.config['MAIL_USE_SSL'] = True 
+def sending_email():
+    current_app.config['MAIL_SERVER']='mail.abeceweb.com'
+    current_app.config['MAIL_PORT'] = 465
+    current_app.config['MAIL_USERNAME'] = 'residenciaapp@abeceweb.com'
+    current_app.config['MAIL_PASSWORD'] = 'tncE{XOBnE}&'
+    current_app.config['MAIL_USE_TLS'] = False
+    current_app.config['MAIL_USE_SSL'] = True 
+    current_app.config['MAIL_DEBUG'] = True
+    mail = Mail(current_app)
+
     subject = request.json.get("subject")
     message = request.json.get("message")
-    msg = Message('Hello', sender = 'yourId@gmail.com', recipients = ['someone1@gmail.com'])
+    
+    msg = Message('Hello', sender = 'residenciaapp@abeceweb.com', recipients = ['carlos.igles@gmail.com'])
     msg.body = "Hello Flask message sent from Flask-Mail"
+    print("\n\n",msg,"\n\n")
+    print("ENVIANDO.........")
     mail.send(msg)
+    print("\n\nENVIADOOOO????")
     return jsonify({"response": "Email sent successfully"}), 200
