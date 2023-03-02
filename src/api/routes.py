@@ -8,6 +8,7 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from flask_mail import Mail, Message
 
 api = Blueprint('api', __name__)
 
@@ -133,3 +134,21 @@ def update_password():
     else:
         return jsonify({"error": "current password invalid "}), 400
 
+# ENVIO DE EMAILS : INSTALAR: pip install Flask-Mail
+
+
+@api.route("/send_email", methods=['POST'])
+def seding_email():
+    mail = Mail(api)
+    api.config['MAIL_SERVER']='smtp.gmail.com'
+    api.config['MAIL_PORT'] = 465
+    api.config['MAIL_USERNAME'] = 'yourId@gmail.com'
+    api.config['MAIL_PASSWORD'] = '*****'
+    api.config['MAIL_USE_TLS'] = False
+    api.config['MAIL_USE_SSL'] = True 
+    subject = request.json.get("subject")
+    message = request.json.get("message")
+    msg = Message('Hello', sender = 'yourId@gmail.com', recipients = ['someone1@gmail.com'])
+    msg.body = "Hello Flask message sent from Flask-Mail"
+    mail.send(msg)
+    return jsonify({"response": "Email sent successfully"}), 200
