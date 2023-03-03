@@ -2,13 +2,18 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint, current_app
+from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Role_user, User_has_booking, Calendar_booking , Message as InternalMessages
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-from flask_mail import Mail, Message
+
+import base64
+from email.mime.text import MIMEText
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from requests import HTTPError
 
 api = Blueprint('api', __name__)
 
@@ -135,26 +140,31 @@ def update_password():
         return jsonify({"error": "current password invalid "}), 400
 
 
-# ENVIO DE EMAILS : INSTALAR: pip install Flask-Mail
+# ENVIO DE EMAILS : https://mailtrap.io/blog/python-send-email-gmail/
 
 @api.route("/send_email", methods=['POST'])
 def sending_email():
-    current_app.config['MAIL_SERVER']='mail.abeceweb.com'
-    current_app.config['MAIL_PORT'] = 465
-    current_app.config['MAIL_USERNAME'] = 'residenciaapp@abeceweb.com'
-    current_app.config['MAIL_PASSWORD'] = 'tncE{XOBnE}&'
-    current_app.config['MAIL_USE_TLS'] = False
-    current_app.config['MAIL_USE_SSL'] = True 
-    current_app.config['MAIL_DEBUG'] = True
-    mail = Mail(current_app)
-
     subject = request.json.get("subject")
     message = request.json.get("message")
-    
-    msg = Message('Hello', sender = 'residenciaapp@abeceweb.com', recipients = ['carlos.igles@gmail.com'])
-    msg.body = "Hello Flask message sent from Flask-Mail"
-    print("\n\n",msg,"\n\n")
-    print("ENVIANDO.........")
-    mail.send(msg)
-    print("\n\nENVIADOOOO????")
-    return jsonify({"response": "Email sent successfully"}), 200
+
+    SCOPES = [
+        "https://www.googleapis.com/auth/gmail.send"
+    ]
+    flow = InstalledAppFlow.from_client_secrets_file('/workspace/residenciaApp/credenciales-carlos.json', SCOPES)
+    creds = flow.run_local_server(port=0)
+
+    service = build('gmail', 'v1', credentials=creds)
+    message = MIMEText('This is the body of the email')
+    message['to'] = 'cigles76@hotmail.com'
+    message['subject'] = 'Email Subject'
+    create_message = {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
+
+    try:
+        message = (service.users().messages().send(userId="me", body=create_message).execute())
+        print(F'sent message to {message} Message Id: {message["id"]}')
+        return jsonify({"response": "Email sent successfully"}), 200
+    except HTTPError as error:
+        print(F'An error occurred: {error}')
+        message = None
+        return jsonify({"response": "Email sent error"}), 405
+ 
