@@ -7,8 +7,11 @@ export const LoggedMenu = () => {
   const { store, actions } = useContext(Context);
   return (
     <div className="row justify-content-md-center">
-      <div className="row">
-        <h2>{store.userdata.role_user == 1 ? "Familiar" : "Trabajador"} {store.userdata.name}</h2>
+      <div className="row justify-content-md-center">
+        <h2 className="text-center">
+          {store.userdata.role_user == 1 ? "Familiar" : "Trabajador"}{" "}
+          {store.userdata.name}
+        </h2>
       </div>
       <div className="myMenu bg-light text-center p-3 col">
         <div className="btn-group m-2" role="group" aria-label="First group">

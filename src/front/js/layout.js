@@ -15,7 +15,6 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { UploadView } from "./pages/upload";
 
 //create your first component
 const Layout = () => {
@@ -39,7 +38,6 @@ const Layout = () => {
             <Route element={<MyHome />} path="/myHome" />
             <Route element={<Messages />} path="/messages" />
             <Route element={<ShuddleVisit />} path="/schuddleVisit" />
-            <Route element={<UploadView />} path="/upload" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

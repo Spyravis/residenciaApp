@@ -18,20 +18,26 @@ export const Navbar = () => {
           role="toolbar"
           aria-label="Toolbar with button groups"
         >
-
           {store.userdata.email ? (
+            <>
+              <img
+                className=""
+                style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+                src={store.userdata.photo}
+              />
 
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={async () => {
-                if (await actions.logout()) {
-                  navigate("/");
-                }
-              }}
-            >
-              Logout
-            </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={async () => {
+                  if (await actions.logout()) {
+                    navigate("/");
+                  }
+                }}
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <>
               <div
