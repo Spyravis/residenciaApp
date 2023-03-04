@@ -17,7 +17,6 @@ export const ShuddleVisit = () => {
   const [hourStart, setHourStart] = useState("");
   const [hourEnd, setHourEnd] = useState("");
 
-  console.log(store.userdata.resident[0]);
   useEffect(() => {
     actions.getCurrentUser();
   }, []);
@@ -142,15 +141,24 @@ export const ShuddleVisit = () => {
             <label className=" col-form-label" htmlFor="hourStart">
               Hora Inicio:
             </label>
-            <input
-              type="time"
-              className="form-control"
-              name="hourStart"
-              placeholder=""
+            <select
+              className="form-select"
               onChange={(e) => {
                 setHourStart(e.target.value);
+                setHourEnd(e.target.value);
               }}
-            ></input>
+            >
+              <option value="select" selected>
+                Select Hour
+              </option>
+              <option value="09:00">09:00 - 10:00</option>
+              <option value="10:00">10:00 - 11:00</option>
+              <option value="11:00">11:00 - 12:00</option>
+              <option value="12:00">12:00 - 13:00</option>
+              <option value="16:00">16:00 - 17:00</option>
+              <option value="17:00">17:00 - 18:00</option>
+              <option value="18:00">18:00 - 19:00</option>
+            </select>
           </div>
           <div className=" my-2">
             <label className=" col-form-label" htmlFor="hourEnd">
