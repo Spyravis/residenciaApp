@@ -153,7 +153,7 @@ def sending_email():
     flow = InstalledAppFlow.from_client_secrets_file('/workspace/residenciaApp/credenciales-carlos.json', SCOPES)
     creds = flow.run_local_server(port=0)
 
-    service = build('gmail', 'v1', credentials=creds)
+    service = build('gmail', 'v2', credentials=creds)
     message = MIMEText('This is the body of the email')
     message['to'] = 'cigles76@hotmail.com'
     message['subject'] = 'Email Subject'
