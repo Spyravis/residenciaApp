@@ -3,10 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import { Calendar } from "../component/calendar";
 import { LoggedMenu } from "../component/logged-menu";
 import { Context } from "../store/appContext";
+import "../../styles/schuddleVisit.css";
 
 export const ShuddleVisit = () => {
   const { store, actions } = useContext(Context);
-  const [resident, setResident] = useState("");
+  const [resident, setResident] = useState(store.userdata?.residents[0].id);
   const [url, setUrl] = useState("");
   const [online, setOnline] = useState(false);
   const [user, setUser] = useState(
@@ -22,23 +23,45 @@ export const ShuddleVisit = () => {
   }, []);
 
   const sendSchuddleVisit = async () => {
-    const response = await fetch(process.env.BACKEND_URL + "/api/shchuddle", {
+    const response = await fetch(process.env.BACKEND_URL + "/api/schuddle", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
       body: JSON.stringify({
-        online: online,
+        is_online: online,
         url: url,
-        user: user,
-        hourStart:
-          selectDate.toLocaleDateString() +
-          " " +
-          selectDate.toLocaleTimeString(),
-        hourEnd: hourEnd,
+        id_user: user,
+        resident: resident,
+        booking: selectDate + " " + hourStart,
       }),
     });
+    if (response.ok) {
+      const data = await response.json();
+    } else {
+      setError(true);
+    }
+  };
+
+  const checkAvalability = async () => {
+    const response = await fetch(
+      process.env.BACKEND_URL + "/api/bookings_availability",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          is_online: online,
+          url: url,
+          id_user: user,
+          resident: resident,
+          booking: selectDate + " " + hourStart,
+        }),
+      }
+    );
     if (response.ok) {
       const data = await response.json();
     } else {
@@ -49,17 +72,17 @@ export const ShuddleVisit = () => {
   return (
     <div className="container-fluid">
       <LoggedMenu />
-      <div className="my-5 border rounded bg-warning bg-opacity-25 ">
-        <div className="col">
+      <div className="body-schuddle row justify-content-md-center ">
+        <div className="calendar col-md-5  ">
           <Calendar selectDate={selectDate} setSelectDate={setSelectDate} />
         </div>
-        <div className="container align-item-center justify-content-center my-5">
+        <div className="col-md-5 align-item-center justify-content-center  p-3">
           <h2 className="my-2 text-center">Agendar visita</h2>
-          <div className="">
+          <div className="col-auto">
             <label className=" col-form-label" htmlFor="online">
               Modalidad:
             </label>
-            <div className="col px-5">
+            <div className="col-auto px-3">
               <input
                 type="radio"
                 id="online"
@@ -70,7 +93,7 @@ export const ShuddleVisit = () => {
                   console.log(online);
                 }}
               />
-              <label htmlFor="online">Online</label>
+              <label htmlFor="online"> Online </label>
               <input
                 type="radio"
                 id="presencial"
@@ -83,7 +106,7 @@ export const ShuddleVisit = () => {
               <label htmlFor="presencial">Presencial</label>
             </div>
           </div>
-          <div className="">
+          <div className="col-auto">
             <label className=" col-form-label" htmlFor="url">
               URL:
             </label>
@@ -92,40 +115,47 @@ export const ShuddleVisit = () => {
               name="url"
               placeholder="www.example.com"
               onChange={(e) => {
-                setError(false);
                 setUrl(e.target.value);
               }}
             ></input>
           </div>
-          <div className="">
+          <div className="col-auto">
             <label className=" col-form-label" htmlFor="resident">
               Resident:
             </label>
-            <input
-              className="form-control"
+            <select
+              className="form-select"
               name="resident"
-              placeholder=""
-              value={resident}
               onChange={(e) => {
                 setResident(e.target.value);
               }}
-            ></input>
+            >
+              {store.userdata?.residents.map((resident, index) => {
+                console.log(resident);
+                return (
+                  <option key={index} value={resident.id}>
+                    {resident.name} {resident.surname}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-          <div className="">
+          <div className="col-auto">
             <label className=" col-form-label" htmlFor="user">
               User:
             </label>
             <input
+              disabled
               className="form-control"
               name="user"
               placeholder=""
-              value={store.userdata?.surname}
+              value={` ${store.userdata?.name} ${store.userdata?.surname}`}
               onChange={(e) => {
                 setUser(e.target.value);
               }}
             ></input>
           </div>
-          <div className="">
+          <div className="col-auto">
             <label className=" col-form-label" htmlFor="day">
               Day:
             </label>
@@ -137,15 +167,15 @@ export const ShuddleVisit = () => {
               value={selectDate}
             ></input>
           </div>
-          <div className="">
+          <div className="col-auto">
             <label className=" col-form-label" htmlFor="hourStart">
-              Hora Inicio:
+              Seleccione Horario
             </label>
             <select
               className="form-select"
               onChange={(e) => {
                 setHourStart(e.target.value);
-                setHourEnd(e.target.value);
+                console.log(selectDate + " " + hourStart);
               }}
             >
               <option value="select" selected>
@@ -160,21 +190,10 @@ export const ShuddleVisit = () => {
               <option value="18:00">18:00 - 19:00</option>
             </select>
           </div>
-          <div className=" my-2">
-            <label className=" col-form-label" htmlFor="hourEnd">
-              Hora Fin:
-            </label>
-            <input
-              type="time"
-              className="form-control"
-              name="hourEnd"
-              placeholder=""
-              onChange={(e) => {
-                setHourEnd(e.target.value);
-              }}
-            ></input>
-          </div>
-          <button className="btn btn-primary" onClick={sendSchuddleVisit}>
+          <button className="btn btn-primary mt-2 " onClick={checkAvalability}>
+            Comprobar disponibilidad
+          </button>
+          <button className="btn btn-primary mt-2 " onClick={sendSchuddleVisit}>
             Confirmar Cita
           </button>
         </div>

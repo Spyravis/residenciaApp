@@ -46,15 +46,24 @@ def current_user():
     return jsonify({"response": x.serialize() for x in user}), 200
 
 
-@api.route('/schuddle', methods=['GET'])
+@api.route('/schuddle', methods=['POST'])
 @jwt_required()
 def current_schuddle():
     user_id = get_jwt_identity()
-    body_url = request.json.get("url")
-    body_resident = request.json.get("resident")
-    body_user = request.json.get("user")
-    body_hour_start = request.json.get("hour_start")
-    user_schuddle = Calendar_booking.query.filter_by(user_id=user_id)
-    schuddle_serialized = [x.serialize() for x in user_schuddle]
-    return jsonify({"response": schuddle_serialized}), 200
+    is_online = request.json.get("is_online")
+    url = request.json.get("url")    
+    resident_id = request.json.get("resident")    
+    booking = request.json.get("booking")
+    new_booking = User_has_booking (is_online=is_online,url=url,resident_id=resident_id,user_id=user_id,booking=booking)
+    print(booking)
+    print("##########################")
+    db.session.add(new_booking)
+    db.session.commit()    
+    return jsonify({"response": "Booking created succesfully"}), 200
 
+@api.route('/bookings_availability', methods=['POST'])
+@jwt_required()
+def bookings_availability():
+    booking = request.json.get("booking")
+    bookings = User_has_booking.query.filter_by(booking=booking)    
+    return jsonify({"response":  x.serialize() for x in bookings}), 200

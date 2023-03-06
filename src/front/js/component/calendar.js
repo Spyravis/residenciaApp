@@ -13,6 +13,7 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
 
   const [day, setDay] = useState(new Date().toLocaleDateString());
   const locale = "en";
+  const format = "YYYY-MM-DD";
 
   const getMonths = () => {
     const monthsIndex = [...Array(12).keys()];
@@ -46,8 +47,9 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
       let days = (
         <li
           onClick={() => {
-            //  console.log(i + " " + month  + " " + year);
-            setSelectDate(new Date(year, month, i).toLocaleDateString());
+            console.log(i + "-" + month + "-" + year);
+            //setSelectDate(new Date(year, month, i).toLocaleDateString());
+            setSelectDate(year + "-" + month + "-" + i);
           }}
         >
           {i}
@@ -90,8 +92,8 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
   }, []);
 
   return (
-    <div className="container d-flex align-item-center justify-content-center mt-5">
-      <div className="calendar-container">
+    <div className="container d-flex justify-content-center align-item-center  mt-5">
+      <div className="calendar-container ">
         <header>
           <div className="icons d-flex ">
             <span
