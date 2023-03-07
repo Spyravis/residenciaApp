@@ -68,7 +68,6 @@ def get_resident_messages():
     for i in (userdata_serialized[0]["residents"]):
         messages_by_resident = Message.query.filter_by(resident_id = i["id"])
         messages_serialized.extend([x.serialize() for x in messages_by_resident])
-    print(messages_serialized)
     return jsonify({"response" : messages_serialized}), 200
 
 @api.route('/messages/send', methods=['POST'])
@@ -81,6 +80,30 @@ def new_message():
     db.session.add(Message (user_id=user_id, subject=subject, message=message, url_attached=url_attached,resident_id=resident_id ))
     db.session.commit()
     return jsonify({"response": "Message sent successfully"}), 200
+
+@api.route('/messages/readed/<id>', methods=['POST'])
+def readed_message(id):
+    message =  Message.query.get(id)
+    message.readed = True
+    db.session.commit()
+    return jsonify({"response": "Message readed"}), 200
+
+@api.route('/messages/unreaded', methods=['GET'])
+@jwt_required()
+def unreaded_messages():
+    user_id = get_jwt_identity()
+    userdata = User.query.filter_by(id = user_id)
+    userdata_serialized = [x.serialize() for x in userdata]        
+    unreaded = 0
+    for i in (userdata_serialized[0]["residents"]):
+        messages_serialized = []
+        messages_by_resident = Message.query.filter_by(resident_id = i["id"])
+        messages_serialized.extend([x.serialize() for x in messages_by_resident])
+        for m in (messages_serialized):           
+            if m["user_id"] != user_id and m["readed"] == False:
+                unreaded +=1
+    return jsonify({"response" : unreaded}), 200
+   
 
 @api.route('/messages/delete/<id>', methods=['DELETE'])
 def delete_message(id):

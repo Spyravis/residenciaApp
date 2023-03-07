@@ -8,8 +8,8 @@ export const NewMessage = (showInput) => {
     const [error, setError] = useState("");
     const { store, actions } = useContext(Context);
 
-    const firstResident = store.userdata.residents[0].id;
-    const [resident, setResident] = useState(firstResident);
+    //const firstResident = store.userdata.residents[0].id;
+    const [resident, setResident] = useState(store.userdata?.residents[0].id);
 
     const sendMessage = async () => {
         if (subject.length > 3 && message.length > 10) {
@@ -38,7 +38,7 @@ export const NewMessage = (showInput) => {
         }
     };
     useEffect(() => {
-        actions.getCurrentUserMessages();
+        actions.getCurrentUserResidentMessages();
     }, [error]);
     if (showInput) {
         return (

@@ -23,7 +23,7 @@ export const Navbar = () => {
 
             <button
               type="button"
-              className="btn btn-danger"
+              className="btn btn-danger position-relative"
               onClick={async () => {
                 if (await actions.logout()) {
                   navigate("/");
@@ -31,6 +31,10 @@ export const Navbar = () => {
               }}
             >
               Logout
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                {store.unreadedMessages}
+                <span className="visually-hidden">Mensajes sin leer</span>
+              </span>
             </button>
           ) : (
             <>
