@@ -13,7 +13,11 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
 
   const [day, setDay] = useState(new Date().toLocaleDateString());
   const locale = "en";
-  const format = "YYYY-MM-DD";
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "numeric",
+  };
 
   const getMonths = () => {
     const monthsIndex = [...Array(12).keys()];
@@ -47,9 +51,9 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
       let days = (
         <li
           onClick={() => {
-            console.log(i + "-" + month + "-" + year);
-            //setSelectDate(new Date(year, month, i).toLocaleDateString());
-            setSelectDate(year + "-" + month + "-" + i);
+            setSelectDate(
+              new Date(year, month, i + 1).toISOString().split("T")[0]
+            );
           }}
         >
           {i}

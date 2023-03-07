@@ -17,6 +17,9 @@ export const ShuddleVisit = () => {
   const [selectDate, setSelectDate] = useState("");
   const [hourStart, setHourStart] = useState("");
   const [hourEnd, setHourEnd] = useState("");
+  const [availability, setAvailability] = useState();
+  const [notAvailable, setNotAvailable] = useState(false);
+  const [Available, setAvailable] = useState(false);
 
   useEffect(() => {
     actions.getCurrentUser();
@@ -54,18 +57,18 @@ export const ShuddleVisit = () => {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify({
-          is_online: online,
-          url: url,
-          id_user: user,
-          resident: resident,
           booking: selectDate + " " + hourStart,
         }),
       }
     );
     if (response.ok) {
       const data = await response.json();
+      setAvailability(data.response);
+      setAvailable(true);
     } else {
-      setError(true);
+      const data = await response.json();
+      setAvailability(data.response);
+      setNotAvailable(true);
     }
   };
 
@@ -90,7 +93,6 @@ export const ShuddleVisit = () => {
                 onChange={(e) => {
                   e.preventDefault();
                   setOnline(true);
-                  console.log(online);
                 }}
               />
               <label htmlFor="online"> Online </label>
@@ -100,7 +102,6 @@ export const ShuddleVisit = () => {
                 name="online"
                 onChange={(e) => {
                   setOnline(false);
-                  console.log(online);
                 }}
               />
               <label htmlFor="presencial">Presencial</label>
@@ -131,7 +132,6 @@ export const ShuddleVisit = () => {
               }}
             >
               {store.userdata?.residents.map((resident, index) => {
-                console.log(resident);
                 return (
                   <option key={index} value={resident.id}>
                     {resident.name} {resident.surname}
@@ -175,27 +175,45 @@ export const ShuddleVisit = () => {
               className="form-select"
               onChange={(e) => {
                 setHourStart(e.target.value);
-                console.log(selectDate + " " + hourStart);
               }}
             >
               <option value="select" selected>
                 Select Hour
               </option>
-              <option value="09:00">09:00 - 10:00</option>
-              <option value="10:00">10:00 - 11:00</option>
-              <option value="11:00">11:00 - 12:00</option>
-              <option value="12:00">12:00 - 13:00</option>
-              <option value="16:00">16:00 - 17:00</option>
-              <option value="17:00">17:00 - 18:00</option>
-              <option value="18:00">18:00 - 19:00</option>
+              <option value="09:00:00">09:00 - 10:00</option>
+              <option value="10:00:00">10:00 - 11:00</option>
+              <option value="11:00:00">11:00 - 12:00</option>
+              <option value="12:00:00">12:00 - 13:00</option>
+              <option value="16:00:00">16:00 - 17:00</option>
+              <option value="17:00:00">17:00 - 18:00</option>
+              <option value="18:00:00">18:00 - 19:00</option>
             </select>
           </div>
-          <button className="btn btn-primary mt-2 " onClick={checkAvalability}>
-            Comprobar disponibilidad
-          </button>
-          <button className="btn btn-primary mt-2 " onClick={sendSchuddleVisit}>
-            Confirmar Cita
-          </button>
+          <div className="d-grid gap-2">
+            <button
+              className="btn btn-success mt-2 "
+              onClick={checkAvalability}
+            >
+              Comprobar disponibilidad
+            </button>
+            {notAvailable ? (
+              <p className="alert alert-warning mt-2 text-center">
+                {availability}
+              </p>
+            ) : null}
+            {Available ? (
+              <p className="alert alert-success mt-2 text-center">
+                {availability}
+              </p>
+            ) : null}
+
+            <button
+              className="btn btn-primary mt-2 "
+              onClick={sendSchuddleVisit}
+            >
+              Confirmar Cita
+            </button>
+          </div>
         </div>
       </div>
     </div>

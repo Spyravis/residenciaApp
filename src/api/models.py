@@ -95,6 +95,9 @@ class User_has_booking(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     booking = db.Column(db.DateTime, unique=False, nullable=False)
 
+    def __repr__(self):
+        return f'{self.booking}'
+
     def serialize(self):
         return {
             "id": self.id,

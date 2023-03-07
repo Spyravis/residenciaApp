@@ -55,15 +55,26 @@ def current_schuddle():
     resident_id = request.json.get("resident")    
     booking = request.json.get("booking")
     new_booking = User_has_booking (is_online=is_online,url=url,resident_id=resident_id,user_id=user_id,booking=booking)
-    print(booking)
-    print("##########################")
     db.session.add(new_booking)
     db.session.commit()    
     return jsonify({"response": "Booking created succesfully"}), 200
 
-@api.route('/bookings_availability', methods=['POST'])
+@api.route('/bookings_availability', methods=['GET','POST'])
 @jwt_required()
 def bookings_availability():
+    user_id = get_jwt_identity()
     booking = request.json.get("booking")
-    bookings = User_has_booking.query.filter_by(booking=booking)    
-    return jsonify({"response":  x.serialize() for x in bookings}), 200
+    print("@@@@@@@@@@@@",booking)
+    bookings = User_has_booking.query.filter_by(booking=booking)
+    print("@@@@@@@@@@@@",bookings)
+    disponilibidad = []
+    for booking in bookings:
+        disponilibidad.append(booking)
+        print(len(disponilibidad))
+    if len(disponilibidad) < 5:
+        return jsonify({"response":  "Cita disponible"}), 200
+    else:
+        return jsonify({"response":  "No hay citas disponibles, seleccione otra fecha"}), 300
+            
+
+    
