@@ -7,10 +7,43 @@ export const NewMessage = (showInput) => {
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
     const { store, actions } = useContext(Context);
+    const [resident, setResident] = useState("");
 
-    //const firstResident = store.userdata.residents[0].id;
-    const [resident, setResident] = useState(store.userdata?.residents[0].id);
+    useEffect(() => {
+        getResident();
+    }, []);
 
+    const getResident = async () => {
+        await actions.getCurrentUser();
+        setResident(store.userdata?.residents[0].id);
+    };
+
+    const sendEmail = async () => {
+        if (subject.length > 3 && message.length > 10) {
+            const response = await fetch(process.env.BACKEND_URL + "/api/send_email",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        subject: subject,
+                        message: message,
+                        resident_id: resident,
+                        url_attached: "",
+                        user_id: store.userdata.id
+                    }),
+                }
+            );
+            const data = await response.json();
+            if (response.ok) {
+                setError(<p className="alert alert-success">Mensaje enviado correctamente</p>)
+            }
+        }
+        else {
+            setError(<p className="alert alert-warning">Error al enviar el mensaje</p>);
+        }
+    };
     const sendMessage = async () => {
         if (subject.length > 3 && message.length > 10) {
             const response = await fetch(process.env.BACKEND_URL + "/api/messages/send",
@@ -92,6 +125,9 @@ export const NewMessage = (showInput) => {
                             <div className="col-sm-2">
                                 <button className="btn btn-success my-3" onClick={() => sendMessage()}>
                                     Enviar
+                                </button>
+                                <button className="btn btn-success my-3" onClick={() => sendEmail()}>
+                                    Email
                                 </button>
                             </div>
                             <div className="col-sm-6 text-center">

@@ -1,11 +1,11 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-
-      userdata: {},
+      userdata: { residents: [] },
       schuddle: {},
       messages: {},
       unreadedMessages: ""
+
     },
     actions: {
       getCurrentUser: async () => {
@@ -19,17 +19,20 @@ const getState = ({ getStore, getActions, setStore }) => {
           const actions = getActions();
           actions.getUnreadUserMessages();
           localStorage.setItem("user", data.response);
+
           setStore({ userdata: data.response });
 
         }
       },
       getCurrentUserMessages: async () => {
-        const response = await fetch(process.env.BACKEND_URL + "/api/messages",
+        const response = await fetch(
+          process.env.BACKEND_URL + "/api/messages",
           {
             headers: {
-              "Authorization": "Bearer " + localStorage.getItem("token"),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          });
+          }
+        );
         const data = await response.json();
         if (response.ok) {
           setStore({ messages: data.response });
@@ -48,12 +51,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       getCurrentUserResidentMessages: async () => {
-        const response = await fetch(process.env.BACKEND_URL + "/api/residentmessages",
+        const response = await fetch(
+          process.env.BACKEND_URL + "/api/residentmessages",
           {
             headers: {
-              "Authorization": "Bearer " + localStorage.getItem("token"),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          });
+          }
+        );
         const data = await response.json();
         if (response.ok) {
           const actions = getActions();
@@ -62,14 +67,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       delteMessage: async (message) => {
-        const response = await fetch(process.env.BACKEND_URL + "/api/messages/delete/" + message,
+        const response = await fetch(
+          process.env.BACKEND_URL + "/api/messages/delete/" + message,
 
           {
             method: "DELETE",
             headers: {
-              "Authorization": "Bearer " + localStorage.getItem("token"),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          });
+          }
+        );
         const actions = getActions();
         if (response.ok) actions.getCurrentUserResidentMessages();
       },
@@ -85,13 +92,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
         const actions = getActions();
         if (response.ok) actions.getCurrentUserResidentMessages();
+
       },
 
       logout: () => {
         try {
           localStorage.removeItem("token");
           setStore({ userdata: {} });
-          return true;
         } catch (e) {
           console.log(e);
           return false;

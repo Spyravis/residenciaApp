@@ -14,11 +14,10 @@ export const Messages = () => {
     const [modalShow, setModalShow] = useState(false);
     const [currentMessageforModal, setcurrentMessageforModal] = useState("");
 
-    useEffect(() => {
-        /*actions.getCurentUserResidentMessages();*/
+    useEffect(() => {        
         actions.getCurrentUser();
         actions.getCurrentUserResidentMessages();
-        /*actions.getUnreadUserMessages();*/
+
     }, []);
 
     useEffect(() => {

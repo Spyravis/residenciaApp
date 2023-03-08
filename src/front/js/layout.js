@@ -11,6 +11,7 @@ import { ContactUs } from "./pages/contactUs";
 import { MyHome } from "./pages/myHome";
 import { Messages } from "./pages/messages";
 import { ShuddleVisit } from "./pages/schuddleVisit";
+import { ExitPermit } from "./pages/exitPermit";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -38,6 +39,7 @@ const Layout = () => {
             <Route element={<MyHome />} path="/myHome" />
             <Route element={<Messages />} path="/messages" />
             <Route element={<ShuddleVisit />} path="/schuddleVisit" />
+            <Route element={<ExitPermit />} path="/exitPermit" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
