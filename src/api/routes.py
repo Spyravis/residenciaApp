@@ -8,6 +8,8 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+import cloudinary
+import cloudinary.uploader
 
 api = Blueprint('api', __name__)
 
@@ -104,13 +106,13 @@ def current_schuddle():
 @jwt_required()
 def change_user_data():
     user_id = get_jwt_identity()
-    update_photo = request.json["photo"]
+    #update_photo = request.json["photo"]
     update_email = request.json["email"]
     update_phone = request.json["phone"]
-    if not (update_email and update_phone and update_photo):
+    if not (update_email and update_phone): #and update_photo):
         return jsonify({"error": "Invalid"}), 400
     user = User.query.get(user_id)
-    user.photo = update_photo
+    #user.photo = update_photo
     user.email = update_email
     user.phone = update_phone
     db.session.commit()
@@ -133,3 +135,23 @@ def update_password():
     else:
         return jsonify({"error": "current password invalid "}), 400
 
+
+@api.route('/upload', methods=['POST'])
+@jwt_required()
+def handle_upload():
+    user_id = get_jwt_identity()
+    # validate that the front-end request was built correctly
+    if 'profile_image' in request.files:
+        # upload file to uploadcare
+        result = cloudinary.uploader.upload(request.files['profile_image'])
+        # fetch for the user
+        user1 = User.query.get(user_id)
+        # update the user with the given cloudinary image URL
+        user1.photo= result['secure_url']
+
+        db.session.add(user1)
+        db.session.commit()
+
+        return jsonify(user1.serialize()) #, 200, "msg: profile photo update successfully")   #user1.serialize()), 200
+    else:
+        raise APIException('Missing profile_image on the FormData')
