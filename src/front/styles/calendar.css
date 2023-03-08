@@ -1,6 +1,6 @@
 .calendar-container {
   width: 500px;
-  background: #b5e8f1;
+  background: #a0c3d2;
   border-radius: 10px;
 }
 .calendar-container header {
@@ -57,10 +57,10 @@ header .icons span:last-child {
   margin-top: 20px;
 }
 .days li.inactive {
-  color: #aaa;
+  color: #727171;
 }
 .days li.active {
-  color: #fff;
+  color: #f7f5eb;
 }
 .calendar .days li::before {
   position: absolute;
@@ -76,8 +76,4 @@ header .icons span:last-child {
 
 .days li:hover::before {
   background: #f2f2f2;
-}
-
-.days li.active::before {
-  background: #9b59b6;
 }

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { LoggedMenu } from "../component/logged-menu";
 
 import "../../styles/home.css";
+import { UploadView } from "../component/upload";
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export const Profile = () => {
   const [photo, setPhoto] = useState(store.userdata?.photo);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [files, setFiles] = useState(null);
 
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -34,7 +36,6 @@ export const Profile = () => {
       body: JSON.stringify({
         name: name,
         surname: surname,
-        photo: photo,
         email: email,
         phone: phone,
       }),
@@ -133,6 +134,10 @@ export const Profile = () => {
     }
   }, [newPassword, confirmNewPassword]);
 
+  useEffect(() => {
+    actions.getCurrentUser();
+  }, [photo]);
+
   return (
     <div className="container-fluid ">
       <LoggedMenu />
@@ -165,6 +170,7 @@ export const Profile = () => {
             ></input>
           </div>
         </div>
+
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="photo">
             Photo:
@@ -177,17 +183,14 @@ export const Profile = () => {
               alt="..."
             />
           </div>
-          <div className="col">
-            <input
-              className="form-control"
-              name="photo"
-              placeholder={"New Photo"}
-              onChange={(e) => {
-                setPhoto(e.target.value);
-              }}
-            ></input>
-          </div>
         </div>
+
+        <UploadView
+          files={files}
+          setFiles={setFiles}
+          photo={photo}
+          setPhoto={setPhoto}
+        />
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="email">
             Email:
