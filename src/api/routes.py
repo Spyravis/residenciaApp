@@ -3,7 +3,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Role_user, User_has_booking, Calendar_booking , Message
+from api.models import db, User, Role_user, User_has_booking, Calendar_booking , Message as InternalMessages
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -54,7 +54,7 @@ def current_user():
 @jwt_required()
 def get_messages():
     user_id = get_jwt_identity()    
-    messages_by_user = Message.query.filter_by(user_id = user_id)
+    messages_by_user = InternalMessages.query.filter_by(user_id = user_id)
     messages_serialized = [x.serialize() for x in messages_by_user]
     print(messages_serialized)
     return jsonify({"response" : messages_serialized}), 200
@@ -68,9 +68,9 @@ def get_resident_messages():
     userdata_serialized = [x.serialize() for x in userdata]    
     messages_serialized = []
     for i in (userdata_serialized[0]["residents"]):
-        messages_by_resident = Message.query.filter_by(resident_id = i["id"])
+        messages_by_resident = InternalMessages.query.filter_by(resident_id = i["id"])
         messages_serialized.extend([x.serialize() for x in messages_by_resident])
-    print(messages_serialized)
+    #print(messages_serialized)
     return jsonify({"response" : messages_serialized}), 200
 
 @api.route('/messages/send', methods=['POST'])
@@ -80,13 +80,13 @@ def new_message():
     message = request.json.get("message")
     url_attached = request.json.get("url_attached")
     resident_id = request.json.get("resident_id")
-    db.session.add(Message (user_id=user_id, subject=subject, message=message, url_attached=url_attached,resident_id=resident_id ))
+    db.session.add(InternalMessages (user_id=user_id, subject=subject, message=message, url_attached=url_attached,resident_id=resident_id ))
     db.session.commit()
     return jsonify({"response": "Message sent successfully"}), 200
 
 @api.route('/messages/delete/<id>', methods=['DELETE'])
 def delete_message(id):
-    message =  Message.query.get(id)
+    message =  InternalMessages.query.get(id)
     db.session.delete(message)
     print(message)
     db.session.commit()
@@ -149,6 +149,37 @@ def update_password():
     else:
         return jsonify({"error": "current password invalid "}), 400
 
+
+
+# ENVIO DE EMAILS : pip install maichimp mailchimp_transactional https://mailchimp.com/developer/transactional/guides/send-first-email/
+
+import mailchimp_transactional as MailchimpTransactional
+from mailchimp_transactional.api_client import ApiClientError
+
+@api.route("/send_email", methods=['POST'])
+def sending_email():
+    subject = request.json.get("subject")
+    message_text = request.json.get("message") 
+
+    mailchimp = MailchimpTransactional.Client('md-54oVbrJrZJhIphFY1kJ-vw')
+    message = {
+        "from_email": "residenciaapp@abeceweb.com",
+        "subject": subject,
+        "text": message_text,
+        "to": [
+        {
+            "email": "rita@abeceweb.com",
+            "type": "to"
+        }
+        ]
+    }
+    try:
+        response = mailchimp.messages.send({"message":message})
+        print('API called successfully: {}'.format(response))
+        return jsonify({"response": "Email sent successfully"}), 200
+    except ApiClientError as error:
+        print('An exception occurred: {}'.format(error.text))
+        return jsonify({"response": "Email sent error"}), 405
 
 @api.route('/upload', methods=['POST'])
 @jwt_required()

@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      userdata: {},
+      userdata: { residents: [] },
       schuddle: {},
       messages: {},
     },
@@ -58,14 +58,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         );
         const actions = getActions();
-        if (response.ok) actions.getCurrentUserMessages();
+        if (response.ok) actions.getCurrentUserResidentMessages();
       },
 
       logout: () => {
         try {
           localStorage.removeItem("token");
           setStore({ userdata: {} });
-          return true;
         } catch (e) {
           console.log(e);
           return false;

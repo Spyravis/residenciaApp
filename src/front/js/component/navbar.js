@@ -39,6 +39,7 @@ export const Navbar = () => {
                 Logout
               </button>
             </>
+
           ) : (
             <>
               <div

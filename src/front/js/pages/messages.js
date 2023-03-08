@@ -15,7 +15,7 @@ export const Messages = () => {
     const [currentMessageforModal, setcurrentMessageforModal] = useState("");
 
     useEffect(() => {
-        /*actions.getCurentUserResidentMessages();*/
+        /*actions.getCurentUserMessages();*/
         actions.getCurrentUserResidentMessages();
     }, []);
 
