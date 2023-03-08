@@ -31,7 +31,11 @@ export const Schuddle = () => {
               This is a wider card with supporting text below as a natural
               lead-in to additional content.
             </p>
-            <button className="btn btn-primary mt-5">Permiso de Salida</button>
+            <Link to="/exitPermit">
+              <button className="btn btn-primary mt-5">
+                Permiso de Salida
+              </button>
+            </Link>
           </div>
           <div className="col-md-4">
             <img src={calendario} className="img-fluid rounded-end" alt="..." />
