@@ -1,45 +1,82 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
+import { LoggedMenu } from "../component/logged-menu";
 
-export const Register = () => {
+import "../../styles/home.css";
+import { UploadView } from "../component/upload";
+
+export const Profile = () => {
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [name, setName] = useState(store.userdata?.name);
+  const [surname, setsurname] = useState(store.userdata?.surname);
+  const [photo, setPhoto] = useState(store.userdata?.photo);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [files, setFiles] = useState(null);
+
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmnewPassword] = useState("");
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const [validateInfo, setValidateInfo] = useState(false);
   const [validatePassword, setValidatePassword] = useState(false);
 
-  const sendRegisterCredentials = async () => {
-    if (password == confirmPassword) {
-      const response = await fetch(process.env.BACKEND_URL + "/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          surname: surname,
-          photo: photo,
-          email: email,
-          password: password,
-          phone: phone,
-        }),
-      });
+  const modifyProfile = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch(process.env.BACKEND_URL + "/api/profile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        name: name,
+        surname: surname,
+        email: email,
+        phone: phone,
+      }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      setEmail("");
+      setPhone("");
+    } else {
+      setEmail("");
+      setPhone("");
+    }
+  };
+
+  const updatePassword = async () => {
+    if (newPassword == confirmNewPassword) {
+      const response = await fetch(
+        process.env.BACKEND_URL + "/api/update_password",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            newPassword: newPassword,
+            password: password,
+          }),
+        }
+      );
       const data = await response.json();
       if (response.ok) {
-        navigate("/login");
+        setSuccess(true);
+        setPassword("");
+        setNewPassword("");
+        setConfirmnewPassword("");
       } else {
-        setError(data.response);
+        setError(true);
+        setPassword("");
+        setNewPassword("");
+        setConfirmnewPassword("");
       }
     }
   };
@@ -82,9 +119,9 @@ export const Register = () => {
   useEffect(() => {
     const passClass = document.getElementsByClassName("pass-check");
     if (
-      password == confirmPassword &&
-      password.length >= 8 &&
-      password.length <= 20 &&
+      newPassword == confirmNewPassword &&
+      newPassword.length >= 8 &&
+      newPassword.length <= 20 &&
       passClass[0].style.color == "green" &&
       passClass[1].style.color == "green" &&
       passClass[2].style.color == "green" &&
@@ -95,30 +132,19 @@ export const Register = () => {
     } else {
       setValidatePassword(false);
     }
-  }, [password, confirmPassword]);
+  }, [newPassword, confirmNewPassword]);
 
   useEffect(() => {
-    if (
-      password == confirmPassword &&
-      email.includes("@") &&
-      photo != "" &&
-      name != "" &&
-      surname != "" &&
-      phone != "" &&
-      phone.length > 8 &&
-      phone.length < 12
-    ) {
-      setValidateInfo(true);
-    } else {
-      setValidateInfo(false);
-    }
-  }, [name, surname, password, confirmPassword, email, phone]);
+    actions.getCurrentUser();
+  }, [photo]);
 
   return (
-    <div className="container-md d-flex  justify-content-center  mt-5">
-      <div className=" col-sm-6 border rounded p-2 ">
-        <h2 className="text-center m-3">Register </h2>
-        <div className="row my-3">
+    <div className="container-fluid ">
+      <LoggedMenu />
+
+      <div className="container col  border rounded p-2 bg-secondary bg-gradient bg-opacity-25 mt-2">
+        <h2 className="text-center mt-5">Modificar Perfil</h2>
+        <div className="row my-3 ">
           <label className=" col-form-label" htmlFor="name">
             Name:
           </label>
@@ -126,12 +152,8 @@ export const Register = () => {
             <input
               className="form-control"
               name="name"
-              placeholder="name"
-              value={name}
-              onChange={(e) => {
-                setError(false);
-                setName(e.target.value);
-              }}
+              placeholder={store.userdata?.name}
+              disabled
             ></input>
           </div>
         </div>
@@ -143,27 +165,44 @@ export const Register = () => {
             <input
               className="form-control"
               name="surname"
-              placeholder="surname"
-              value={surname}
-              onChange={(e) => {
-                setError(false);
-                setSurname(e.target.value);
-              }}
+              placeholder={store.userdata?.surname}
+              disabled
             ></input>
           </div>
         </div>
+
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="photo">
             Photo:
           </label>
+          <div>
+            <img
+              src={photo}
+              className="card-img-top"
+              style={{ width: "12rem" }}
+              alt="..."
+            />
+          </div>
+        </div>
+
+        <UploadView
+          files={files}
+          setFiles={setFiles}
+          photo={photo}
+          setPhoto={setPhoto}
+        />
+        <div className="row my-3">
+          <label className=" col-form-label" htmlFor="email">
+            Email:
+          </label>
           <div className="col">
             <input
+              value={email}
               className="form-control"
-              name="photo"
-              placeholder="Photo URL"
+              name="email"
+              placeholder={"New Email"}
               onChange={(e) => {
-                setError(false);
-                setPhoto(e.target.value);
+                setEmail(e.target.value);
               }}
             ></input>
           </div>
@@ -174,78 +213,90 @@ export const Register = () => {
           </label>
           <div className="col">
             <input
+              value={phone}
               className="form-control"
               name="phone"
-              placeholder="phone"
-              maxLength="12"
-              value={phone}
+              placeholder={"New Phone"}
               onChange={(e) => {
-                setError(false);
                 setPhone(e.target.value);
               }}
             ></input>
           </div>
         </div>
+        <div className="my-2">
+          <button
+            className="btn btn-success btn-lg my-2"
+            onClick={modifyProfile}
+          >
+            Modify Profile
+          </button>
+        </div>
+      </div>
+
+      {/* ACA EMPIEZA EL CAMBIO DE CONTRASEÑA*/}
+
+      <div className="col border rounded p-2 bg-secondary bg-gradient bg-opacity-25 mt-5">
+        <h2 className="mt-5">Cambiar Contraseña</h2>
         <div className="row my-3">
-          <label className=" col-form-label" htmlFor="email">
-            Email:
+          <label className=" col-form-label" htmlFor="password">
+            Actual Password:
           </label>
           <div className="col">
             <input
-              type="email"
+              value={password}
+              type="password"
               className="form-control"
-              name="email"
-              placeholder="email"
-              minLength="12"
-              value={email}
+              name="password"
+              placeholder="Password"
+              minLength="8"
+              maxLength="20"
               onChange={(e) => {
+                setPassword(e.target.value);
                 setError(false);
-                setEmail(e.target.value);
               }}
             ></input>
           </div>
         </div>
+
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="password">
-            Password:
+            New Password:
           </label>
           <div className="col">
             <input
+              value={newPassword}
               type="password"
               className="form-control"
               name="password"
-              placeholder="password"
+              placeholder="New password"
               minLength="8"
               maxLength="20"
-              value={password}
               onChange={(e) => {
-                setError(false);
-                setPassword(e.target.value);
+                setNewPassword(e.target.value);
                 checkPassword(e.target.value);
               }}
             ></input>
           </div>
         </div>
         <div className="row my-3">
-          <label className=" col-form-label" htmlFor="password">
-            Confirm Password:
+          <label className=" col-form-label" htmlFor="Confirm new password">
+            Confirm Password:{" "}
           </label>
           <div className="col">
             <input
+              value={confirmNewPassword}
               type="password"
               className="form-control"
-              name="confirm password"
-              placeholder="confirm password"
+              name="Confirm new password"
+              placeholder="Confirm new password"
               minLength="8"
               maxLength="20"
-              value={confirmPassword}
               onChange={(e) => {
-                setError(false);
-                setConfirmPassword(e.target.value);
+                setConfirmnewPassword(e.target.value);
                 if (
-                  password.slice(0, e.target.value.length) != e.target.value
+                  newPassword.slice(0, e.target.value.length) != e.target.value
                 ) {
-                  alert("x");
+                  alert("Las contraseñas no coinciden");
                 }
               }}
             ></input>
@@ -267,16 +318,23 @@ export const Register = () => {
               </label>
             </p>
           </div>
-        </div>
-        <div>
-          <button
-            className="btn btn-success btn-lg"
-            disabled={!validateInfo}
-            onClick={sendRegisterCredentials}
-          >
-            Register
-          </button>
-          {error ? <p className="alert alert-warning mt-2">{error}</p> : null}
+          <div className="my-2">
+            <button
+              disabled={!validatePassword}
+              className="btn btn-success btn-lg my-2"
+              onClick={updatePassword}
+            >
+              Update Password
+            </button>
+            {success ? (
+              <p className="alert alert-warning">Contraseña modificada</p>
+            ) : null}
+            {error ? (
+              <p className="alert alert-warning">
+                Contraseña actual incorrecta
+              </p>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

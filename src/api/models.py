@@ -7,6 +7,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     surname = db.Column(db.String(120), unique=False, nullable=False)
+    photo = db.Column(db.String(250), unique=True, nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     phone = db.Column(db.Integer, unique=True, nullable=False)
@@ -26,6 +27,7 @@ class User(db.Model):
             "id": self.id,
             "name": self.name,
             "surname": self.surname,
+            "photo": self.photo,
             "email": self.email,
             "phone": self.phone,
             "role_user": self.role_user_id,
@@ -134,9 +136,8 @@ class Message(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'), nullable=False)
     
-    
-
     def serialize(self):
+        resident = Resident.query.get(self.resident_id)
         return {
             "id": self.id,
             "subject": self.subject,

@@ -14,16 +14,18 @@ export const Login = () => {
   const [error, setError] = useState(false);
 
   const sendLoginCredential = async () => {
-    const response = await fetch(process.env.BACKEND_URL + "/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
+    const response = await fetch(process.env.BACKEND_URL + "/api/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
@@ -31,6 +33,8 @@ export const Login = () => {
       navigate("/myHome");
     } else {
       setError(true);
+      setEmail("")
+      setPassword("");
     }
   };
 

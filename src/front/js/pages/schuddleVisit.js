@@ -74,7 +74,7 @@ export const ShuddleVisit = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="row d-flex justify-content-center">
       <LoggedMenu />
       <div className="body-schuddle row justify-content-md-center ">
         <div className="calendar col-md-5  ">
