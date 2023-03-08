@@ -64,14 +64,8 @@ def current_schuddle():
 def bookings_availability():
     user_id = get_jwt_identity()
     booking = request.json.get("booking")
-    print("@@@@@@@@@@@@",booking)
     bookings = User_has_booking.query.filter_by(booking=booking)
-    print("@@@@@@@@@@@@",bookings)
-    disponilibidad = []
-    for booking in bookings:
-        disponilibidad.append(booking)
-        print(len(disponilibidad))
-    if len(disponilibidad) < 5:
+    if bookings.count() < 5:
         return jsonify({"response":  "Cita disponible"}), 200
     else:
         return jsonify({"response":  "No hay citas disponibles, seleccione otra fecha"}), 300

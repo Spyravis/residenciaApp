@@ -5,25 +5,23 @@ import { LoggedMenu } from "../component/logged-menu";
 import { Context } from "../store/appContext";
 import "../../styles/schuddleVisit.css";
 
-export const ShuddleVisit = () => {
+export const ExitPermit = () => {
   const { store, actions } = useContext(Context);
-  const [resident, setResident] = useState("");
-  const [url, setUrl] = useState("");
-  const [online, setOnline] = useState(false);
+  const [resident, setResident] = useState(store.userdata?.residents[0].id);
+  const [user, setUser] = useState(
+    store.userdata?.name,
+    store.userdata?.surname
+  );
   const [selectDate, setSelectDate] = useState("");
   const [hourStart, setHourStart] = useState("");
-  const [availability, setAvailability] = useState(null);
+  const [hourEnd, setHourEnd] = useState("");
+  const [availability, setAvailability] = useState();
   const [notAvailable, setNotAvailable] = useState(false);
-  const [available, setAvailable] = useState(null);
+  const [Available, setAvailable] = useState(false);
 
   useEffect(() => {
-    getResident();
+    actions.getCurrentUser();
   }, []);
-
-  const getResident = async () => {
-    await actions.getCurrentUser();
-    setResident(store.userdata?.residents[0].id);
-  };
 
   const sendSchuddleVisit = async () => {
     const response = await fetch(process.env.BACKEND_URL + "/api/schuddle", {
@@ -33,8 +31,7 @@ export const ShuddleVisit = () => {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
       body: JSON.stringify({
-        is_online: online,
-        url: url,
+        id_user: user,
         resident: resident,
         booking: selectDate + " " + hourStart,
       }),
@@ -64,12 +61,10 @@ export const ShuddleVisit = () => {
       const data = await response.json();
       setAvailability(data.response);
       setAvailable(true);
-      return true;
     } else {
       const data = await response.json();
       setAvailability(data.response);
-      setAvailable(false);
-      return false;
+      setNotAvailable(true);
     }
   };
 
@@ -78,53 +73,11 @@ export const ShuddleVisit = () => {
       <LoggedMenu />
       <div className="body-schuddle row justify-content-md-center ">
         <div className="calendar col-md-5  ">
-          <Calendar
-            selectDate={selectDate}
-            setSelectDate={setSelectDate}
-            setAvailable={setAvailable}
-          />
+          <Calendar selectDate={selectDate} setSelectDate={setSelectDate} />
         </div>
         <div className="col-md-5 align-item-center justify-content-center  p-3">
-          <h2 className="my-2 text-center">Agendar visita</h2>
-          <div className="col-auto">
-            <label className=" col-form-label" htmlFor="online">
-              Modalidad:
-            </label>
-            <div className="col-auto px-3">
-              <input
-                type="radio"
-                id="online"
-                name="online"
-                onChange={(e) => {
-                  e.preventDefault();
-                  setOnline(true);
-                }}
-              />
-              <label htmlFor="online"> Online </label>
-              <input
-                type="radio"
-                id="presencial"
-                name="online"
-                onChange={(e) => {
-                  setOnline(false);
-                }}
-              />
-              <label htmlFor="presencial">Presencial</label>
-            </div>
-          </div>
-          <div className="col-auto">
-            <label className=" col-form-label" htmlFor="url">
-              URL:
-            </label>
-            <input
-              className="form-control"
-              name="url"
-              placeholder="www.example.com"
-              onChange={(e) => {
-                setUrl(e.target.value);
-              }}
-            ></input>
-          </div>
+          <h2 className="my-2 text-center">Solicitar Permiso de Salida</h2>
+
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="resident">
               Resident:
@@ -136,15 +89,13 @@ export const ShuddleVisit = () => {
                 setResident(e.target.value);
               }}
             >
-              {store.userdata.residents
-                ? store.userdata.residents.map((resident, index) => {
-                    return (
-                      <option key={index} value={resident.id}>
-                        {resident.name} {resident.surname}
-                      </option>
-                    );
-                  })
-                : null}
+              {store.userdata?.residents.map((resident, index) => {
+                return (
+                  <option key={index} value={resident.id}>
+                    {resident.name} {resident.surname}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="col-auto">
@@ -157,6 +108,9 @@ export const ShuddleVisit = () => {
               name="user"
               placeholder=""
               value={` ${store.userdata?.name} ${store.userdata?.surname}`}
+              onChange={(e) => {
+                setUser(e.target.value);
+              }}
             ></input>
           </div>
           <div className="col-auto">
@@ -176,14 +130,14 @@ export const ShuddleVisit = () => {
               Seleccione Horario
             </label>
             <select
-              defaultValue="select"
               className="form-select"
               onChange={(e) => {
                 setHourStart(e.target.value);
-                setAvailable(null);
               }}
             >
-              <option value="select">Select Hour</option>
+              <option value="select" selected>
+                Select Hour
+              </option>
               <option value="09:00:00">09:00 - 10:00</option>
               <option value="10:00:00">10:00 - 11:00</option>
               <option value="11:00:00">11:00 - 12:00</option>
@@ -195,24 +149,28 @@ export const ShuddleVisit = () => {
           </div>
           <div className="d-grid gap-2">
             <button
-              className="btn btn-primary mt-2 "
-              onClick={async () => {
-                if (await checkAvalability()) {
-                  sendSchuddleVisit();
-                }
-              }}
+              className="btn btn-success mt-2 "
+              onClick={checkAvalability}
             >
-              Confirmar Cita
+              Comprobar disponibilidad
             </button>
-            {available == null ? null : available ? (
-              <p className="alert alert-success mt-2 text-center">
-                {availability}
-              </p>
-            ) : (
+            {notAvailable ? (
               <p className="alert alert-warning mt-2 text-center">
                 {availability}
               </p>
-            )}
+            ) : null}
+            {Available ? (
+              <p className="alert alert-success mt-2 text-center">
+                {availability}
+              </p>
+            ) : null}
+
+            <button
+              className="btn btn-primary mt-2 "
+              onClick={sendSchuddleVisit}
+            >
+              Confirmar Cita
+            </button>
           </div>
         </div>
       </div>
