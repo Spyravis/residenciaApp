@@ -16,7 +16,7 @@ export const Messages = () => {
 
     useEffect(() => {
         /*actions.getCurentUserMessages();*/
-        actions.getCurrentUserMessages();
+        actions.getCurrentUserResidentMessages();
     }, []);
 
     return (

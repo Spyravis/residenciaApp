@@ -9,12 +9,6 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
-import base64
-from email.mime.text import MIMEText
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from requests import HTTPError
-
 api = Blueprint('api', __name__)
 
 @api.route('/login', methods=['POST'])
@@ -74,7 +68,7 @@ def get_resident_messages():
     for i in (userdata_serialized[0]["residents"]):
         messages_by_resident = InternalMessages.query.filter_by(resident_id = i["id"])
         messages_serialized.extend([x.serialize() for x in messages_by_resident])
-    print(messages_serialized)
+    #print(messages_serialized)
     return jsonify({"response" : messages_serialized}), 200
 
 @api.route('/messages/send', methods=['POST'])
@@ -140,31 +134,33 @@ def update_password():
         return jsonify({"error": "current password invalid "}), 400
 
 
-# ENVIO DE EMAILS : https://mailtrap.io/blog/python-send-email-gmail/
+# ENVIO DE EMAILS :
+
+import mailchimp_transactional as MailchimpTransactional
+from mailchimp_transactional.api_client import ApiClientError
 
 @api.route("/send_email", methods=['POST'])
 def sending_email():
     subject = request.json.get("subject")
-    message = request.json.get("message")
+    message = request.json.get("message") 
 
-    SCOPES = [
-        "https://www.googleapis.com/auth/gmail.send"
-    ]
-    flow = InstalledAppFlow.from_client_secrets_file('/workspace/residenciaApp/credenciales-carlos.json', SCOPES)
-    creds = flow.run_local_server(port=0)
-
-    service = build('gmail', 'v2', credentials=creds)
-    message = MIMEText('This is the body of the email')
-    message['to'] = 'cigles76@hotmail.com'
-    message['subject'] = 'Email Subject'
-    create_message = {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
-
+    mailchimp = MailchimpTransactional.Client('md-54oVbrJrZJhIphFY1kJ-vw')
+    message = {
+        "from_email": "residenciaapp@abeceweb.com",
+        "subject": "Hello world",
+        "text": "Welcome to Mailchimp Transactional!",
+        "to": [
+        {
+            "email": "matias@abeceweb.com",
+            "type": "to"
+        }
+        ]
+    }
     try:
-        message = (service.users().messages().send(userId="me", body=create_message).execute())
-        print(F'sent message to {message} Message Id: {message["id"]}')
+        response = mailchimp.messages.send({"message":message})
+        print('API called successfully: {}'.format(response))
         return jsonify({"response": "Email sent successfully"}), 200
-    except HTTPError as error:
-        print(F'An error occurred: {error}')
-        message = None
+    except ApiClientError as error:
+        print('An exception occurred: {}'.format(error.text))
         return jsonify({"response": "Email sent error"}), 405
  

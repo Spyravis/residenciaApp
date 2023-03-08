@@ -64,7 +64,7 @@ export const NewMessage = (showInput) => {
         }
     };
     useEffect(() => {
-        actions.getCurrentUserMessages();
+        actions.getCurrentUserResidentMessages();
     }, [error]);
     if (showInput) {
         return (

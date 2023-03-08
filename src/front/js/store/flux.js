@@ -53,7 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
         const actions = getActions();
-        if (response.ok) actions.getCurrentUserMessages();
+        if (response.ok) actions.getCurrentUserResidentMessages();
       },
 
       logout: () => {
