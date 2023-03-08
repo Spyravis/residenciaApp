@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../../styles/calendar.css";
 import calendario from "../../img/calendario.jpg";
 
-export const Calendar = ({ selectDate, setSelectDate }) => {
+export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
   let date = new Date();
   const [currentYear, setCurrentYear] = useState(date.getFullYear());
   const [actualMonth, setActualMonth] = useState(date.getMonth());
@@ -13,6 +13,11 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
 
   const [day, setDay] = useState(new Date().toLocaleDateString());
   const locale = "en";
+  const options = {
+    year: "numeric",
+    month: "2-digit",
+    day: "numeric",
+  };
 
   const getMonths = () => {
     const monthsIndex = [...Array(12).keys()];
@@ -37,7 +42,12 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
 
     for (let i = firstDayOfMonth; i > 0; i--) {
       let lastDayOfLastMonth = (
-        <li className="inactive">{lastDateofLastMonth - i + 1} </li>
+        <li
+          key={"inactive " + (lastDateofLastMonth - i + 1)}
+          className="inactive"
+        >
+          {lastDateofLastMonth - i + 1}{" "}
+        </li>
       );
       liTag.push(lastDayOfLastMonth);
     }
@@ -45,9 +55,12 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
     for (let i = 1; i <= lastDateOfMonth; i++) {
       let days = (
         <li
+          key={"" + i}
           onClick={() => {
-            //  console.log(i + " " + month  + " " + year);
-            setSelectDate(new Date(year, month, i).toLocaleDateString());
+            setSelectDate(
+              new Date(year, month, i + 1).toISOString().split("T")[0]
+            );
+            setAvailable(null);
           }}
         >
           {i}
@@ -58,7 +71,9 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
 
     for (let i = lastDayOfMonth; i < 5; i++) {
       let lastDayOfActualMonth = (
-        <li className="inactive">{i - lastDayOfMonth + 1} </li>
+        <li key={"inactive " + (i - lastDayOfMonth + 1)} className="inactive">
+          {i - lastDayOfMonth + 1}{" "}
+        </li>
       );
       liTag.push(lastDayOfActualMonth);
     }
@@ -90,8 +105,8 @@ export const Calendar = ({ selectDate, setSelectDate }) => {
   }, []);
 
   return (
-    <div className="container d-flex align-item-center justify-content-center mt-5">
-      <div className="calendar-container">
+    <div className="container d-flex justify-content-center align-item-center  mt-5">
+      <div className="calendar-container ">
         <header>
           <div className="icons d-flex ">
             <span

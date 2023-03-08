@@ -76,7 +76,7 @@ class Calendar_booking(db.Model):
     visit_day = db.Column(db.String(120), unique=False, nullable=True)
     hour_start = db.Column(db.DateTime, unique=False, nullable=False)
     hour_end = db.Column(db.DateTime, unique=False, nullable=False)
-    bookings = db.relationship("User_has_booking", backref="Calendar_booking")
+    #bookings = db.relationship("User_has_booking", backref="Calendar_booking")
     
 
     def __repr__(self):
@@ -90,13 +90,16 @@ class Calendar_booking(db.Model):
         }
 
 class User_has_booking(db.Model):
-    id = db.Column(db.Integer, primary_key=True),
+    id = db.Column(db.Integer, primary_key=True)
     is_online = db.Column(db.Boolean(), unique=False, nullable=False)
-    url = db.Column(db.String(250), unique=True, nullable=True)
-    resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'),nullable=False , primary_key=True)
+    url = db.Column(db.String(250), unique=False, nullable=True)
+    resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'),nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    calendar_booking_id = db.Column(db.Integer, db.ForeignKey('calendar_booking.id'),nullable=False , primary_key=True)
-    
+    booking = db.Column(db.DateTime, unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'{self.booking}'
+
     def serialize(self):
         return {
             "id": self.id,
@@ -104,7 +107,7 @@ class User_has_booking(db.Model):
             "url": self.url,
             "resident_id": self.resident_id,
             "user_id": self.user_id,
-            "calendar_booking_id": self.calendar_booking_id
+            "booking": self.booking
         }
 
 class Night_report(db.Model):

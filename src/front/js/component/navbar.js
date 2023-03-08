@@ -13,6 +13,7 @@ export const Navbar = () => {
         <Link to="/">
           <span className="navbar-brand mb-0 h1">ACA VA EL LOGO</span>
         </Link>
+
         <div
           className="btn-toolbar"
           role="toolbar"
