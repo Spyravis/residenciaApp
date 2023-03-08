@@ -36,7 +36,12 @@ export const LoggedMenu = () => {
         </div>
         <div className="btn-group m-2" role="group" aria-label="First group">
           <Link to="/messages">
-            <button className="btn btn-danger p-2">Mensajeria</button>
+            <button className="btn btn-danger p-2 position-relative">Mensajeria
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                {store.unreadedMessages}
+                <span className="visually-hidden">Mensajes sin leer</span>
+              </span>
+            </button>
           </Link>
         </div>
       </div>

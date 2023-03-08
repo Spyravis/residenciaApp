@@ -14,10 +14,15 @@ export const Messages = () => {
     const [modalShow, setModalShow] = useState(false);
     const [currentMessageforModal, setcurrentMessageforModal] = useState("");
 
-    useEffect(() => {
-        /*actions.getCurentUserMessages();*/
+    useEffect(() => {        
+        actions.getCurrentUser();
         actions.getCurrentUserResidentMessages();
+
     }, []);
+
+    useEffect(() => {
+        store.userdata.id != currentMessageforModal.user_id && currentMessageforModal != "" ? actions.readedMessage(currentMessageforModal.id) : null;
+    }, [currentMessageforModal]);
 
     return (
 
@@ -46,7 +51,7 @@ export const Messages = () => {
                         {Object.keys(store.messages).map((message, index) => {
                             return (
                                 <Fragment key={index}>
-                                    <tr role="button" onClick={() => {
+                                    <tr className={!store.messages[message].readed && store.messages[message].user_id != store.userdata.id ? "fw-bold" : null} role="button" onClick={() => {
                                         setModalShow(true)
                                         setcurrentMessageforModal(store.messages[message])
                                     }}>

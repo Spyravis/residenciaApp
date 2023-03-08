@@ -135,6 +135,7 @@ class Message(db.Model):
     url_attached = db.Column(db.String(250), unique=False, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'), nullable=False)
+    readed = db.Column(db.Boolean(), unique=False, nullable=False,default=False)
     
     def serialize(self):
         resident = Resident.query.get(self.resident_id)
@@ -145,4 +146,5 @@ class Message(db.Model):
             "url_attached": self.url_attached,
             "user_id": self.user_id, 
             "resident" : resident.serialize(),
+            "readed": self.readed,
         }

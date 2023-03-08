@@ -26,20 +26,21 @@ export const Navbar = () => {
                 style={{ width: "40px", height: "40px", borderRadius: "50%" }}
                 src={store.userdata.photo}
               />
-
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={async () => {
-                  if (await actions.logout()) {
-                    navigate("/");
-                  }
-                }}
-              >
-                Logout
-              </button>
-            </>
-
+             <button
+              type="button"
+              className="btn btn-danger position-relative"
+              onClick={async () => {
+                if (await actions.logout()) {
+                  navigate("/");
+                }
+              }}
+            >
+              Logout
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                {store.unreadedMessages}
+                <span className="visually-hidden">Mensajes sin leer</span>
+              </span>
+            </button>
           ) : (
             <>
               <div
