@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
 
-      userdata: {},
+      userdata: { residents: [] },
       schuddle: {},
       messages: {}
     },
@@ -60,7 +60,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           localStorage.removeItem("token");
           setStore({ userdata: {} });
-          return true;
         } catch (e) {
           console.log(e);
           return false;

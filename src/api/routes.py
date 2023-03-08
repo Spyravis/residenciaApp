@@ -134,7 +134,7 @@ def update_password():
         return jsonify({"error": "current password invalid "}), 400
 
 
-# ENVIO DE EMAILS :
+# ENVIO DE EMAILS : pip install maichimp mailchimp_transactional https://mailchimp.com/developer/transactional/guides/send-first-email/
 
 import mailchimp_transactional as MailchimpTransactional
 from mailchimp_transactional.api_client import ApiClientError
@@ -142,16 +142,16 @@ from mailchimp_transactional.api_client import ApiClientError
 @api.route("/send_email", methods=['POST'])
 def sending_email():
     subject = request.json.get("subject")
-    message = request.json.get("message") 
+    message_text = request.json.get("message") 
 
     mailchimp = MailchimpTransactional.Client('md-54oVbrJrZJhIphFY1kJ-vw')
     message = {
         "from_email": "residenciaapp@abeceweb.com",
-        "subject": "Hello world",
-        "text": "Welcome to Mailchimp Transactional!",
+        "subject": subject,
+        "text": message_text,
         "to": [
         {
-            "email": "matias@abeceweb.com",
+            "email": "rita@abeceweb.com",
             "type": "to"
         }
         ]

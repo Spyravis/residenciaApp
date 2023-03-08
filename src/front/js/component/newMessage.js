@@ -7,9 +7,16 @@ export const NewMessage = (showInput) => {
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
     const { store, actions } = useContext(Context);
+    const [resident, setResident] = useState("");
 
-    const firstResident = store.userdata.residents[0].id;
-    const [resident, setResident] = useState(firstResident);
+    useEffect(() => {
+        getResident();
+    }, []);
+
+    const getResident = async () => {
+        await actions.getCurrentUser();
+        setResident(store.userdata?.residents[0].id);
+    };
 
     const sendEmail = async () => {
         if (subject.length > 3 && message.length > 10) {
