@@ -30,9 +30,9 @@ export const Navbar = () => {
                 type="button"
                 className="btn btn-danger position-relative"
                 onClick={async () => {
-                  if (await actions.logout()) {
-                    navigate("/");
-                  }
+                  navigate("/");
+                  await actions.logout()
+
                 }}
               >
                 Logout

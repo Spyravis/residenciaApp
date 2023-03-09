@@ -70,7 +70,9 @@ def get_resident_messages():
     for i in (userdata_serialized[0]["residents"]):
         messages_by_resident = InternalMessages.query.filter_by(resident_id = i["id"])
         messages_serialized.extend([x.serialize() for x in messages_by_resident])
-    return jsonify({"response" : messages_serialized}), 200
+    ordenados = sorted(messages_serialized, key=lambda k: k["id"], reverse = True)
+    print(ordenados)
+    return jsonify({"response" : ordenados}), 200
 
 @api.route('/messages/send', methods=['POST'])
 def new_message():
@@ -99,7 +101,7 @@ def unreaded_messages():
     unreaded = 0
     for i in (userdata_serialized[0]["residents"]):
         messages_serialized = []
-        messages_by_resident = Message.query.filter_by(resident_id = i["id"])
+        messages_by_resident = InternalMessages.query.filter_by(resident_id = i["id"])
         messages_serialized.extend([x.serialize() for x in messages_by_resident])
         for m in (messages_serialized):           
             if m["user_id"] != user_id and m["readed"] == False:
