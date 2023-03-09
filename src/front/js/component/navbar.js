@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import navbarLogo from "./../../img/navbarLogo.png";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -11,7 +12,13 @@ export const Navbar = () => {
     <nav className="navbar navbar-light bg-light p-3">
       <div className="container">
         <Link to="/">
-          <span className="navbar-brand mb-0 h1">ACA VA EL LOGO</span>
+          <span className="navbar-brand mb-0 h1">
+            <img
+              className=""
+              style={{ width: "auto", height: "70px" }}
+              src={navbarLogo}
+            />
+          </span>
         </Link>
 
         <div
@@ -21,25 +28,31 @@ export const Navbar = () => {
         >
           {store.userdata.email ? (
             <>
-              <img
-                className=""
-                style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-                src={store.userdata.photo}
-              />
+              <div
+                className="position-relative mx-4"
+                onClick={async () => {
+                  navigate("/messages");
+                }}
+              >
+                <img
+                  className=""
+                  style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+                  src={store.userdata.photo}
+                />
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                  {store.unreadedMessages}
+                  <span className="visually-hidden">Mensajes sin leer</span>
+                </span>
+              </div>
               <button
                 type="button"
                 className="btn btn-danger position-relative"
                 onClick={async () => {
                   navigate("/");
-                  await actions.logout()
-
+                  await actions.logout();
                 }}
               >
                 Logout
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                  {store.unreadedMessages}
-                  <span className="visually-hidden">Mensajes sin leer</span>
-                </span>
               </button>
             </>
           ) : (

@@ -179,7 +179,7 @@ export const Profile = () => {
             <img
               src={photo}
               className="card-img-top"
-              style={{ width: "12rem" }}
+              style={{ width: "12rem", borderRadius: "50%" }}
               alt="..."
             />
           </div>

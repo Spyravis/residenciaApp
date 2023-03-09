@@ -4,8 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       userdata: { residents: [] },
       schuddle: {},
       messages: {},
-      unreadedMessages: ""
-
+      unreadedMessages: "",
     },
     actions: {
       getCurrentUser: async () => {
@@ -18,10 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (response.ok) {
           const actions = getActions();
           actions.getUnreadUserMessages();
-          localStorage.setItem("user", data.response);
 
           setStore({ userdata: data.response });
-
         }
       },
       getCurrentUserMessages: async () => {
@@ -39,12 +36,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       getUnreadUserMessages: async () => {
-        const response = await fetch(process.env.BACKEND_URL + "/api/messages/unreaded",
+        const response = await fetch(
+          process.env.BACKEND_URL + "/api/messages/unreaded",
           {
             headers: {
-              "Authorization": "Bearer " + localStorage.getItem("token"),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          });
+          }
+        );
         const data = await response.json();
         if (response.ok) {
           setStore({ unreadedMessages: data.response });
@@ -82,17 +81,18 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       readedMessage: async (message) => {
-        const response = await fetch(process.env.BACKEND_URL + "/api/messages/readed/" + message,
+        const response = await fetch(
+          process.env.BACKEND_URL + "/api/messages/readed/" + message,
 
           {
             method: "POST",
             headers: {
-              "Authorization": "Bearer " + localStorage.getItem("token"),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          });
+          }
+        );
         const actions = getActions();
         if (response.ok) actions.getCurrentUserResidentMessages();
-
       },
 
       logout: () => {

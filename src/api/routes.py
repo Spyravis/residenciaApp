@@ -87,7 +87,7 @@ def new_message():
 
 @api.route('/messages/readed/<id>', methods=['POST'])
 def readed_message(id):
-    message =  Message.query.get(id)
+    message =  InternalMessages.query.get(id)
     message.readed = True
     db.session.commit()
     return jsonify({"response": "Message readed"}), 200

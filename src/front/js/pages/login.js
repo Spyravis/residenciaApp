@@ -14,18 +14,16 @@ export const Login = () => {
   const [error, setError] = useState(false);
 
   const sendLoginCredential = async () => {
-    const response = await fetch(process.env.BACKEND_URL + "/api/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      }
-    );
+    const response = await fetch(process.env.BACKEND_URL + "/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
@@ -33,14 +31,14 @@ export const Login = () => {
       navigate("/myHome");
     } else {
       setError(true);
-      setEmail("")
+      setEmail("");
       setPassword("");
     }
   };
 
   return (
     <div className="container d-flex  justify-content-center  mt-5">
-      <div className="border rounded p-2">
+      <div className="border rounded ">
         <img className="img-fluid" src={logo} alt="logo" width="300" />
       </div>
       <div className="border rounded p-2 bg-secondary bg-gradient bg-opacity-75">
