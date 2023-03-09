@@ -139,7 +139,7 @@ def bookings_availability():
     if bookings.count() < 5:
         return jsonify({"response":  "Cita disponible"}), 200
     else:
-        return jsonify({"response":  "No hay citas disponibles, seleccione otra fecha"}), 300
+        return jsonify({"response":  "No hay citas disponibles, seleccione otra fecha y/o hora"}), 300
             
 @api.route("/profile", methods=["PUT"])
 @jwt_required()

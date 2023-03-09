@@ -18,12 +18,7 @@ export const MyHome = () => {
   return (
     <div className=" text-center">
       <LoggedMenu />
-      <div className="container row">
-        <h2 className="mt-3">
-          {store.userdata.role_user == 1 ? "Familiar " : "Trabajador "}
-          {store.userdata.name + " " + store.userdata.surname}
-        </h2>
-      </div>
+
       {store.userdata.role_user == 1 ? <Schuddle /> : null}
     </div>
   );

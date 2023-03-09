@@ -30,10 +30,10 @@ export const Messages = () => {
   }, [currentMessageforModal]);
 
   return (
-    <div className="container mt-5">
+    <div className="container-fluid">
       <LoggedMenu></LoggedMenu>
 
-      <div className="row">
+      <div className="row mt-5">
         <h3 className="text-center">Mis Mensajes</h3>
         <div className="col-12 m-2">
           <button

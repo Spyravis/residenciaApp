@@ -138,6 +138,12 @@ export const Profile = () => {
     actions.getCurrentUser();
   }, [photo]);
 
+  useEffect(() => {
+    if (!store.userdata.id) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <div className="container-fluid ">
       <LoggedMenu />
