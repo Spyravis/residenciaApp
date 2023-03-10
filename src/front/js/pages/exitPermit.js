@@ -13,7 +13,7 @@ export const ExitPermit = () => {
   const [hourEnd, setHourEnd] = useState("");
   const [availability, setAvailability] = useState(null);
   const [notAvailable, setNotAvailable] = useState(false);
-  const [Available, setAvailable] = useState(null);
+  const [available, setAvailable] = useState(null);
 
   useEffect(() => {
     getResident();
@@ -24,7 +24,7 @@ export const ExitPermit = () => {
     setResident(store.userdata?.residents[0].id);
   };
 
-  const sendSchuddleVisit = async () => {
+  const sendExitVisit = async () => {
     const response = await fetch(process.env.BACKEND_URL + "/api/exit_permit", {
       method: "POST",
       headers: {
@@ -54,6 +54,7 @@ export const ExitPermit = () => {
         },
         body: JSON.stringify({
           booking: selectDate + " " + hourStart,
+          resident: resident,
         }),
       }
     );
@@ -61,10 +62,12 @@ export const ExitPermit = () => {
       const data = await response.json();
       setAvailability(data.response);
       setAvailable(true);
+      return true;
     } else {
       const data = await response.json();
       setAvailability(data.response);
-      setNotAvailable(true);
+      setAvailable(false);
+      return false;
     }
   };
 
@@ -73,7 +76,11 @@ export const ExitPermit = () => {
       <LoggedMenu />
       <div className="body-schuddle row justify-content-md-center ">
         <div className="calendar col-md-5  ">
-          <Calendar selectDate={selectDate} setSelectDate={setSelectDate} />
+          <Calendar
+            selectDate={selectDate}
+            setSelectDate={setSelectDate}
+            setAvailable={setAvailable}
+          />
         </div>
         <div className="col-md-5 align-item-center justify-content-center  p-3">
           <h2 className="my-2 text-center">Solicitar Permiso de Salida</h2>
@@ -89,13 +96,15 @@ export const ExitPermit = () => {
                 setResident(e.target.value);
               }}
             >
-              {store.userdata?.residents.map((resident, index) => {
-                return (
-                  <option key={index} value={resident.id}>
-                    {resident.name} {resident.surname}
-                  </option>
-                );
-              })}
+              {store.userdata.residents
+                ? store.userdata.residents.map((resident, index) => {
+                    return (
+                      <option key={index} value={resident.id}>
+                        {resident.name} {resident.surname}
+                      </option>
+                    );
+                  })
+                : null}
             </select>
           </div>
           <div className="col-auto">
@@ -149,10 +158,23 @@ export const ExitPermit = () => {
           <div className="d-grid gap-2">
             <button
               className="btn btn-primary mt-2 "
-              onClick={sendSchuddleVisit}
+              onClick={async () => {
+                if (await checkAvalability()) {
+                  sendExitVisit();
+                }
+              }}
             >
               Enviar solicitud
             </button>
+            {available == null ? null : available ? (
+              <p className="alert alert-success mt-2 text-center">
+                {availability}
+              </p>
+            ) : (
+              <p className="alert alert-warning mt-2 text-center">
+                {availability}
+              </p>
+            )}
           </div>
         </div>
       </div>
