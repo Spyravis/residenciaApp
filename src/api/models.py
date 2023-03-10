@@ -71,22 +71,21 @@ class Role_user(db.Model):
             "name": self.name,
         }
 
-class Calendar_booking(db.Model):
+class Exit_permit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    visit_day = db.Column(db.String(120), unique=False, nullable=True)
-    hour_start = db.Column(db.DateTime, unique=False, nullable=False)
-    hour_end = db.Column(db.DateTime, unique=False, nullable=False)
-    #bookings = db.relationship("User_has_booking", backref="Calendar_booking")
+    resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'),nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+    booking = db.Column(db.DateTime, unique=False, nullable=False)
     
-
     def __repr__(self):
-        return f'{self.hour_start} to {self.hour_end}'
+        return f'{self.booking}'
 
     def serialize(self):
         return {
             "id": self.id,
-            "hour_start": self.hour_start,
-            "hour_end": self.hour_end,
+            "resident_id": self.resident_id,
+            "user_id": self.user_id,
+            "booking": self.booking
         }
 
 class User_has_booking(db.Model):

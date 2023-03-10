@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, User, Role_user, Resident, Calendar_booking, Night_report, Message, User_has_booking
+from .models import db, User, Role_user, Resident, Exit_permit, Night_report, Message, User_has_booking
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -12,11 +12,11 @@ def setup_admin(app):
     
     class MyModel(ModelView):
         column_display_pk = True
-
+  
     admin.add_view(MyModel(User, db.session))
     admin.add_view(MyModel(Role_user, db.session))
     admin.add_view(MyModel(Resident, db.session))
-    admin.add_view(MyModel(Calendar_booking, db.session))
+    admin.add_view(MyModel(Exit_permit, db.session))
     admin.add_view(MyModel(Night_report, db.session))
     admin.add_view(MyModel(Message, db.session))
     admin.add_view(MyModel(User_has_booking, db.session))

@@ -25,14 +25,13 @@ export const ExitPermit = () => {
   };
 
   const sendSchuddleVisit = async () => {
-    const response = await fetch(process.env.BACKEND_URL + "/api/schuddle", {
+    const response = await fetch(process.env.BACKEND_URL + "/api/exit_permit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
       body: JSON.stringify({
-        id_user: user,
         resident: resident,
         booking: selectDate + " " + hourStart,
       }),
@@ -46,7 +45,7 @@ export const ExitPermit = () => {
 
   const checkAvalability = async () => {
     const response = await fetch(
-      process.env.BACKEND_URL + "/api/bookings_availability",
+      process.env.BACKEND_URL + "/api/exit_permit_availability",
       {
         method: "POST",
         headers: {
