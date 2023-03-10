@@ -65,7 +65,7 @@ export const Login = () => {
             Password:{" "}
           </label>
           <div className="col-sm-10">
-            <input
+            <input type="password"
               className="form-control"
               name="password"
               placeholder="password"

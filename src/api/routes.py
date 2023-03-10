@@ -193,7 +193,7 @@ def sending_email():
         "text": message_text,
         "to": [
         {
-            "email": "rita@abeceweb.com",
+            "email": "carlos@abeceweb.com",
             "type": "to"
         }
         ]
