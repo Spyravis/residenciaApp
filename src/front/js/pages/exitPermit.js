@@ -7,21 +7,22 @@ import "../../styles/schuddleVisit.css";
 
 export const ExitPermit = () => {
   const { store, actions } = useContext(Context);
-  const [resident, setResident] = useState(store.userdata?.residents[0].id);
-  const [user, setUser] = useState(
-    store.userdata?.name,
-    store.userdata?.surname
-  );
+  const [resident, setResident] = useState("");
   const [selectDate, setSelectDate] = useState("");
   const [hourStart, setHourStart] = useState("");
   const [hourEnd, setHourEnd] = useState("");
-  const [availability, setAvailability] = useState();
+  const [availability, setAvailability] = useState(null);
   const [notAvailable, setNotAvailable] = useState(false);
-  const [Available, setAvailable] = useState(false);
+  const [Available, setAvailable] = useState(null);
 
   useEffect(() => {
-    actions.getCurrentUser();
+    getResident();
   }, []);
+
+  const getResident = async () => {
+    await actions.getCurrentUser();
+    setResident(store.userdata?.residents[0].id);
+  };
 
   const sendSchuddleVisit = async () => {
     const response = await fetch(process.env.BACKEND_URL + "/api/schuddle", {
@@ -130,46 +131,28 @@ export const ExitPermit = () => {
               Seleccione Horario
             </label>
             <select
+              defaultValue="select"
               className="form-select"
               onChange={(e) => {
                 setHourStart(e.target.value);
               }}
             >
-              <option value="select" selected>
-                Select Hour
-              </option>
-              <option value="09:00:00">09:00 - 10:00</option>
-              <option value="10:00:00">10:00 - 11:00</option>
-              <option value="11:00:00">11:00 - 12:00</option>
-              <option value="12:00:00">12:00 - 13:00</option>
-              <option value="16:00:00">16:00 - 17:00</option>
-              <option value="17:00:00">17:00 - 18:00</option>
-              <option value="18:00:00">18:00 - 19:00</option>
+              <option value="select">Select Hour</option>
+              <option value="09:00:00">09:00 - 13:00</option>
+              <option value="10:00:00">10:00 - 14:00</option>
+              <option value="11:00:00">11:00 - 15:00</option>
+              <option value="12:00:00">12:00 - 16:00</option>
+              <option value="16:00:00">13:00 - 17:00</option>
+              <option value="17:00:00">14:00 - 18:00</option>
+              <option value="18:00:00">15:00 - 19:00</option>
             </select>
           </div>
           <div className="d-grid gap-2">
             <button
-              className="btn btn-success mt-2 "
-              onClick={checkAvalability}
-            >
-              Comprobar disponibilidad
-            </button>
-            {notAvailable ? (
-              <p className="alert alert-warning mt-2 text-center">
-                {availability}
-              </p>
-            ) : null}
-            {Available ? (
-              <p className="alert alert-success mt-2 text-center">
-                {availability}
-              </p>
-            ) : null}
-
-            <button
               className="btn btn-primary mt-2 "
               onClick={sendSchuddleVisit}
             >
-              Confirmar Cita
+              Enviar solicitud
             </button>
           </div>
         </div>
