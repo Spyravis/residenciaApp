@@ -7,7 +7,7 @@ import { generateString } from "../helper/generateRandomString";
 
 export const StartupPage = () => {
     // we will use this to navigate next page
-    const history = useNavigate();
+    const navigate = useNavigate();
     const { store, actions } = useContext(Context);
 
     useEffect(() => {
@@ -16,7 +16,6 @@ export const StartupPage = () => {
         }
     }, []);
 
-    // will be using name across all pages from context
     return (
         <div >
             <>
@@ -33,7 +32,7 @@ export const StartupPage = () => {
                         />
                     </div>
                     <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
-                        <Button
+                        <button
                             variant="contained"
                             color="default"
                             onClick={() => {
@@ -44,11 +43,11 @@ export const StartupPage = () => {
                                 }
 
                                 // if all goes well we will be redirecting the user to meet room
-                                history.push(`/meetPage/${generateString(7)}`);
+                                navigate(`/meet/${generateString(7)}`);
                             }}
                         >
                             Create Meet
-                        </Button>
+                        </button>
                     </div>
                 </>
             </>

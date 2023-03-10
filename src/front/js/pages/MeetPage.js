@@ -1,16 +1,22 @@
 import React, { useEffect, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MeetContext } from "../context/MeetContext";
+import { Context } from "../store/appContext";
 
 export const MeetPage = ({ match }) => {
     //AS OF NOW DOMAIN WOULD BE JITSI'S AS WE ARE STILL USING THIER SERVERS
     const domain = "meet.jit.si";
     let api = {};
 
-    const history = useNavigate();
+    const navigate = useNavigate();
 
-    // THIS IS TO EXTRACT THE NAME WHICH WAS FILLED IN THE FIRST PAGE
-    const [name] = useContext(MeetContext);
+    const { store, actions } = useContext(Context);
+
+    useEffect(() => {
+        if (!store.userdata.id) {
+            navigate("/");
+        }
+    }, []);
 
     // INTIALISE THE MEET WITH THIS FUNCTION
     const startMeet = useCallback(() => {
@@ -25,11 +31,11 @@ export const MeetPage = ({ match }) => {
             // VIDEO FRAME WILL BE ADDED HERE
             parentNode: document.querySelector("#jitsi-iframe"),
             userInfo: {
-                displayName: name,
+                displayName: store.userdata.name,
             },
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        api = new window.JitsiMeetExternalAPI(domain, options);
+        api = new JitsiMeetExternalAPI(domain, options);
 
         api.addEventListeners({
             readyToClose: handleClose,
@@ -41,7 +47,7 @@ export const MeetPage = ({ match }) => {
     }, [api]);
 
     useEffect(() => {
-        if (window.JitsiMeetExternalAPI) {
+        if (JitsiMeetExternalAPI) {
             startMeet();
         } else {
             alert("JitsiMeetExternalAPI not loaded");
@@ -70,7 +76,7 @@ export const MeetPage = ({ match }) => {
 
     const handleVideoConferenceLeft = () => {
         console.log("handleVideoConferenceLeft");
-        history.push("/thank-you");
+        navigate.push("/thank-you");
     };
 
     // GETTING ALL PARTICIPANTS

@@ -14,8 +14,8 @@ export const LoggedMenu = () => {
           </Link>
         </div>
         <div className="btn-group m-2" role="group" aria-label="First group">
-          <Link to="/pacientes">
-            <button className="btn btn-warning p-2">Pacientes</button>
+          <Link to="/startmeet">
+            <button className="btn btn-warning p-2">Videollamada</button>
           </Link>
         </div>
         <div className="btn-group m-2" role="group" aria-label="First group">
