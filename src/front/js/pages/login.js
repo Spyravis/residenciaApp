@@ -49,6 +49,7 @@ export const Login = () => {
           </label>
           <div className="col-sm-10">
             <input
+              type="email"
               className="form-control"
               name="email"
               placeholder="email"
@@ -66,6 +67,7 @@ export const Login = () => {
           </label>
           <div className="col-sm-10">
             <input
+              type="password"
               className="form-control"
               name="password"
               placeholder="password"

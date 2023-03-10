@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Calendar } from "../component/calendar";
 import { LoggedMenu } from "../component/logged-menu";
 import { Context } from "../store/appContext";
 import "../../styles/schuddleVisit.css";
 
 export const ShuddleVisit = () => {
+  const navigate = useNavigate();
   const { store, actions } = useContext(Context);
   const [resident, setResident] = useState("");
   const [url, setUrl] = useState("");
@@ -18,6 +20,13 @@ export const ShuddleVisit = () => {
 
   useEffect(() => {
     getResident();
+  }, []);
+
+  useEffect(() => {
+    actions.getCurrentUser();
+    if (!store.userdata.id) {
+      navigate("/");
+    }
   }, []);
 
   const getResident = async () => {
