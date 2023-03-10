@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "301033839330d5512d0edef75f17cc52e4c8f3c87a49e1ca884f9a1885474b24"
+            "sha256": "53bc35f96aeecf2255b37d377d23c4baa4e50865dda6061d881db23111f6c237"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -138,11 +138,10 @@
         },
         "flask-admin": {
             "hashes": [
-                "sha256:24cae2af832b6a611a01d7dc35f42d266c1d6c75a426b869d8cb241b78233369",
-                "sha256:fd8190f1ec3355913a22739c46ed3623f1d82b8112cde324c60a6fc9b21c9406"
+                "sha256:424ffc79b7b0dfff051555686ea12e86e48dffacac14beaa319fb4502ac40988"
             ],
             "index": "pypi",
-            "version": "==1.6.1"
+            "version": "==1.6.0"
         },
         "flask-cors": {
             "hashes": [
@@ -151,6 +150,22 @@
             ],
             "index": "pypi",
             "version": "==3.0.10"
+        },
+        "flask-jwt-extended": {
+            "hashes": [
+                "sha256:62b521d75494c290a646ae8acc77123721e4364790f1e64af0038d823961fbf0",
+                "sha256:a85eebfa17c339a7260c4643475af444784ba6de5588adda67406f0a75599553"
+            ],
+            "index": "pypi",
+            "version": "==4.4.4"
+        },
+        "flask-jwt-token": {
+            "hashes": [
+                "sha256:5e06def9d9d51c772999456a96d766afe0e2a1dd812421c82bed7b8a58fad700",
+                "sha256:eedf5b13934d5c528f5b5efc954f4c7db39dac92e5d62435de41fa244dc8cc16"
+            ],
+            "index": "pypi",
+            "version": "==0.1.2"
         },
         "flask-migrate": {
             "hashes": [
@@ -421,6 +436,14 @@
             ],
             "index": "pypi",
             "version": "==2.9.5"
+        },
+        "pyjwt": {
+            "hashes": [
+                "sha256:69285c7e31fc44f68a1feb309e948e0df53259d579295e6cfe2b1792329f05fd",
+                "sha256:d83c3d892a77bbb74d3e1a2cfa90afaadb60945205d1095d9221f04466f64c14"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==2.6.0"
         },
         "python-dateutil": {
             "hashes": [
