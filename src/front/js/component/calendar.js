@@ -19,6 +19,13 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
     day: "numeric",
   };
 
+  const [selectedDay, setSelectedDay] = useState(null);
+
+  const handleSelect = (i) => {
+    setSelectedDay(i);
+    setAvailable(null);
+  };
+
   const getMonths = () => {
     const monthsIndex = [...Array(12).keys()];
     const intl = new Intl.DateTimeFormat(locale, { month: "long" });
@@ -36,31 +43,40 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
     let firstDayOfMonth = new Date(year, month, 1).getDay(); //getting first day of month
     let lastDateOfMonth = new Date(year, month + 1, 0).getDate(); //getting last date of month
     let lastDayOfMonth = new Date(year, month + lastDateOfMonth).getDate(); //getting last day of month
-    let lastDateofLastMonth = new Date(year, month, 0).getDate(); //getting last date of previos
+    let lastDateofLastMonth = new Date(year, month, 0).getDate(); //getting last date of previous
 
     let liTag = [];
 
     for (let i = firstDayOfMonth; i > 0; i--) {
       let lastDayOfLastMonth = (
         <li
-          key={"inactive " + (lastDateofLastMonth - i + 1)}
+          //key={"inactive " + (lastDateofLastMonth - i + 1)}
           className="inactive"
         >
-          {lastDateofLastMonth - i + 1}{" "}
+          {lastDateofLastMonth - i + 1}
         </li>
       );
       liTag.push(lastDayOfLastMonth);
     }
 
     for (let i = 1; i <= lastDateOfMonth; i++) {
+      let classes = "active";
+      if (
+        year === date.getFullYear() &&
+        month === date.getMonth() &&
+        i === date.getDate()
+      ) {
+        classes += " today";
+      }
+
       let days = (
         <li
-          key={"" + i}
+          // key={"" + i}
           onClick={() => {
+            handleSelect(i);
             setSelectDate(
               new Date(year, month, i + 1).toISOString().split("T")[0]
             );
-            setAvailable(null);
           }}
         >
           {i}
@@ -71,7 +87,10 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
 
     for (let i = lastDayOfMonth; i < 5; i++) {
       let lastDayOfActualMonth = (
-        <li key={"inactive " + (i - lastDayOfMonth + 1)} className="inactive">
+        <li
+          //key={"inactive " + (i - lastDayOfMonth + 1)}
+          className="inactive"
+        >
           {i - lastDayOfMonth + 1}{" "}
         </li>
       );
@@ -152,7 +171,24 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
               return <li key={index}>{e.slice(0, 3)}</li>;
             })}
           </ul>
-          <ul className="days">{monthDays}</ul>
+          <ul className="days">
+            {monthDays.map((x, y) => {
+              console.log(x.props);
+              return (
+                <li
+                  key={y}
+                  className={
+                    selectedDay === x.props.children &&
+                    x.props.className != "inactive"
+                      ? " bg-danger"
+                      : " nooo"
+                  }
+                >
+                  {x}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </div>

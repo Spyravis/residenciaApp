@@ -16,9 +16,9 @@ python-dotenv = "*"
 flask-cors = "*"
 gunicorn = "*"
 cloudinary = "*"
-flask-admin = "*"
 typing-extensions = "*"
 mailchimp-transactional = "*"
+flask-admin = "==1.6.0"
 
 [requires]
 python_version = "3.10"

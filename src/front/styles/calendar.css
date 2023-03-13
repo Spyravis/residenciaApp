@@ -59,9 +59,7 @@ header .icons span:last-child {
 .days li.inactive {
   color: #727171;
 }
-.days li.active {
-  color: #f7f5eb;
-}
+
 .calendar .days li::before {
   position: absolute;
   content: "";
@@ -76,4 +74,8 @@ header .icons span:last-child {
 
 .days li:hover::before {
   background: #f2f2f2;
+}
+
+.today::before {
+  background-color: #d1cece;
 }

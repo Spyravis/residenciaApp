@@ -158,7 +158,7 @@ def exit_permit_availability():
     user_id = get_jwt_identity()
     resident_id = request.json.get("resident") 
     booking = request.json.get("booking")
-    bookings = Exit_permit.query.filter_by(booking=booking, user_id=user_id, resident_id=resident_id)
+    bookings = Exit_permit.query.filter_by(booking=booking, resident_id=resident_id)
     if bookings.count() < 1:
         return jsonify({"response":  "Solicitud de Permiso de salida enviada"}), 200
     else:

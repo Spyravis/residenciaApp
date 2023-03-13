@@ -12,6 +12,7 @@ def setup_admin(app):
     
     class MyModel(ModelView):
         column_display_pk = True
+        column_display_fk = True
   
     admin.add_view(MyModel(User, db.session))
     admin.add_view(MyModel(Role_user, db.session))
