@@ -1,9 +1,10 @@
 import React, { useEffect, useCallback, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { MeetContext } from "../context/MeetContext";
+import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { LoggedMenu } from "../component/logged-menu";
 
-export const MeetPage = ({ match }) => {
+export const MeetPage = ({ matches }) => {
+    const { id } = useParams();
     //AS OF NOW DOMAIN WOULD BE JITSI'S AS WE ARE STILL USING THIER SERVERS
     const domain = "meet.jit.si";
     let api = {};
@@ -14,14 +15,14 @@ export const MeetPage = ({ match }) => {
 
     useEffect(() => {
         if (!store.userdata.id) {
-            navigate("/");
+            navigate("/login");
         }
     }, []);
 
     // INTIALISE THE MEET WITH THIS FUNCTION
     const startMeet = useCallback(() => {
         const options = {
-            roomName: match.params.id,
+            roomName: id,
             width: "100%",
             height: 500,
             configOverwrite: { prejoinPageEnabled: false },
@@ -76,7 +77,7 @@ export const MeetPage = ({ match }) => {
 
     const handleVideoConferenceLeft = () => {
         console.log("handleVideoConferenceLeft");
-        navigate.push("/thank-you");
+        navigate("/myhome");
     };
 
     // GETTING ALL PARTICIPANTS
@@ -89,24 +90,27 @@ export const MeetPage = ({ match }) => {
     };
 
     return (
-        <React.Fragment>
-            <header
-                style={{
-                    backgroundColor: "rgb(10, 25, 41)",
-                    color: "white",
-                    textAlign: "center",
-                }}
-            >
-                <p style={{ margin: 0, padding: 10 }}>Meeting name</p>
-            </header>
-            <div id="jitsi-iframe" style={{ marginBottom: 0 }}></div>
-            <div
-                style={{
-                    backgroundColor: "rgb(10, 25, 41)",
-                    height: "20vh",
-                    margin: 0,
-                }}
-            ></div>
-        </React.Fragment>
+        <div className="row d-flex justify-content-center">
+            <LoggedMenu />
+            <React.Fragment>
+                <header
+                    style={{
+                        backgroundColor: "rgb(10, 25, 41)",
+                        color: "white",
+                        textAlign: "center",
+                    }}
+                >
+                    <p style={{ margin: 0, padding: 10 }}>Videollamada con Familiar</p>
+                </header>
+                <div id="jitsi-iframe" style={{ marginBottom: 0 }}></div>
+                <div
+                    style={{
+                        backgroundColor: "rgb(10, 25, 41)",
+                        height: "20vh",
+                        margin: 0,
+                    }}
+                ></div>
+            </React.Fragment>
+        </div>
     );
 };

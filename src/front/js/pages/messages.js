@@ -18,13 +18,13 @@ export const Messages = () => {
     actions.getCurrentUser();
     actions.getCurrentUserResidentMessages();
     if (!store.userdata.id) {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
 
   useEffect(() => {
     store.userdata.id != currentMessageforModal.user_id &&
-    currentMessageforModal != ""
+      currentMessageforModal != ""
       ? actions.readedMessage(currentMessageforModal.id)
       : null;
   }, [currentMessageforModal]);
@@ -62,7 +62,7 @@ export const Messages = () => {
                   <tr
                     className={
                       !store.messages[message].readed &&
-                      store.messages[message].user_id != store.userdata.id
+                        store.messages[message].user_id != store.userdata.id
                         ? "fw-bold"
                         : null
                     }

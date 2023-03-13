@@ -101,11 +101,12 @@ class User_has_booking(db.Model):
         return f'{self.booking}'
 
     def serialize(self):
+        resident = Resident.query.get(self.resident_id)
         return {
             "id": self.id,
             "is_online": self.is_online,
             "url": self.url,
-            "resident_id": self.resident_id,
+            "resident" : resident.serialize(),
             "user_id": self.user_id,
             "booking": self.booking
         }

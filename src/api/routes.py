@@ -44,8 +44,7 @@ def user_register():
 @api.route('/user', methods=['GET'])
 @jwt_required()
 def current_user():
-    user_id = get_jwt_identity()
-    #user = User.query.get(user_id)
+    user_id = get_jwt_identity()    
     user = User.query.filter_by(id = user_id)
     return jsonify({"response": x.serialize() for x in user}), 200
 
@@ -55,8 +54,7 @@ def current_user():
 def get_messages():
     user_id = get_jwt_identity()    
     messages_by_user = InternalMessages.query.filter_by(user_id = user_id)
-    messages_serialized = [x.serialize() for x in messages_by_user]
-    print(messages_serialized)
+    messages_serialized = [x.serialize() for x in messages_by_user]    
     return jsonify({"response" : messages_serialized}), 200
 
 #Mensajes por residente
@@ -129,6 +127,27 @@ def current_schuddle():
     db.session.add(new_booking)
     db.session.commit()    
     return jsonify({"response": "Booking created succesfully"}), 200
+
+@api.route('/userschuddle', methods=['GET'])
+@jwt_required()
+def current_user_schuddle():
+    user_id = get_jwt_identity()
+    bookings =  User_has_booking.query.filter_by(user_id=user_id)    
+    bookings_serialized = [x.serialize() for x in bookings]
+    return jsonify({"response" : bookings_serialized}), 200
+
+@api.route('/residentbookings', methods=['GET'])
+@jwt_required()
+def get_resident_bookings():
+    user_id = get_jwt_identity()
+    userdata = User.query.filter_by(id = user_id)
+    userdata_serialized = [x.serialize() for x in userdata]    
+    bookings_serialized = []
+    for i in (userdata_serialized[0]["residents"]):
+        bookings_by_resident = User_has_booking.query.filter_by(resident_id = i["id"])
+        bookings_serialized.extend([x.serialize() for x in bookings_by_resident])
+    ordenados = sorted(bookings_serialized, key=lambda k: k["id"], reverse = True)    
+    return jsonify({"response" : ordenados}), 200
 
 @api.route('/bookings_availability', methods=['GET','POST'])
 @jwt_required()

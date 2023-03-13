@@ -14,8 +14,7 @@ import { ShuddleVisit } from "./pages/schuddleVisit";
 import { ExitPermit } from "./pages/exitPermit";
 
 import { MeetPage } from "./pages/MeetPage";
-import { StartupPage } from "./pages/StartupPage";
-import { ThankYou } from "./pages/ThankYouPage";
+import { MyVisits } from "./pages/myVisits";
 
 import injectContext from "./store/appContext";
 
@@ -45,9 +44,8 @@ const Layout = () => {
             <Route element={<Messages />} path="/messages" />
             <Route element={<ShuddleVisit />} path="/schuddleVisit" />
             <Route element={<ExitPermit />} path="/exitPermit" />
-            <Route element={<StartupPage />} path="/startmeet" exact />
-            <Route element={<MeetPage />} path="/meet/:id" exact />
-            <Route element={<ThankYou />} path="/meet-thank-you" />
+            <Route element={<MyVisits />} path="/MyVisits" />
+            <Route element={<MeetPage />} path="/meet/:id" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />

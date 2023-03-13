@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Calendar } from "../component/calendar";
 import { LoggedMenu } from "../component/logged-menu";
 import { Context } from "../store/appContext";
+import { generateString } from "../helper/generateRandomString";
 import "../../styles/schuddleVisit.css";
 
 export const ShuddleVisit = () => {
@@ -19,6 +20,15 @@ export const ShuddleVisit = () => {
   useEffect(() => {
     getResident();
   }, []);
+
+  useEffect(() => {
+    if (online == true) {
+      setUrl(`/meet/${generateString(7)}`);
+    } else {
+      setUrl("");
+    }
+
+  }, [online]);
 
   const getResident = async () => {
     await actions.getCurrentUser();
@@ -119,10 +129,8 @@ export const ShuddleVisit = () => {
             <input
               className="form-control"
               name="url"
-              placeholder="www.example.com"
-              onChange={(e) => {
-                setUrl(e.target.value);
-              }}
+              disabled
+              value={url}
             ></input>
           </div>
           <div className="col-auto">
@@ -138,12 +146,12 @@ export const ShuddleVisit = () => {
             >
               {store.userdata.residents
                 ? store.userdata.residents.map((resident, index) => {
-                    return (
-                      <option key={index} value={resident.id}>
-                        {resident.name} {resident.surname}
-                      </option>
-                    );
-                  })
+                  return (
+                    <option key={index} value={resident.id}>
+                      {resident.name} {resident.surname}
+                    </option>
+                  );
+                })
                 : null}
             </select>
           </div>
