@@ -136,7 +136,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="resident">
-              Resident:
+              Residente:
             </label>
             <select
               className="form-select"
@@ -158,7 +158,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="user">
-              User:
+              Usuario:
             </label>
             <input
               disabled
@@ -170,13 +170,13 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="day">
-              Day:
+              Día:
             </label>
             <input
               className="form-control"
               name="day"
               disabled="disabled"
-              placeholder="Select day from calendar"
+              placeholder="Seleccione un día del calendario"
               value={selectDate}
             ></input>
           </div>
@@ -192,7 +192,7 @@ export const ShuddleVisit = () => {
                 setAvailable(null);
               }}
             >
-              <option value="select">Select Hour</option>
+              <option value="select">Seleccione Hora</option>
               <option value="09:00:00">09:00 - 10:00</option>
               <option value="10:00:00">10:00 - 11:00</option>
               <option value="11:00:00">11:00 - 12:00</option>

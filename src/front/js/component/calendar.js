@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/calendar.css";
 import calendario from "../../img/calendario.jpg";
@@ -20,6 +20,8 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
   };
 
   const [selectedDay, setSelectedDay] = useState(null);
+
+  const [elijoDia, setElijoDia] = useState(null);
 
   const handleSelect = (i) => {
     setSelectedDay(i);
@@ -49,12 +51,12 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
 
     for (let i = firstDayOfMonth; i > 0; i--) {
       let lastDayOfLastMonth = (
-        <li
+        <div
           //key={"inactive " + (lastDateofLastMonth - i + 1)}
           className="inactive"
         >
           {lastDateofLastMonth - i + 1}
-        </li>
+        </div>
       );
       liTag.push(lastDayOfLastMonth);
     }
@@ -70,8 +72,9 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
       }
 
       let days = (
-        <li
+        <div
           // key={"" + i}
+          className={classes}
           onClick={() => {
             handleSelect(i);
             setSelectDate(
@@ -80,19 +83,19 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
           }}
         >
           {i}
-        </li>
+        </div>
       );
       liTag.push(days);
     }
 
     for (let i = lastDayOfMonth; i < 5; i++) {
       let lastDayOfActualMonth = (
-        <li
+        <div
           //key={"inactive " + (i - lastDayOfMonth + 1)}
           className="inactive"
         >
           {i - lastDayOfMonth + 1}{" "}
-        </li>
+        </div>
       );
       liTag.push(lastDayOfActualMonth);
     }
@@ -173,15 +176,14 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
           </ul>
           <ul className="days">
             {monthDays.map((x, y) => {
-              console.log(x.props);
               return (
                 <li
                   key={y}
                   className={
                     selectedDay === x.props.children &&
                     x.props.className != "inactive"
-                      ? " bg-danger"
-                      : " nooo"
+                      ? " selected"
+                      : ""
                   }
                 >
                   {x}
