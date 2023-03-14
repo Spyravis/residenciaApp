@@ -37,16 +37,15 @@ export const MyVisits = () => {
                     </thead>
                     <tbody className="table-group-divider">
                         {Object.keys(store.bookings).map((booking, index) => {
-                            /* var utcDate = new Date(Date.UTC(2022, 03, 19, 17, 39, 49));
-                             const date = store.bookings[booking].booking;
-                             const year = date.getUTCFullYear();*/
+                            var utc = (new Date(store.bookings[booking].booking)).toUTCString()
+                            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                             return (
                                 <Fragment key={index}>
                                     <tr>
                                         <th scope="row">{index + 1}</th>
-                                        <td>{store.bookings[booking].booking}</td>
+                                        <td>{new Date(utc).toLocaleDateString('es-ES', options)} a las {new Date(utc).toLocaleTimeString('es-ES', { hour: "2-digit", minute: "2-digit" })}</td>
                                         <td>
-                                            {store.bookings[booking].url ? <Link to={store.bookings[booking].url}>Online<br></br>Iniciar ahora </Link> : "Presencial"}</td>
+                                            {store.bookings[booking].url ? new Date(utc).toDateString() == new Date().toDateString() ? <Link to={store.bookings[booking].url}>Online<br></br>Iniciar ahora </Link> : "Online" : "Presencial"}</td>
                                         <td>{store.bookings[booking].resident.name}</td>
                                     </tr>
                                 </Fragment>

@@ -30,7 +30,7 @@ export const Messages = () => {
   }, [currentMessageforModal]);
 
   return (
-    <div className="container-fluid">
+    <div className="container">
       <LoggedMenu></LoggedMenu>
 
       <div className="row mt-5">
