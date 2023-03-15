@@ -169,7 +169,7 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
           </div>
         </header>
         <div className="calendar">
-          <ul className="weeks mb-0">
+          <ul className="weeks mb-2">
             {daysNames.map((e, index) => {
               return <li key={index}>{e.slice(0, 3)}</li>;
             })}

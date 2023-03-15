@@ -109,7 +109,9 @@ export const ShuddleVisit = () => {
                   setOnline(true);
                 }}
               />
-              <label htmlFor="online"> Online </label>
+              <label className="p-2" htmlFor="online">
+                <i class="fa-solid fa-laptop"></i> Online{" "}
+              </label>
               <input
                 type="radio"
                 id="presencial"
@@ -170,7 +172,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="day">
-              Día:
+              <i class="fa-regular fa-calendar"></i> Día:
             </label>
             <input
               className="form-control"
@@ -182,7 +184,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="hourStart">
-              Seleccione Horario
+              <i class="fa-solid fa-clock"></i> Seleccione Horario
             </label>
             <select
               defaultValue="select"

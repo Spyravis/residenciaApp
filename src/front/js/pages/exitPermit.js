@@ -124,7 +124,7 @@ export const ExitPermit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="day">
-              Día:
+              <i class="fa-regular fa-calendar"></i> Día:
             </label>
             <input
               className="form-control"
@@ -136,7 +136,7 @@ export const ExitPermit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="hourStart">
-              Seleccione Horario
+              <i class="fa-solid fa-clock"></i> Seleccione Horario
             </label>
             <select
               defaultValue="select"
