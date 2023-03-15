@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Calendar } from "../component/calendar";
 import { LoggedMenu } from "../component/logged-menu";
 import { Context } from "../store/appContext";
@@ -7,6 +8,7 @@ import { generateString } from "../helper/generateRandomString";
 import "../../styles/schuddleVisit.css";
 
 export const ShuddleVisit = () => {
+  const navigate = useNavigate();
   const { store, actions } = useContext(Context);
   const [resident, setResident] = useState("");
   const [url, setUrl] = useState("");
@@ -22,13 +24,20 @@ export const ShuddleVisit = () => {
   }, []);
 
   useEffect(() => {
+
     if (online == true) {
       setUrl(`/meet/${generateString(7)}`);
     } else {
       setUrl("");
     }
-
   }, [online]);
+  
+ useEffect(() => {
+    actions.getCurrentUser();
+    if (!store.userdata.id) {
+      navigate("/login");
+    }
+  }, []);
 
   const getResident = async () => {
     await actions.getCurrentUser();
@@ -110,7 +119,9 @@ export const ShuddleVisit = () => {
                   setOnline(true);
                 }}
               />
-              <label htmlFor="online"> Online </label>
+              <label className="p-2" htmlFor="online">
+                <i class="fa-solid fa-laptop"></i> Online{" "}
+              </label>
               <input
                 type="radio"
                 id="presencial"
@@ -135,7 +146,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="resident">
-              Resident:
+              Residente:
             </label>
             <select
               className="form-select"
@@ -157,7 +168,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="user">
-              User:
+              Usuario:
             </label>
             <input
               disabled
@@ -169,19 +180,19 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="day">
-              Day:
+              <i class="fa-regular fa-calendar"></i> Día:
             </label>
             <input
               className="form-control"
               name="day"
               disabled="disabled"
-              placeholder="Select day from calendar"
+              placeholder="Seleccione un día del calendario"
               value={selectDate}
             ></input>
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="hourStart">
-              Seleccione Horario
+              <i class="fa-solid fa-clock"></i> Seleccione Horario
             </label>
             <select
               defaultValue="select"
@@ -191,7 +202,7 @@ export const ShuddleVisit = () => {
                 setAvailable(null);
               }}
             >
-              <option value="select">Select Hour</option>
+              <option value="select">Seleccione Hora</option>
               <option value="09:00:00">09:00 - 10:00</option>
               <option value="10:00:00">10:00 - 11:00</option>
               <option value="11:00:00">11:00 - 12:00</option>

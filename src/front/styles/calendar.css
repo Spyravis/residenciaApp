@@ -51,22 +51,32 @@ header .icons span:last-child {
   position: relative;
   width: calc(100% / 7);
 }
+
+ul .days {
+  display: flex;
+  align-items: center;
+}
+
 .calendar .days li {
   z-index: 1;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-.days li.inactive {
+.days li div.inactive {
   color: #727171;
 }
-.days li.active {
-  color: #f7f5eb;
+
+.calendar div {
+  align-items: center;
+  justify-content: center;
 }
+
 .calendar .days li::before {
   position: absolute;
   content: "";
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   top: 50%;
   left: 50%;
   z-index: -1;
@@ -76,4 +86,37 @@ header .icons span:last-child {
 
 .days li:hover::before {
   background: #f2f2f2;
+}
+
+.today::before:only-child {
+  background-color: #4cd4f3;
+}
+
+.selected {
+  position: relative;
+  display: inline-block;
+}
+
+.days li div.today {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #f5f3f3;
+}
+
+.selected :only-child {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #eb9b9b;
 }

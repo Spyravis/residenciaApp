@@ -24,6 +24,16 @@ export const Profile = () => {
 
   const [validatePassword, setValidatePassword] = useState(false);
 
+  useEffect(() => {
+    actions.getCurrentUser();
+  }, [photo]);
+
+  useEffect(() => {
+    if (!store.userdata.id) {
+      navigate("/");
+    }
+  }, []);
+
   const modifyProfile = async (e) => {
     e.preventDefault();
 
@@ -133,16 +143,6 @@ export const Profile = () => {
       setValidatePassword(false);
     }
   }, [newPassword, confirmNewPassword]);
-
-  useEffect(() => {
-    actions.getCurrentUser();
-  }, [photo]);
-
-  useEffect(() => {
-    if (!store.userdata.id) {
-      navigate("/");
-    }
-  }, []);
 
   return (
     <div className="container-fluid ">
