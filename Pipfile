@@ -18,6 +18,8 @@ gunicorn = "*"
 cloudinary = "*"
 typing-extensions = "*"
 mailchimp-transactional = "*"
+flask-jwt-token = "*"
+flask-jwt-extended = "*"
 flask-admin = "==1.6.0"
 
 [requires]
