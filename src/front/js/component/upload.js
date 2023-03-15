@@ -36,11 +36,7 @@ export const UploadView = ({ files, setFiles, photo, setPhoto }) => {
   return (
     <>
       <div className="row my-3">
-        <label className=" col-form-label" htmlFor="photo">
-          Photo:
-        </label>
-        <div></div>
-        <form className="" onSubmit={uploadImage}>
+        <form className="col-auto" onSubmit={uploadImage}>
           <input
             className="form-control"
             type="file"

@@ -3,7 +3,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Role_user, User_has_booking, Calendar_booking , Message as InternalMessages
+from api.models import db, User, Role_user, User_has_booking, Exit_permit , Message as InternalMessages
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -128,7 +128,7 @@ def current_schuddle():
     new_booking = User_has_booking (is_online=is_online,url=url,resident_id=resident_id,user_id=user_id,booking=booking)
     db.session.add(new_booking)
     db.session.commit()    
-    return jsonify({"response": "Booking created succesfully"}), 200
+    return jsonify({"response": "Exit permit created succesfully"}), 200
 
 @api.route('/bookings_availability', methods=['GET','POST'])
 @jwt_required()
@@ -137,10 +137,33 @@ def bookings_availability():
     booking = request.json.get("booking")
     bookings = User_has_booking.query.filter_by(booking=booking)
     if bookings.count() < 5:
-        return jsonify({"response":  "Cita disponible"}), 200
+        return jsonify({"response":  "Cita confirmada"}), 200
     else:
         return jsonify({"response":  "No hay citas disponibles, seleccione otra fecha y/o hora"}), 300
-            
+
+@api.route('/exit_permit', methods=['POST'])
+@jwt_required()
+def current_exit_permit():
+    user_id = get_jwt_identity()
+    resident_id = request.json.get("resident")    
+    booking = request.json.get("booking")
+    new_booking = Exit_permit (resident_id=resident_id,user_id=user_id,booking=booking)
+    db.session.add(new_booking)
+    db.session.commit()    
+    return jsonify({"response": "Booking created succesfully"}), 200
+          
+@api.route('/exit_permit_availability', methods=['GET','POST'])
+@jwt_required()
+def exit_permit_availability():
+    user_id = get_jwt_identity()
+    resident_id = request.json.get("resident") 
+    booking = request.json.get("booking")
+    bookings = Exit_permit.query.filter_by(booking=booking, resident_id=resident_id)
+    if bookings.count() < 1:
+        return jsonify({"response":  "Solicitud de Permiso de salida enviada"}), 200
+    else:
+        return jsonify({"response":  "Ya tiene un permiso de salida con esos datos"}), 300
+
 @api.route("/profile", methods=["PUT"])
 @jwt_required()
 def change_user_data():
