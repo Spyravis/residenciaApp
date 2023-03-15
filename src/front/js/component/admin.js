@@ -8,7 +8,7 @@ export const Admin = () => {
     const [error, setError] = useState("");
 
     const sendEmail = async () => {
-        const message = "Bienvenido a Residencia APP, utilitza el siguiente enlace para completar el registro: " + process.env.BACKEND_URL + "/register/8983ef5be7525d9ec2f9e74dd458bf8f";
+        const message = "Bienvenido a Residencia APP, utilitza el siguiente enlace para completar el registro: " + process.env.PUBLIC_URL + "/register/8983ef5be7525d9ec2f9e74dd458bf8f";
         const response = await fetch(process.env.BACKEND_URL + "/api/send_email",
             {
                 method: "POST",
