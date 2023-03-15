@@ -21,6 +21,10 @@ export const ShuddleVisit = () => {
 
   useEffect(() => {
     getResident();
+    actions.getCurrentUser();
+    if (!store.userdata.id) {
+      navigate("/login");
+    }
   }, []);
 
   useEffect(() => {
@@ -31,13 +35,6 @@ export const ShuddleVisit = () => {
       setUrl("");
     }
   }, [online]);
-  
- useEffect(() => {
-    actions.getCurrentUser();
-    if (!store.userdata.id) {
-      navigate("/login");
-    }
-  }, []);
 
   const getResident = async () => {
     await actions.getCurrentUser();
@@ -120,7 +117,7 @@ export const ShuddleVisit = () => {
                 }}
               />
               <label className="p-2" htmlFor="online">
-                <i class="fa-solid fa-laptop"></i> Online{" "}
+                <i className="fa-solid fa-laptop"></i> Online{" "}
               </label>
               <input
                 type="radio"
@@ -180,7 +177,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="day">
-              <i class="fa-regular fa-calendar"></i> Día:
+              <i className="fa-regular fa-calendar"></i> Día:
             </label>
             <input
               className="form-control"
@@ -192,7 +189,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="hourStart">
-              <i class="fa-solid fa-clock"></i> Seleccione Horario
+              <i className="fa-solid fa-clock"></i> Seleccione Horario
             </label>
             <select
               defaultValue="select"

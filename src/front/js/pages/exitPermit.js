@@ -98,12 +98,12 @@ export const ExitPermit = () => {
             >
               {store.userdata.residents
                 ? store.userdata.residents.map((resident, index) => {
-                    return (
-                      <option key={index} value={resident.id}>
-                        {resident.name} {resident.surname}
-                      </option>
-                    );
-                  })
+                  return (
+                    <option key={index} value={resident.id}>
+                      {resident.name} {resident.surname}
+                    </option>
+                  );
+                })
                 : null}
             </select>
           </div>
@@ -124,7 +124,7 @@ export const ExitPermit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="day">
-              <i class="fa-regular fa-calendar"></i> Día:
+              <i className="fa-regular fa-calendar"></i> Día:
             </label>
             <input
               className="form-control"
@@ -136,7 +136,7 @@ export const ExitPermit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="hourStart">
-              <i class="fa-solid fa-clock"></i> Seleccione Horario
+              <i className="fa-solid fa-clock"></i> Seleccione Horario
             </label>
             <select
               defaultValue="select"
