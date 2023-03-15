@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
@@ -18,6 +18,14 @@ export const Register = () => {
 
   const [validateInfo, setValidateInfo] = useState(false);
   const [validatePassword, setValidatePassword] = useState(false);
+
+  const { hash } = useParams();
+
+  useEffect(() => {
+    if (hash != "8983ef5be7525d9ec2f9e74dd458bf8f") {
+      navigate("/");
+    }
+  }, []);
 
   const sendRegisterCredentials = async () => {
     if (password == confirmPassword) {

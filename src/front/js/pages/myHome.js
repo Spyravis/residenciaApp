@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { LoggedMenu } from "../component/logged-menu";
 import "../../styles/home.css";
 import { Schuddle } from "../component/schuddle";
+import { Admin } from "../component/admin";
+import { Worker } from "../component/worker";
 
 export const MyHome = () => {
   const navigate = useNavigate();
@@ -11,15 +13,15 @@ export const MyHome = () => {
 
   useEffect(() => {
     if (!store.userdata.id) {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
 
   return (
-    <div className=" text-center">
-      <LoggedMenu />
+    <div className="container">
+      <LoggedMenu></LoggedMenu>
 
-      {store.userdata.role_user == 1 ? <Schuddle /> : null}
+      {store.userdata.role_user == 1 ? <Schuddle /> : store.userdata.role_user == 3 ? <Admin /> : <Worker />}
     </div>
   );
 };

@@ -14,8 +14,8 @@ export const LoggedMenu = () => {
           </Link>
         </div>
         <div className="btn-group m-2" role="group" aria-label="First group">
-          <Link to="/pacientes">
-            <button className="btn btn-warning p-2">Pacientes</button>
+          <Link to="/myVisits">
+            <button className="btn btn-warning p-2">Mis visitas</button>
           </Link>
         </div>
         <div className="btn-group m-2" role="group" aria-label="First group">
@@ -41,7 +41,7 @@ export const LoggedMenu = () => {
         </div>
         <div className="row justify-content-md-center mt-2">
           <h2 className="text-center">
-            {store.userdata.role_user == 1 ? "Familiar" : "Trabajador"}{" "}
+            {store.userdata.role_user == 1 ? "Familiar" : store.userdata.role_user == 2 ? "Trabajador" : "Administrador"}{" "}
             {store.userdata.name} {store.userdata.surname}
           </h2>
         </div>

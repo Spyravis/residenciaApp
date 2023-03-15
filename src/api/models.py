@@ -38,6 +38,7 @@ class Resident(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     surname = db.Column(db.String(120), unique=False, nullable=False)
+    users = db.relationship("User", secondary="user_has_resident", backref="Resident" )
     reports = db.relationship("Night_report", backref="Resident")
     messages = db.relationship("Message", backref="Resident")
     bookings = db.relationship("User_has_booking", backref="Resident")
@@ -50,6 +51,13 @@ class Resident(db.Model):
             "id": self.id,
             "name": self.name,
             "surname": self.surname,
+        }
+    def resident_users(self):        
+        return {
+            "id": self.id,
+            "name": self.name,
+            "surname": self.surname,
+            "users" :[user.serialize() for user in self.users]
         }
 
 user_has_resident= db.Table("user_has_resident",
@@ -100,11 +108,12 @@ class User_has_booking(db.Model):
         return f'{self.booking}'
 
     def serialize(self):
+        resident = Resident.query.get(self.resident_id)
         return {
             "id": self.id,
             "is_online": self.is_online,
             "url": self.url,
-            "resident_id": self.resident_id,
+            "resident" : resident.serialize(),
             "user_id": self.user_id,
             "booking": self.booking
         }

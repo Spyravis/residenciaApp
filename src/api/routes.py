@@ -3,7 +3,8 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Role_user, User_has_booking, Exit_permit , Message as InternalMessages
+from api.models import db, User, Role_user, User_has_booking, Exit_permit ,Resident,user_has_resident, Message as InternalMessages
+
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -44,10 +45,23 @@ def user_register():
 @api.route('/user', methods=['GET'])
 @jwt_required()
 def current_user():
-    user_id = get_jwt_identity()
-    #user = User.query.get(user_id)
+    user_id = get_jwt_identity()    
     user = User.query.filter_by(id = user_id)
     return jsonify({"response": x.serialize() for x in user}), 200
+
+#información de los usuarios que tiene un residente
+@api.route('/userresidentsInfo', methods=['GET'])
+@jwt_required()
+def current_user_residents():
+    user_id = get_jwt_identity()
+    userdata = User.query.filter_by(id = user_id)
+    userdata_serialized = [x.serialize() for x in userdata]    
+    users_resindent = []
+    for i in (userdata_serialized[0]["residents"]):   
+        users = Resident.query.filter_by(id = i["id"])
+        users_resindent.extend(x.resident_users() for x in users)    
+    print( users_resindent)
+    return jsonify({"response": users_resindent}), 200
 
 #Mensajes por usuario
 @api.route('/messages', methods=['GET'])
@@ -55,8 +69,7 @@ def current_user():
 def get_messages():
     user_id = get_jwt_identity()    
     messages_by_user = InternalMessages.query.filter_by(user_id = user_id)
-    messages_serialized = [x.serialize() for x in messages_by_user]
-    print(messages_serialized)
+    messages_serialized = [x.serialize() for x in messages_by_user]    
     return jsonify({"response" : messages_serialized}), 200
 
 #Mensajes por residente
@@ -129,6 +142,27 @@ def current_schuddle():
     db.session.add(new_booking)
     db.session.commit()    
     return jsonify({"response": "Exit permit created succesfully"}), 200
+
+@api.route('/userschuddle', methods=['GET'])
+@jwt_required()
+def current_user_schuddle():
+    user_id = get_jwt_identity()
+    bookings =  User_has_booking.query.filter_by(user_id=user_id).order_by(User_has_booking.booking.desc())   
+    bookings_serialized = [x.serialize() for x in bookings]
+    return jsonify({"response" : bookings_serialized}), 200
+
+@api.route('/residentbookings', methods=['GET'])
+@jwt_required()
+def get_resident_bookings():
+    user_id = get_jwt_identity()
+    userdata = User.query.filter_by(id = user_id)
+    userdata_serialized = [x.serialize() for x in userdata]    
+    bookings_serialized = []
+    for i in (userdata_serialized[0]["residents"]):
+        bookings_by_resident = User_has_booking.query.filter_by(resident_id = i["id"])
+        bookings_serialized.extend([x.serialize() for x in bookings_by_resident])
+    ordenados = sorted(bookings_serialized, key=lambda k: k["booking"], reverse = True)    
+    return jsonify({"response" : ordenados}), 200
 
 @api.route('/bookings_availability', methods=['GET','POST'])
 @jwt_required()

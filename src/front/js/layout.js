@@ -12,6 +12,10 @@ import { MyHome } from "./pages/myHome";
 import { Messages } from "./pages/messages";
 import { ShuddleVisit } from "./pages/schuddleVisit";
 import { ExitPermit } from "./pages/exitPermit";
+
+import { MeetPage } from "./pages/MeetPage";
+import { MyVisits } from "./pages/myVisits";
+
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -24,12 +28,12 @@ const Layout = () => {
   const basename = process.env.BASENAME || "";
 
   return (
-    <div>
+    <div className="d-flex flex-column h-100">
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
           <Routes>
-            <Route element={<Register />} path="/register" />
+            <Route element={<Register />} path="/register/:hash" />
             <Route element={<Login />} path="/login" />
             <Route element={<Profile />} path="/profile" />
             <Route element={<AboutUs />} path="/aboutUs" />
@@ -40,6 +44,8 @@ const Layout = () => {
             <Route element={<Messages />} path="/messages" />
             <Route element={<ShuddleVisit />} path="/schuddleVisit" />
             <Route element={<ExitPermit />} path="/exitPermit" />
+            <Route element={<MyVisits />} path="/MyVisits" />
+            <Route element={<MeetPage />} path="/meet/:id" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
