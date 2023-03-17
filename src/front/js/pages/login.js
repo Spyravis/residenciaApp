@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
-import logo from "./../../img/logo.png";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -28,26 +27,28 @@ export const Login = () => {
       const data = await response.json();
       console.log(data);
       localStorage.setItem("token", data.token);
-      await actions.getCurrentUserEmail();
+      await actions.getCurrentUser();
       navigate("/myHome");
     } else {
       setError(true);
+      setEmail("");
+      setPassword("");
     }
   };
 
   return (
     <div className="container d-flex  justify-content-center  mt-5">
-      <div className="border rounded p-2">
-        <img className="img-fluid" src={logo} alt="logo" width="300" />
-      </div>
-      <div className="border rounded p-2 bg-secondary bg-gradient bg-opacity-75">
-        <h2 className="text-center m-3">Login </h2>
-        <div className="row my-3">
-          <label className="col-sm-2 col-form-label" htmlFor="email">
-            Email:{" "}
-          </label>
-          <div className="col-sm-10">
+      <div
+        className="card bg-secondary bg-gradient bg-opacity-75 p-2 m-5"
+        style={{ width: "18rem" }}
+      >
+        <h2 className="text-center m-3 fs-1 justify-content-center">
+          <i className="fa-solid fa-circle-user"></i>
+        </h2>
+        <div className="d-grid my-3 justify-content-center gap-2">
+          <div className="col">
             <input
+              type="email"
               className="form-control"
               name="email"
               placeholder="email"
@@ -58,13 +59,9 @@ export const Login = () => {
               }}
             ></input>
           </div>
-        </div>
-        <div className="row my-3">
-          <label className="col-sm-2 col-form-label" htmlFor="password">
-            Password:{" "}
-          </label>
-          <div className="col-sm-10">
+          <div className="col">
             <input
+              type="password"
               className="form-control"
               name="password"
               placeholder="password"
@@ -75,9 +72,9 @@ export const Login = () => {
               }}
             ></input>
           </div>
-          <div className="text-center mt-3 p-3 ">
+          <div className="d-grid text-center mt-3">
             <button
-              className="btn btn-primary btn-lg"
+              className="btn btn-primary btn-lg rounded-pill "
               onClick={() => sendLoginCredential()}
             >
               Login
@@ -86,7 +83,7 @@ export const Login = () => {
               <p className="alert alert-warning">Error en crendenciales</p>
             ) : null}
           </div>
-          <div>
+          <div className="mt-3">
             <p>Forgot your password?</p>
           </div>
         </div>

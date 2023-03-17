@@ -2,9 +2,11 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Quincenal, Night_report
+from api.models import db, User, Role_user
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
@@ -34,33 +36,25 @@ def user_login():
 
     return jsonify({"response": "Hola", "token": token}), 200
 
-    #Crear ruta para reporte nocturo
-@api.route('/parte', methods=['GET'])
-@jwt_required()
-def parte():
-   #user_id = get_jwt_identity()
-   query=Quincenal.query.all()
-   data=[report.serialize() for report in query]
-   #acceder, mediante la relacion entre tablas, al paciente que esta relacionado al ID del usuario que recibimos en el jwt, y entonces generar el reporte
-   return jsonify({"result": data}), 200
-#Crear ruta para reporte quincenal  
-#  
-@api.route('/parteQuincenal', methods=['GET'])
-@jwt_required()
-def quincenal():
-   user_id = get_jwt_identity()
-   query=Night_report.query.order_by(Night_report.date.asc()).limit(15)
-   data=[report.serialize() for report in query]
-   #print(data)
-   #acceder, mediante la relacion entre tablas, al paciente que esta relacionado al ID del usuario que recibimos en el jwt, y entonces generar el reporte
-   return jsonify({"result": data}), 200
-#Crear ruta para reporte quincenal  
+@api.route('/register', methods=['POST'])
+def user_register():
+    body_name = request.json.get("name")
+    body_surname = request.json.get("surname")
+    body_email = request.json.get("email")
+    body_password = request.json.get("password")
+    body_phone = request.json.get("phone")
+    user_already_exist = User.query.filter_by(email= body_email).first()
+    if user_already_exist:
+        return jsonify({"response": "Email already used"}), 300
+    new_user = User (name=body_name, surname=body_surname, email=body_email, password=body_password, phone=body_phone, role_user_id=1)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"response": "User registered successfully"}), 200 
 
 @api.route('/parteNocturno', methods=['GET'])
 @jwt_required()
-def nocturno():
+def current_user():
     user_id = get_jwt_identity()
-    night_report = Night_report.query.filter_by(user_id = user_id).order_by(Night_report.date.desc()).first()
-    print(night_report.serialize())
-    return jsonify({"result":night_report.serialize()})
-   
+    user = User.query.filter_by(id = user_id)
+    #return jsonify({"id":user.id, "email": user.email}), 200
+    return jsonify({"response": x.serialize() for x in user}), 200

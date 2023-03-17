@@ -4,9 +4,17 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import { Register } from "./pages/register";
 import { Login } from "./pages/login";
+import { Profile } from "./pages/profile";
 import { AboutUs } from "./pages/aboutUs";
 import { ContactUs } from "./pages/contactUs";
 import { MyHome } from "./pages/myHome";
+import { Messages } from "./pages/messages";
+import { ShuddleVisit } from "./pages/schuddleVisit";
+import { ExitPermit } from "./pages/exitPermit";
+
+import { MeetPage } from "./pages/MeetPage";
+import { MyVisits } from "./pages/myVisits";
+
 import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -20,13 +28,14 @@ const Layout = () => {
   const basename = process.env.BASENAME || "";
 
   return (
-    <div>
+    <div className="d-flex flex-column h-100">
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
           <Routes>
-            <Route element={<Register />} path="/register" />
+            <Route element={<Register />} path="/register/:hash" />
             <Route element={<Login />} path="/login" />
+            <Route element={<Profile />} path="/profile" />
             <Route element={<AboutUs />} path="/aboutUs" />
             <Route element={<ContactUs />} path="/contactUs" />
             <Route element={<Home />} path="/" />
@@ -34,6 +43,11 @@ const Layout = () => {
             <Route element={<MyHome />} path="/myHome" />
             <Route element={<Partes />} path="/partes" />
             <Route element={<Historial />} path="/historial" />
+            <Route element={<Messages />} path="/messages" />
+            <Route element={<ShuddleVisit />} path="/schuddleVisit" />
+            <Route element={<ExitPermit />} path="/exitPermit" />
+            <Route element={<MyVisits />} path="/MyVisits" />
+            <Route element={<MeetPage />} path="/meet/:id" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer />
