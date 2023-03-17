@@ -1,6 +1,6 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+body {
+  background-color: #fff6ea;
+}
 .myMenu div .btn {
   min-width: 170px;
 }
