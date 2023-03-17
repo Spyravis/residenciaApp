@@ -1,39 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { LoggedMenu } from "../component/logged-menu";
 import "../../styles/home.css";
+import { Schuddle } from "../component/schuddle";
+import { Admin } from "../component/admin";
+import { Worker } from "../component/worker";
 
 export const MyHome = () => {
-    const navigate = useNavigate();
-    const { store, actions } = useContext(Context);
-    /*
-        if (store.userdata == null) {
-            console.log("VACIOOO");
-            localStorage.getItem("user");
-            actions.getCurrentUserEmail();
-        } else {
-            console.log(store.userdata);
-            console.log(localStorage.getItem("user").email);
-        }
-    */
+  const navigate = useNavigate();
+  const { store, actions } = useContext(Context);
 
-    return (
+  useEffect(() => {
+    if (!store.userdata.id) {
+      navigate("/login");
+    }
+  }, []);
 
-        <div className="container text-center mt-5">
-            <div className="row">
-                <h2>{store.userdata.role_user == 1 ? "Familiar" : "Trabajador"} {store.userdata.name}</h2>
-            </div>
-            <LoggedMenu></LoggedMenu>
-            <div className="row">
+  return (
+    <div className="container">
+      <LoggedMenu></LoggedMenu>
 
-                {Object.keys(store.userdata).map((x, index) => {
-                    return (
-                        <p key={index}>{x + " " + store.userdata[x]}</p>
-                    );
-                })}
-            </div>
-
-        </div>
-    );
+      {store.userdata.role_user == 1 ? <Schuddle /> : store.userdata.role_user == 3 ? <Admin /> : <Worker />}
+    </div>
+  );
 };

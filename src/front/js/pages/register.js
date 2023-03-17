@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
@@ -9,6 +9,7 @@ export const Register = () => {
   const { store, actions } = useContext(Context);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
+  const [photo, setPhoto] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,25 +17,32 @@ export const Register = () => {
   const [error, setError] = useState(false);
 
   const [validateInfo, setValidateInfo] = useState(false);
+  const [validatePassword, setValidatePassword] = useState(false);
+
+  const { hash } = useParams();
+
+  useEffect(() => {
+    if (hash != "8983ef5be7525d9ec2f9e74dd458bf8f") {
+      navigate("/");
+    }
+  }, []);
 
   const sendRegisterCredentials = async () => {
     if (password == confirmPassword) {
-      const response = await fetch(
-        "https://3001-spyravis-residenciaapp-a54c0x6wdii.ws-eu85.gitpod.io/api/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: name,
-            surname: surname,
-            email: email,
-            password: password,
-            phone: phone,
-          }),
-        }
-      );
+      const response = await fetch(process.env.BACKEND_URL + "/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          surname: surname,
+          photo: photo,
+          email: email,
+          password: password,
+          phone: phone,
+        }),
+      });
       const data = await response.json();
       if (response.ok) {
         navigate("/login");
@@ -44,14 +52,68 @@ export const Register = () => {
     }
   };
 
+  const checkPassword = (data) => {
+    const passClass = document.getElementsByClassName("pass-check");
+    const lowerCase = new RegExp("(?=.*[a-z])");
+    const upperCase = new RegExp("(?=.*[A-Z])");
+    const number = new RegExp("(?=.*[0-9])");
+    const specialChar = new RegExp("(?=.*[!@#$%&*])");
+    const eightChar = new RegExp("(?=.{8,})");
+
+    if (eightChar.test(data)) {
+      passClass[0].style.color = "green";
+    } else {
+      passClass[0].style.color = "grey";
+    }
+    if (lowerCase.test(data)) {
+      passClass[1].style.color = "green";
+    } else {
+      passClass[1].style.color = "grey";
+    }
+    if (upperCase.test(data)) {
+      passClass[2].style.color = "green";
+    } else {
+      passClass[2].style.color = "grey";
+    }
+    if (specialChar.test(data)) {
+      passClass[3].style.color = "green";
+    } else {
+      passClass[3].style.color = "grey";
+    }
+    if (number.test(data)) {
+      passClass[4].style.color = "green";
+    } else {
+      passClass[4].style.color = "grey";
+    }
+  };
+
+  useEffect(() => {
+    const passClass = document.getElementsByClassName("pass-check");
+    if (
+      password == confirmPassword &&
+      password.length >= 8 &&
+      password.length <= 20 &&
+      passClass[0].style.color == "green" &&
+      passClass[1].style.color == "green" &&
+      passClass[2].style.color == "green" &&
+      passClass[3].style.color == "green" &&
+      passClass[4].style.color == "green"
+    ) {
+      setValidatePassword(true);
+    } else {
+      setValidatePassword(false);
+    }
+  }, [password, confirmPassword]);
+
   useEffect(() => {
     if (
       password == confirmPassword &&
       email.includes("@") &&
+      photo != "" &&
       name != "" &&
       surname != "" &&
       phone != "" &&
-      phone.length > 9 &&
+      phone.length > 8 &&
       phone.length < 12
     ) {
       setValidateInfo(true);
@@ -66,7 +128,7 @@ export const Register = () => {
         <h2 className="text-center m-3">Register </h2>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="name">
-            Name:{" "}
+            Name:
           </label>
           <div className="col">
             <input
@@ -83,7 +145,7 @@ export const Register = () => {
         </div>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="surname">
-            Surname:{" "}
+            Surname:
           </label>
           <div className="col">
             <input
@@ -99,8 +161,42 @@ export const Register = () => {
           </div>
         </div>
         <div className="row my-3">
+          <label className=" col-form-label" htmlFor="photo">
+            Photo:
+          </label>
+          <div className="col">
+            <input
+              className="form-control"
+              name="photo"
+              placeholder="Photo URL"
+              onChange={(e) => {
+                setError(false);
+                setPhoto(e.target.value);
+              }}
+            ></input>
+          </div>
+        </div>
+        <div className="row my-3">
+          <label className=" col-form-label" htmlFor="phone">
+            Phone:
+          </label>
+          <div className="col">
+            <input
+              className="form-control"
+              name="phone"
+              placeholder="phone"
+              maxLength="12"
+              value={phone}
+              onChange={(e) => {
+                setError(false);
+                setPhone(e.target.value);
+              }}
+            ></input>
+          </div>
+        </div>
+        <div className="row my-3">
           <label className=" col-form-label" htmlFor="email">
-            Email:{" "}
+            Email:
           </label>
           <div className="col">
             <input
@@ -119,11 +215,11 @@ export const Register = () => {
         </div>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="password">
-            Password:{" "}
+            Password:
           </label>
           <div className="col">
             <input
-              type="text"
+              type="password"
               className="form-control"
               name="password"
               placeholder="password"
@@ -133,17 +229,18 @@ export const Register = () => {
               onChange={(e) => {
                 setError(false);
                 setPassword(e.target.value);
+                checkPassword(e.target.value);
               }}
             ></input>
           </div>
         </div>
         <div className="row my-3">
           <label className=" col-form-label" htmlFor="password">
-            Confirm Password:{" "}
+            Confirm Password:
           </label>
           <div className="col">
             <input
-              type="text"
+              type="password"
               className="form-control"
               name="confirm password"
               placeholder="confirm password"
@@ -160,24 +257,23 @@ export const Register = () => {
                 }
               }}
             ></input>
-          </div>
-        </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="phone">
-            Phone:{" "}
-          </label>
-          <div className="col">
-            <input
-              className="form-control"
-              name="phone"
-              placeholder="phone"
-              maxLength="12"
-              value={phone}
-              onChange={(e) => {
-                setError(false);
-                setPhone(e.target.value);
-              }}
-            ></input>
+            <p className="d-flex flex-column mt-2">
+              <label className="pass-check fw-semibold">
+                At least 8 characters
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 lower case characters
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 Upper case characters
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 especial characters ( !, @, #, $, %, & ,* )
+              </label>
+              <label className="pass-check fw-semibold">
+                At least 1 numerical characters
+              </label>
+            </p>
           </div>
         </div>
         <div>

@@ -1,0 +1,122 @@
+.calendar-container {
+  width: 500px;
+  background: #a0c3d2;
+  border-radius: 10px;
+}
+.calendar-container header {
+  display: flex;
+  align-items: center;
+  padding: 25px 15px 10px;
+  justify-content: space-around;
+}
+header .current-date {
+  font-size: 2rem;
+  font-weight: 500;
+}
+header .icons span {
+  height: 38px;
+  width: 38px;
+  color: #878787;
+  font-size: 1.9rem;
+  margin: 0 1px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 50%;
+}
+header .icons span:hover {
+  background: #f2f2f2;
+}
+header .icons span:last-child {
+  margin-right: -10px;
+}
+.calendar {
+  padding: 10px;
+}
+.calendar ul {
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 0;
+}
+.calendar .days {
+  margin-bottom: 15px;
+}
+.calendar .weeks li {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.calendar ul li {
+  position: relative;
+  width: calc(100% / 7);
+}
+
+ul .days {
+  display: flex;
+  align-items: center;
+}
+
+.calendar .days li {
+  z-index: 1;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.days li div.inactive {
+  color: #727171;
+}
+
+.calendar div {
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar .days li::before {
+  position: absolute;
+  content: "";
+  height: 30px;
+  width: 30px;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  border-radius: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.days li:hover::before {
+  background: #f2f2f2;
+}
+
+.today::before:only-child {
+  background-color: #4cd4f3;
+}
+
+.selected {
+  position: relative;
+  display: inline-block;
+}
+
+.days li div.today {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #f5f3f3;
+}
+
+.selected :only-child {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #eb9b9b;
+}
