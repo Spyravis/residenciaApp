@@ -4,3 +4,20 @@
 .myMenu div .btn {
   min-width: 170px;
 }
+
+body {
+  margin-top: 100px;
+  color: #7ab0b2;
+}
+
+button {
+  color: #e3946e;
+}
+
+footer {
+  background-color: #6d7e9a;
+}
+
+cardHeader {
+  color: #6d7e9a;
+}
