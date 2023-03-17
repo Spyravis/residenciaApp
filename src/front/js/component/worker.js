@@ -37,10 +37,10 @@ export const Worker = () => {
                                     <Fragment key={index}>
                                         <div className="card m-2" style={{ width: "18rem" }}>
                                             <img src={user.photo} className="card-img-top" alt={user.name} />
-                                            <div className="card-body">
-                                                <p className="card-text">{user.name} {user.surname}</p>
-                                                <p className="card-text">{user.phone}</p>
-                                                <p className="card-text">{user.email}</p>
+                                            <div className="card-body fw-light">
+                                                <p className="card-text"><i className="fa-solid fa-user" /> {user.name} {user.surname}</p>
+                                                <p className="card-text"><i className="fa-solid fa-phone" /> {user.phone}</p>
+                                                <p className="card-text"><i className="fa-solid fa-envelope" /> {user.email}</p>
                                             </div>
                                         </div>
                                     </Fragment>

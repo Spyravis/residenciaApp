@@ -43,9 +43,9 @@ export const MyVisits = () => {
                                 <Fragment key={index}>
                                     <tr>
                                         <th scope="row">{index + 1}</th>
-                                        <td>{new Date(utc).toLocaleDateString('es-ES', options)} a las {new Date(utc).toLocaleTimeString('es-ES', { hour: "2-digit", minute: "2-digit" })}</td>
+                                        <td>{new Date(utc) > new Date() ? <span><i className="fa-solid fa-hourglass" /></span> : <span><i className="fa-solid fa-check" /></span>} {new Date(utc).toLocaleDateString('es-ES', options)} a las {new Date(utc).toLocaleTimeString('es-ES', { hour: "2-digit", minute: "2-digit" })}</td>
                                         <td>
-                                            {store.bookings[booking].url ? new Date(utc).toDateString() == new Date().toDateString() ? <Link to={store.bookings[booking].url}>Online<br></br>Iniciar ahora </Link> : "Online" : "Presencial"}</td>
+                                            {store.bookings[booking].url ? new Date(utc).toDateString() == new Date().toDateString() ? <Link to={store.bookings[booking].url}>Online<br></br>Iniciar ahora </Link> : <span><i className='fa-solid fa-mobile' /> Online</span> : <span><i className="fa-solid fa-home" /> Presencial </span>}</td>
                                         <td>{store.bookings[booking].resident.name}</td>
                                     </tr>
                                 </Fragment>
