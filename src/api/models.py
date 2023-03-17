@@ -102,17 +102,31 @@ class Night_report(db.Model):
     date = db.Column(db.DateTime , unique=False, nullable=False)
     incidences = db.Column(db.Boolean(), unique=False, nullable=False)
     comments = db.Column(db.String(250), unique=False, nullable=True)
+    sugar_level = db.Column(db.String(80), unique=False, nullable=False)
+    oxygen_level = db.Column(db.String(80), unique=False, nullable=False)
+    cholesterol_level = db.Column(db.String(80), unique=False, nullable=False)
+    leukocytes_level = db.Column(db.String(80), unique=False, nullable=False)
+    redbloods_level = db.Column(db.String(80), unique=False, nullable=False)
+    whitebloods_level = db.Column(db.String(80), unique=False, nullable=False)
     resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'),nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
 
     def serialize(self):
+        resident = Resident.query.get(self.resident_id)
+        user = User.query.get(self.user_id)
         return {
             "id": self.id,
             "date": self.date,
             "incidences": self.incidences,
             "comments": self.comments,
-            "resident_id": self.resident_id,
-            "user_id": self.user_id,            
+            "sugar_level": self.sugar_level,
+            "oxygen_level": self.oxygen_level,
+            "cholesterol_level": self.cholesterol_level,
+            "leukocytes": self.leukocytes_level,
+            "redbloods_level": self.redbloods_level,
+            "whitebloods_level": self.whitebloods_level,
+            "resident": {"id":resident.id, "name":resident.name},
+            "user": {"id":user.id, "name":user.name},           
         }
 
 class Message(db.Model):
@@ -139,6 +153,13 @@ class Quincenal(db.Model):
     date = db.Column(db.DateTime , unique=False, nullable=False)
     incidences = db.Column(db.Boolean(), unique=False, nullable=False)
     comments = db.Column(db.String(250), unique=False, nullable=True)
+    sugar_level = db.Column(db.String(80), unique=False, nullable=False)
+    oxygen_level = db.Column(db.String(80), unique=False, nullable=False)
+    cholesterol_level = db.Column(db.String(80), unique=False, nullable=False)
+    leukocytes_level = db.Column(db.String(80), unique=False, nullable=False)
+    redbloods_level = db.Column(db.String(80), unique=False, nullable=False)
+    whitebloods_level = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
     resident_id = db.Column(db.Integer, db.ForeignKey('resident.id'),nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     def __repr__(self):
@@ -150,6 +171,12 @@ class Quincenal(db.Model):
             "date": self.date,
             "incidences": self.incidences,
             "comments": self.comments,
+            "sugar_level": self.sugar_level,
+            "oxygen_level": self.oxygen_level,
+            "cholesterol_level": self.cholesterol_level,
+            "leukocytes": self.leukocytes_level,
+            "redbloods_level": self.redbloods_level,
+            "whitebloods_level": self.whitebloods_level,
             "resident_id": self.resident_id,
             "user_id": self.user_id,            
         }

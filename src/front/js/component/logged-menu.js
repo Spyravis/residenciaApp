@@ -19,9 +19,6 @@ export const LoggedMenu = () => {
         <div className="btn-group m-2" role="group" aria-label="First group">
           <Link to="/partes">
             <button className="btn btn-success p-5">Partes</button>
-            {/* este boton enseña el componente donde van a estar los dos botones de los partes */}
-            {/* desde ese componente, se llama a los dos componentes parteNocturno, parteQuincenal */}
-            {/* AQUI SE MUESTRA COMPONENTE PARTES */}
           </Link>
         </div>
         <div className="btn-group m-2" role="group" aria-label="First group">

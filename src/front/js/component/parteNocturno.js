@@ -7,55 +7,43 @@ export const ParteNocturno = () => {
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
 
+  const [parte, setParte] = useState({ resident: {}, user: {} });
+
   useEffect(() => {
-    fetch(
-      `https://3001-spyravis-residenciaapp-n2elmvmu4h1.ws-eu87.gitpod.io/parte/`
-    );
+    getparteNocturno();
   }, []);
 
+  const getparteNocturno = async () => {
+    const response = await fetch(
+      process.env.BACKEND_URL + "/api/parteNocturno",
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+    const data = await response.json();
+    setParte(data.result);
+  };
   return (
     <div className="card text-center">
-      <div className="card-header">Paciente: Periquito de los Palotes </div>
-      <div className="card-body">
-        <div class="input-group">
-          <div className="input-group-text">
-            <label
-              className="form-check-input mt-0"
-              type="radio"
-              value=""
-              aria-label="Radio button for following text input"
-            ></label>
-          </div>
-          <label
-            type="text"
-            className="form-control"
-            aria-label="Text input with radio button"
-          >
-            Noche sin incidencia
-          </label>
-        </div>
-        <div className="input-group">
-          <div className="input-group-text">
-            <label
-              className="form-check-input mt-0"
-              type="radio"
-              value=""
-              aria-label="Radio button for following text input"
-            ></label>
-          </div>
-          <label
-            type="text"
-            className="form-control"
-            aria-label="Text input with radio button"
-          >
-            Noche con incidencia
-          </label>
-        </div>
-      </div>
-      <div></div>
+      <div className="card-header">Paciente: {parte.resident.name} </div>
+      <p>Azúcar: {parte.sugar_level}</p>
+      <p>Oxígeno: {parte.oxygen_level}</p>
+      <p>Colesterol: {parte.cholesterol_level}</p>
+      <p>Leucocitos: {parte.leukocytes_level}</p>
+      <p>Glóbulos rojos: {parte.redbloods_level}</p>
+      <p>Glóbulos blancos: {parte.whitebloods_level}</p>
+
+      {parte.incidences ? (
+        <h4>Noche con incidencia</h4>
+      ) : (
+        <h4>Noche sin incidencia</h4>
+      )}
       <div className="card-body">
         <h5 className="card-title d-flex justify-content-start">
           Observaciones:
+          {parte.comments}
         </h5>
         <p className="card-text"></p>
       </div>

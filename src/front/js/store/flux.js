@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       currentUserEmail: {},
       userdata: {},
+      partes: {},
     },
     actions: {
       getCurrentUserEmail: async () => {
@@ -15,9 +16,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (response.ok) {
           setStore({ currentUserEmail: data.response.email });
           localStorage.setItem("user", data.response);
+          localStorage.setItem("id", data.response.id);
           setStore({ userdata: data.response });
         }
       },
+
       logout: () => {
         try {
           localStorage.removeItem("token");

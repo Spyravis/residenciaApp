@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Quincenal, Night_report
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 
@@ -35,12 +35,32 @@ def user_login():
     return jsonify({"response": "Hola", "token": token}), 200
 
     #Crear ruta para reporte nocturo
-@api.route('/parte/<int:id>', methods=['GET'])
+@api.route('/parte', methods=['GET'])
 @jwt_required()
 def parte():
-   user_id = get_jwt_identity()
+   #user_id = get_jwt_identity()
+   query=Quincenal.query.all()
+   data=[report.serialize() for report in query]
    #acceder, mediante la relacion entre tablas, al paciente que esta relacionado al ID del usuario que recibimos en el jwt, y entonces generar el reporte
-   return jsonify({"msg": "asd"})
-#Crear ruta para reporte quincenal   
-#def quincena():
-   #hay que crear tabla de parte quincenal
+   return jsonify({"result": data}), 200
+#Crear ruta para reporte quincenal  
+#  
+@api.route('/parteQuincenal', methods=['GET'])
+@jwt_required()
+def quincenal():
+   user_id = get_jwt_identity()
+   query=Night_report.query.order_by(Night_report.date.asc()).limit(15)
+   data=[report.serialize() for report in query]
+   #print(data)
+   #acceder, mediante la relacion entre tablas, al paciente que esta relacionado al ID del usuario que recibimos en el jwt, y entonces generar el reporte
+   return jsonify({"result": data}), 200
+#Crear ruta para reporte quincenal  
+
+@api.route('/parteNocturno', methods=['GET'])
+@jwt_required()
+def nocturno():
+    user_id = get_jwt_identity()
+    night_report = Night_report.query.filter_by(user_id = user_id).order_by(Night_report.date.desc()).first()
+    print(night_report.serialize())
+    return jsonify({"result":night_report.serialize()})
+   
