@@ -24,7 +24,7 @@ export const MyVisits = () => {
             <LoggedMenu></LoggedMenu>
 
             <div className="row mt-5">
-                <h3 className="text-center">Mis Visitas</h3>
+                <h3 className="p-3 bg-info bg-opacity-10 border border-info border-start-0 border-end-0">Mis Visitass</h3>
 
                 <table className="table table-striped table-hover">
                     <thead>

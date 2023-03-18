@@ -92,31 +92,10 @@ ul .days {
   background-color: #4cd4f3;
 }
 
-.selected {
-  position: relative;
-  display: inline-block;
-}
-
-.days li div.today {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
+.days li:has(div.today)::before {
   background-color: #f5f3f3;
 }
 
-.selected :only-child {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
+.selected::before {
   background-color: #eb9b9b;
 }

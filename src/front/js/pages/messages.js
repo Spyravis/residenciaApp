@@ -50,9 +50,9 @@ export const Messages = () => {
             <tr>
               <th scope="col">#</th>
               <th scope="col">Asunto</th>
-              <th scope="col">Mensaje</th>
+              <th scope="col" className="w-50">Mensaje</th>
               <th scope="col">Residente</th>
-              <th scope="col">X</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -66,21 +66,29 @@ export const Messages = () => {
                         ? "fw-bold"
                         : null
                     }
-                    role="button"
-                    onClick={() => {
-                      setModalShow(true);
-                      setcurrentMessageforModal(store.messages[message]);
-                    }}
+
                   >
                     <th scope="row">{index + 1}</th>
-                    <td>{store.messages[message].subject}</td>
-                    <td>
-                      {store.messages[message].message.substring(0, 10)}...
+                    <td role="button"
+                      onClick={() => {
+                        setModalShow(true);
+                        setcurrentMessageforModal(store.messages[message]);
+                      }}>{store.messages[message].subject}</td>
+                    <td role="button"
+                      onClick={() => {
+                        setModalShow(true);
+                        setcurrentMessageforModal(store.messages[message]);
+                      }}>
+                      {store.messages[message].message.substring(0, 20)}
                     </td>
-                    <td>{store.messages[message].resident.name}</td>
+                    <td role="button"
+                      onClick={() => {
+                        setModalShow(true);
+                        setcurrentMessageforModal(store.messages[message]);
+                      }}>{store.messages[message].resident.name}</td>
                     <td>
                       <span>
-                        <i
+                        <i role="button"
                           className="fa fa-trash"
                           onClick={(e) => {
                             actions.delteMessage(store.messages[message].id);
