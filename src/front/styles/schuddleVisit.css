@@ -1,3 +1,23 @@
-.body-schuddle {
-  background-color: #eae0da;
+
+.btn-schuddle{
+  background-color: #1367ED;
+  border-color: #1367ED;
+  color: white
+}
+.btn-schuddle:hover{
+  background-color: #E1B393;
+  border-color: #E1B393;
+  color: white
+}
+
+.btn-schuddle:active{
+  background-color: #E3946E;
+  border-color: #E3946E;
+  color: white
+}
+
+.btn-schuddle:focus{
+  background-color: #6D7E9A;
+  border-color: #6D7E9A;
+  color: white
 }

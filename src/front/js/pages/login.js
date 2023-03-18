@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-
+import "../../styles/login.css";
 import { useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
@@ -37,54 +37,57 @@ export const Login = () => {
   };
 
   return (
-    <div className="container d-flex  justify-content-center  mt-5">
-      <div
-        className="card bg-secondary bg-gradient bg-opacity-75 p-2 m-5"
-        style={{ width: "18rem" }}
-      >
-        <h2 className="text-center m-3 fs-1 justify-content-center">
-          <i className="fa-solid fa-circle-user"></i>
-        </h2>
-        <div className="d-grid my-3 justify-content-center gap-2">
-          <div className="col">
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              placeholder="email"
-              value={email}
-              onChange={(e) => {
-                setError(false);
-                setEmail(e.target.value);
-              }}
-            ></input>
-          </div>
-          <div className="col">
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => {
-                setError(false);
-                setPassword(e.target.value);
-              }}
-            ></input>
-          </div>
-          <div className="d-grid text-center mt-3">
-            <button
-              className="btn btn-primary btn-lg rounded-pill "
-              onClick={() => sendLoginCredential()}
-            >
-              Login
-            </button>
-            {error ? (
-              <p className="alert alert-warning">Error en crendenciales</p>
-            ) : null}
-          </div>
-          <div className="mt-3">
-            <p>Forgot your password?</p>
+    <div className=" d-flex  justify-content-center  mt-5">
+      <div className="login-card row  border p-0 my-5 ">
+        <div className="col-md-6  justify-content-center login-izq">
+        </div>
+        <div className="col-md-6 justify-content-center login-der">
+          <h2 className="text-center m-3 fs-1 justify-content-center">
+            <i className="fa-solid fa-circle-user my-3 icono-login"></i>
+          </h2>
+          <div className="d-grid my-3 justify-content-center gap-2">
+            <div className=" form-floating ">
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                placeholder="email"
+                value={email}
+                onChange={(e) => {
+                  setError(false);
+                  setEmail(e.target.value);
+                }}
+              ></input>
+              <label htmlFor="email"> <i className="fa-solid fa-envelope"></i> Email</label>
+            </div>
+            <div className="col form-floating">
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                placeholder="password"
+                value={password}
+                onChange={(e) => {
+                  setError(false);
+                  setPassword(e.target.value);
+                }}
+              ></input>
+              <label htmlFor="password"><i className="fa-solid fa-lock"></i> Password</label>
+            </div>
+            <div className="d-grid text-center mt-3">
+              <button
+                className="btn btn-primary btn-lg rounded-pill "
+                onClick={() => sendLoginCredential()}
+              >
+                Login
+              </button>
+              {error ? (
+                <p className="alert alert-warning rounded mt-2">Error en crendenciales</p>
+              ) : null}
+            </div>
+            <div className="mt-3 ">
+              <p className="text-end">Forgot your password?</p>
+            </div>
           </div>
         </div>
       </div>

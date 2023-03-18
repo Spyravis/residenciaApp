@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 
 export const UploadView = ({ files, setFiles, photo, setPhoto }) => {
   const { store, actions } = useContext(Context);
@@ -35,19 +33,16 @@ export const UploadView = ({ files, setFiles, photo, setPhoto }) => {
 
   return (
     <>
-      <div className="row my-3">
+      <div className="row justify-content-center my-3">
         <form className="col-auto" onSubmit={uploadImage}>
           <input
-            className="form-control"
+            className="form-control form-control-sm"
             type="file"
-            placeholder="Select file to upload"
             onChange={(e) => {
               setFiles(e.target.files);
             }}
           />
-          <button className="btn-outline-primary btn-sm mt-1">
-            Change Photo
-          </button>
+          <button className="btn-primary btn-sm mt-2">Change Photo</button>
         </form>
       </div>
     </>

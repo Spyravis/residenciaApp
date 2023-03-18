@@ -129,7 +129,7 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
   return (
     <div className="container d-flex justify-content-center align-item-center  mt-5">
       <div className="calendar-container ">
-        <header>
+        <div className="div-header">
           <div className="icons d-flex ">
             <span
               onClick={() => {
@@ -167,7 +167,10 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
               <i className="fa-solid fa-chevron-right"></i>
             </span>
           </div>
-        </header>
+        </div>
+        <div className="bg-white">
+          <br />
+        </div>
         <div className="calendar">
           <ul className="weeks mb-2">
             {daysNames.map((e, index) => {
@@ -181,7 +184,7 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
                   key={y}
                   className={
                     selectedDay === x.props.children &&
-                    x.props.className != "inactive"
+                      x.props.className != "inactive"
                       ? " selected"
                       : ""
                   }
