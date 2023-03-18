@@ -1,22 +1,22 @@
 .calendar-container {
   width: 500px;
-  background: #a0c3d2;
+  background: #6D7E9A;
   border-radius: 10px;
 }
-.calendar-container header {
+.calendar-container .div-header {
   display: flex;
   align-items: center;
   padding: 25px 15px 10px;
   justify-content: space-around;
 }
-header .current-date {
+.div-header .current-date {
   font-size: 2rem;
   font-weight: 500;
 }
-header .icons span {
+.div-header .icons span {
   height: 38px;
   width: 38px;
-  color: #878787;
+  color: #7AB0B2;
   font-size: 1.9rem;
   margin: 0 1px;
   cursor: pointer;
@@ -24,10 +24,10 @@ header .icons span {
   line-height: 38px;
   border-radius: 50%;
 }
-header .icons span:hover {
+.div-header .icons span:hover {
   background: #f2f2f2;
 }
-header .icons span:last-child {
+.div-header .icons span:last-child {
   margin-right: -10px;
 }
 .calendar {
@@ -64,7 +64,7 @@ ul .days {
   margin-bottom: 10px;
 }
 .days li div.inactive {
-  color: #727171;
+  color: #7AB0B2;
 }
 
 .calendar div {

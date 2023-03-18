@@ -112,7 +112,6 @@ export const ShuddleVisit = () => {
                 id="online"
                 name="online"
                 onChange={(e) => {
-                  e.preventDefault();
                   setOnline(true);
                 }}
               />
