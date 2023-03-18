@@ -34,7 +34,7 @@ export const Messages = () => {
       <LoggedMenu></LoggedMenu>
 
       <div className="row mt-5">
-        <h3 className="text-center">Mis Mensajes</h3>
+        <h3 className="p-3 bg-info bg-opacity-10 border border-info border-start-0 border-end-0">Mis Mensajes</h3>
         <div className="col-12 m-2">
           <button
             className="btn btn-primary"
