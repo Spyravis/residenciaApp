@@ -6,8 +6,8 @@ import "../../styles/index.css";
 export const LoggedMenu = () => {
   const { store, actions } = useContext(Context);
   return (
-    <div className="row justify-content-md-center">
-      <div className="myMenu bg-light text-center  col">
+    <div className=" row justify-content-md-center">
+      <div className="container-fluid myMenu bg-light text-center  col">
         <div className="btn-group m-2" role="group" aria-label="First group">
           <Link to="/myHome">
             <button className="btn btn-secondary p-2">Inicio</button>
