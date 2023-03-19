@@ -14,4 +14,10 @@
     background-image: url("https://res.cloudinary.com/dhqruwnj9/image/upload/v1678972538/869760579b6f459f0cdf1e0c5dc0f860_rlvcs1.jpg") ;
     background-repeat: no-repeat;
     background-size: cover;
+
+}
+
+.agenda-visita, .permiso-salida {
+    background-color: white;
+
 }

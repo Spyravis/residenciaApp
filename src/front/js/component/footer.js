@@ -10,12 +10,9 @@ export const Footer = () => {
 				className="d-flex justify-content-between p-4 text-white"
 				style={{ backgroundColor: "#E1B393" }}
 			>
-
 				<div className="me-5">
 					<span>Get connected with us on social networks:</span>
 				</div>
-
-
 
 				<div>
 					<Link to="/myHome" className="text-white me-4">
@@ -37,14 +34,10 @@ export const Footer = () => {
 						<i className="fab fa-github"></i>
 					</Link>
 				</div>
-
 			</section>
 
-
-
-			<section className="">
+			<section className="d-none d-md-block">
 				<div className="container text-center text-md-start mt-5">
-
 					<div className="row mt-3">
 						<div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
 							<Link to="/" className="text-dark">

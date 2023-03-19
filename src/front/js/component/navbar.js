@@ -17,11 +17,10 @@ export const Navbar = () => {
             <img
               className=""
               style={{ width: "auto", height: "50px" }}
-              src={azaharNav}
+              src="https://res.cloudinary.com/dhqruwnj9/image/upload/v1679248348/LOGO_AZAHAR_2_mbmzcq.png"
             />
           </span>
         </Link>
-
         <div
           className="btn-toolbar"
           role="toolbar"
@@ -38,7 +37,7 @@ export const Navbar = () => {
                 <img
                   className=""
                   style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-                  src={store.userdata.photo ? store.userdata.photo : "https://i.pinimg.com/564x/ad/57/b1/ad57b11e313616c7980afaa6b9cc6990.jpg"}
+                  src={store.userdata.photo ? store.userdata.photo : "https://res.cloudinary.com/dhqruwnj9/image/upload/v1679246283/ad57b11e313616c7980afaa6b9cc6990_iumvqv.jpg"}
                 />
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
                   {store.unreadedMessages}

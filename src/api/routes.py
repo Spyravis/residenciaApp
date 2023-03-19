@@ -59,14 +59,13 @@ def nocturno():
 def user_register():
     body_name = request.json.get("name")
     body_surname = request.json.get("surname")
-    body_photo = request.json.get("photo")
     body_email = request.json.get("email")
     body_password = request.json.get("password")
     body_phone = request.json.get("phone")
     user_already_exist = User.query.filter_by(email= body_email).first()
     if user_already_exist:
         return jsonify({"response": "Email already used"}), 300
-    new_user = User (name=body_name, surname=body_surname, photo=body_photo ,email=body_email, password=body_password, phone=body_phone, role_user_id=1)
+    new_user = User (name=body_name, surname=body_surname ,email=body_email, password=body_password, phone=body_phone, role_user_id=1)
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"response": "User registered successfully"}), 200 
@@ -216,20 +215,6 @@ def get_resident_bookings():
     ordenados = sorted(bookings_serialized, key=lambda k: k["booking"], reverse = True)    
     return jsonify({"response" : ordenados}), 200
 
-<<<<<<< HEAD
-@api.route('/bookings_availability', methods=['GET','POST'])
-@jwt_required()
-def bookings_availability():
-    user_id = get_jwt_identity()
-    booking = request.json.get("booking")
-    bookings = User_has_booking.query.filter_by(booking=booking)
-    if bookings.count() < 5:
-        return jsonify({"response":  "Cita confirmada"}), 200
-    else:
-        return jsonify({"response":  "No hay citas disponibles, seleccione otra fecha y/o hora"}), 300
-=======
-
->>>>>>> 310ba2a (guardando)
 
 @api.route('/exit_permit', methods=['POST'])
 @jwt_required()
@@ -237,22 +222,6 @@ def current_exit_permit():
     user_id = get_jwt_identity()
     resident_id = request.json.get("resident")    
     booking = request.json.get("booking")
-<<<<<<< HEAD
-    new_booking = Exit_permit (resident_id=resident_id,user_id=user_id,booking=booking)
-    db.session.add(new_booking)
-    db.session.commit()    
-    return jsonify({"response": "Booking created succesfully"}), 200
-          
-@api.route('/exit_permit_availability', methods=['GET','POST'])
-@jwt_required()
-def exit_permit_availability():
-    user_id = get_jwt_identity()
-    resident_id = request.json.get("resident") 
-    booking = request.json.get("booking")
-    bookings = Exit_permit.query.filter_by(booking=booking, resident_id=resident_id)
-    if bookings.count() < 1:
-        return jsonify({"response":  "Solicitud de Permiso de salida enviada"}), 200
-=======
 
     existing_booking = Exit_permit.query.filter_by(
         resident_id=resident_id,
@@ -269,7 +238,6 @@ def exit_permit_availability():
         db.session.add(new_booking)
         db.session.commit()
         return jsonify({"response": "Solicitud de Permiso de salida enviada"}), 200
->>>>>>> 310ba2a (guardando)
     else:
         return jsonify({"response": "Ya tiene un permiso de salida con esos datos"}), 409
 
