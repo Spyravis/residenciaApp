@@ -1,0 +1,49 @@
+.navbar{
+    background-color: #F5CE9A;
+}
+.btn-login-nav{
+    background-color: #6D7E9A;
+    border-color: #6D7E9A;
+    color: white
+}
+.btn-login-nav:hover{
+    background-color: #B87E93;
+    border-color: #B87E93;
+    color: white
+}
+
+.btn-login-nav:active{
+    background-color: #B87E93;
+    border-color: #B87E93;
+    color: white;
+    box-shadow: none;
+}
+
+.btn-login-nav:focus{
+    background-color: #6D7E9A;
+    border-color: #6D7E9A;
+    color: white;
+    box-shadow: none;
+}
+
+.btn-nav{
+    background-color: #F5CE9A;
+    border: #F5CE9A;
+}
+.btn-nav:hover{
+    border: #F5CE9A;
+    color: white;
+}
+
+.btn-nav:active{
+    color: white;
+    border: #F5CE9A;
+    box-shadow: none;
+}
+
+.btn-nav:focus{
+    border: none;
+    color: black;
+    outline-color: #F5CE9A ;
+    box-shadow: none;
+}

@@ -59,14 +59,13 @@ def nocturno():
 def user_register():
     body_name = request.json.get("name")
     body_surname = request.json.get("surname")
-    body_photo = request.json.get("photo")
     body_email = request.json.get("email")
     body_password = request.json.get("password")
     body_phone = request.json.get("phone")
     user_already_exist = User.query.filter_by(email= body_email).first()
     if user_already_exist:
         return jsonify({"response": "Email already used"}), 300
-    new_user = User (name=body_name, surname=body_surname, photo=body_photo ,email=body_email, password=body_password, phone=body_phone, role_user_id=1)
+    new_user = User (name=body_name, surname=body_surname ,email=body_email, password=body_password, phone=body_phone, role_user_id=1)
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"response": "User registered successfully"}), 200 
@@ -168,10 +167,32 @@ def current_schuddle():
     url = request.json.get("url")    
     resident_id = request.json.get("resident")    
     booking = request.json.get("booking")
-    new_booking = User_has_booking (is_online=is_online,url=url,resident_id=resident_id,user_id=user_id,booking=booking)
-    db.session.add(new_booking)
-    db.session.commit()    
-    return jsonify({"response": "Exit permit created succesfully"}), 200
+    
+    existing_booking = User_has_booking.query.filter_by(
+        is_online=is_online,
+        url=url,
+        resident_id=resident_id,
+        user_id=user_id,
+        booking=booking
+    ).first()
+
+    bookings = User_has_booking.query.filter_by(booking=booking)
+    if bookings.count() < 5:
+        if existing_booking is None:
+            new_booking = User_has_booking(
+                is_online=is_online,
+                url=url,
+                resident_id=resident_id,
+                user_id=user_id,
+                booking=booking
+            )
+            db.session.add(new_booking)
+            db.session.commit()
+            return jsonify({"response": "Cita confirmada"}), 200
+        else:
+            return jsonify({"response": "Ya existe cita con esos datos"}), 409
+    else:
+        return jsonify({"response":  "No hay citas disponibles, seleccione otra fecha y/o hora"}), 300
 
 @api.route('/userschuddle', methods=['GET'])
 @jwt_required()
@@ -194,16 +215,6 @@ def get_resident_bookings():
     ordenados = sorted(bookings_serialized, key=lambda k: k["booking"], reverse = True)    
     return jsonify({"response" : ordenados}), 200
 
-@api.route('/bookings_availability', methods=['GET','POST'])
-@jwt_required()
-def bookings_availability():
-    user_id = get_jwt_identity()
-    booking = request.json.get("booking")
-    bookings = User_has_booking.query.filter_by(booking=booking)
-    if bookings.count() < 5:
-        return jsonify({"response":  "Cita confirmada"}), 200
-    else:
-        return jsonify({"response":  "No hay citas disponibles, seleccione otra fecha y/o hora"}), 300
 
 @api.route('/exit_permit', methods=['POST'])
 @jwt_required()
@@ -211,34 +222,36 @@ def current_exit_permit():
     user_id = get_jwt_identity()
     resident_id = request.json.get("resident")    
     booking = request.json.get("booking")
-    new_booking = Exit_permit (resident_id=resident_id,user_id=user_id,booking=booking)
-    db.session.add(new_booking)
-    db.session.commit()    
-    return jsonify({"response": "Booking created succesfully"}), 200
-          
-@api.route('/exit_permit_availability', methods=['GET','POST'])
-@jwt_required()
-def exit_permit_availability():
-    user_id = get_jwt_identity()
-    resident_id = request.json.get("resident") 
-    booking = request.json.get("booking")
-    bookings = Exit_permit.query.filter_by(booking=booking, resident_id=resident_id)
-    if bookings.count() < 1:
-        return jsonify({"response":  "Solicitud de Permiso de salida enviada"}), 200
+
+    existing_booking = Exit_permit.query.filter_by(
+        resident_id=resident_id,
+        user_id=user_id,
+        booking=booking
+    ).first()
+
+    if existing_booking is None:
+        new_booking = Exit_permit(
+            resident_id=resident_id,
+            user_id=user_id,
+            booking=booking
+        )
+        db.session.add(new_booking)
+        db.session.commit()
+        return jsonify({"response": "Solicitud de Permiso de salida enviada"}), 200
     else:
-        return jsonify({"response":  "Ya tiene un permiso de salida con esos datos"}), 300
+        return jsonify({"response": "Ya tiene un permiso de salida con esos datos"}), 409
+
+  
 
 @api.route("/profile", methods=["PUT"])
 @jwt_required()
 def change_user_data():
     user_id = get_jwt_identity()
-    #update_photo = request.json["photo"]
     update_email = request.json["email"]
     update_phone = request.json["phone"]
-    if not (update_email and update_phone): #and update_photo):
+    if not (update_email and update_phone): 
         return jsonify({"error": "Invalid"}), 400
     user = User.query.get(user_id)
-    #user.photo = update_photo
     user.email = update_email
     user.phone = update_phone
     db.session.commit()
@@ -273,7 +286,7 @@ def sending_email():
     subject = request.json.get("subject")
     message_text = request.json.get("message") 
 
-    mailchimp = MailchimpTransactional.Client('md-54oVbrJrZJhIphFY1kJ-vw')
+    mailchimp = MailchimpTransactional.Client(os.environ.get(MAILCHIMP_API_KEY))
     message = {
         "from_email": "residenciaapp@abeceweb.com",
         "subject": subject,

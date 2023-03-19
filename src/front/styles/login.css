@@ -1,0 +1,15 @@
+.login-card{
+    max-width: 40rem;
+    border-radius: 2%;
+    background-color: white;
+}
+
+.icono-login{
+    font-size: 5rem; 
+}
+
+.login-izq{
+    background-image: url("https://res.cloudinary.com/dhqruwnj9/image/upload/v1678972538/869760579b6f459f0cdf1e0c5dc0f860_rlvcs1.jpg") ;
+    background-repeat: no-repeat;
+    border-radius: 2% 0% 0% 2%
+}

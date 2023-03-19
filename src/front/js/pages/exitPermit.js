@@ -38,28 +38,6 @@ export const ExitPermit = () => {
     });
     if (response.ok) {
       const data = await response.json();
-    } else {
-      setError(true);
-    }
-  };
-
-  const checkAvalability = async () => {
-    const response = await fetch(
-      process.env.BACKEND_URL + "/api/exit_permit_availability",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          booking: selectDate + " " + hourStart,
-          resident: resident,
-        }),
-      }
-    );
-    if (response.ok) {
-      const data = await response.json();
       setAvailability(data.response);
       setAvailable(true);
       return true;
@@ -70,6 +48,7 @@ export const ExitPermit = () => {
       return false;
     }
   };
+
 
   return (
     <div className="container-fluid">
@@ -82,7 +61,7 @@ export const ExitPermit = () => {
             setAvailable={setAvailable}
           />
         </div>
-        <div className="col-md-5 align-item-center justify-content-center  p-3">
+        <div className="col-md-5 align-item-center justify-content-center mt-5 p-3">
           <h2 className="my-2 text-center">Solicitar Permiso de Salida</h2>
 
           <div className="col-auto">
@@ -157,12 +136,10 @@ export const ExitPermit = () => {
           </div>
           <div className="d-grid gap-2">
             <button
-              className="btn btn-primary mt-2 "
+              className="btn btn-agendar-visita mt-2"
               onClick={async () => {
-                if (await checkAvalability()) {
-                  sendExitVisit();
-                }
-              }}
+                                 sendExitVisit();
+               }}
             >
               Enviar solicitud
             </button>
