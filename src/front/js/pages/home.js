@@ -59,12 +59,12 @@ export const Home = () => {
         </div>
 
         <div className="row testimonials h-25">
-          <div className="col border rounded p-5 m-3"><i class="fa fa-comment"></i><p>Dar las gracias al equipo de la residencia El Carmen. Por su cuidado y su bien hacer con las personas mayores . Muchas gracias.</p>
+          <div className="col border rounded p-5 m-3"><i className="fa fa-comment"></i><p>Dar las gracias al equipo de la residencia El Carmen. Por su cuidado y su bien hacer con las personas mayores . Muchas gracias.</p>
             <p>Señora Haro</p>
           </div>
-          <div className="col border rounded p-5 m-3"><i class="fa fa-comment"></i><p>Quiero agradecer al personal y a la dirección de Residencia El Carmen la amabilidad y la ayuda que nos han brindado a la persona que han tenido a su cargo y a sus allegados. El trato que hemos recibido y que les hemos visto dar a los demás ha sido profesional y cariñoso, y el ambiente siempre afable y tranquilo, en un entorno muy bonito.</p>
+          <div className="col border rounded p-5 m-3"><i className="fa fa-comment"></i><p>Quiero agradecer al personal y a la dirección de Residencia El Carmen la amabilidad y la ayuda que nos han brindado a la persona que han tenido a su cargo y a sus allegados. El trato que hemos recibido y que les hemos visto dar a los demás ha sido profesional y cariñoso, y el ambiente siempre afable y tranquilo, en un entorno muy bonito.</p>
             <p>Señor Paco</p></div>
-          <div className="col border rounded p-5 m-3"><i class="fa fa-comment"></i><p>Es más que una residencia, es el hogar de todos y cada uno de los abuelos que en ella residen. El equipo de profesionales que en ella trabajamos lo hacemos para ellos con mucho cariño, dedicación y empatia por ellos y sus familiares.</p>
+          <div className="col border rounded p-5 m-3"><i className="fa fa-comment"></i><p>Es más que una residencia, es el hogar de todos y cada uno de los abuelos que en ella residen. El equipo de profesionales que en ella trabajamos lo hacemos para ellos con mucho cariño, dedicación y empatia por ellos y sus familiares.</p>
             <p>Señor Marcial</p></div>
         </div>
         <div className="carrousel">
