@@ -4,3 +4,6 @@ body {
 .myMenu div .btn {
   min-width: 170px;
 }
+.card-cover {
+  background-position: center;
+}
