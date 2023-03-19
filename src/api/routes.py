@@ -216,6 +216,7 @@ def get_resident_bookings():
     ordenados = sorted(bookings_serialized, key=lambda k: k["booking"], reverse = True)    
     return jsonify({"response" : ordenados}), 200
 
+<<<<<<< HEAD
 @api.route('/bookings_availability', methods=['GET','POST'])
 @jwt_required()
 def bookings_availability():
@@ -226,6 +227,9 @@ def bookings_availability():
         return jsonify({"response":  "Cita confirmada"}), 200
     else:
         return jsonify({"response":  "No hay citas disponibles, seleccione otra fecha y/o hora"}), 300
+=======
+
+>>>>>>> 310ba2a (guardando)
 
 @api.route('/exit_permit', methods=['POST'])
 @jwt_required()
@@ -233,6 +237,7 @@ def current_exit_permit():
     user_id = get_jwt_identity()
     resident_id = request.json.get("resident")    
     booking = request.json.get("booking")
+<<<<<<< HEAD
     new_booking = Exit_permit (resident_id=resident_id,user_id=user_id,booking=booking)
     db.session.add(new_booking)
     db.session.commit()    
@@ -247,6 +252,24 @@ def exit_permit_availability():
     bookings = Exit_permit.query.filter_by(booking=booking, resident_id=resident_id)
     if bookings.count() < 1:
         return jsonify({"response":  "Solicitud de Permiso de salida enviada"}), 200
+=======
+
+    existing_booking = Exit_permit.query.filter_by(
+        resident_id=resident_id,
+        user_id=user_id,
+        booking=booking
+    ).first()
+
+    if existing_booking is None:
+        new_booking = Exit_permit(
+            resident_id=resident_id,
+            user_id=user_id,
+            booking=booking
+        )
+        db.session.add(new_booking)
+        db.session.commit()
+        return jsonify({"response": "Solicitud de Permiso de salida enviada"}), 200
+>>>>>>> 310ba2a (guardando)
     else:
         return jsonify({"response": "Ya tiene un permiso de salida con esos datos"}), 409
 

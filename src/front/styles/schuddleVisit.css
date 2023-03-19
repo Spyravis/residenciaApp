@@ -25,3 +25,30 @@
 h2.agendar-visita{
   font-weight: 700;
 }
+
+
+
+.btn-agendar-visita{
+  background-color: #7AB0B2;
+  border-color: #7AB0B2;
+  color: black;
+
+}
+.btn-agendar-visita:hover{
+  background-color: #2b585a;
+  border-color: #2b585a;
+  color: white;
+
+}
+
+.btn-agendar-visita:active{
+  background-color: #7AB0B2;
+  border-color: #7AB0B2;
+  color: black;
+}
+
+.btn-agendar-visita:focus{
+  background-color: #7AB0B2;
+  border-color: #7AB0B2;
+  color: black;
+}

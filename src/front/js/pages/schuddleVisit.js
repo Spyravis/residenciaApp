@@ -82,7 +82,7 @@ export const ShuddleVisit = () => {
             setAvailable={setAvailable}
           />
         </div>
-        <div className="col-md-5 align-item-center justify-content-center  p-3">
+        <div className="col-md-5 align-item-center justify-content-center mt-5 p-3">
           <h2 className="my-2 text-center agendar-visita">Agendar visita</h2>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="online">
@@ -192,7 +192,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="d-grid gap-2">
             <button
-              className="btn btn-primary mt-2 "
+              className="btn btn-agendar-visita mt-2 "
               onClick={async () => {
                 
                   sendSchuddleVisit();
