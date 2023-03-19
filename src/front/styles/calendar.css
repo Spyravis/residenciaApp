@@ -96,33 +96,13 @@ ul .days {
   background-color: #4cd4f3;
 }
 
-.selected {
-  position: relative;
-  display: inline-block;
+.days li:has(div.today)::before {
+  background-color: #f5f3f3;
 }
 
-.days li div.today {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: lightgray;
-}
+.selected::before {
+  background-color: #eb9b9b;
 
-.selected :only-child {
-  position: absolute;
-  content: "";
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: #7AB0B2;
 }
 
 .linea-horizontal{

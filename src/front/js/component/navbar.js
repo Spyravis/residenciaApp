@@ -34,6 +34,7 @@ export const Navbar = () => {
                   navigate("/messages");
                 }}
               >
+                <span className="px-2">{store.userdata.role_user == 1 ? <i className="fa-solid fa-people-group" /> : store.userdata.role_user == 2 ? <i className="fa-solid fa-user-nurse" /> : <i className="fa-solid fa-lock" />} {store.userdata.name} {store.userdata.surname}</span>
                 <img
                   className=""
                   style={{ width: "40px", height: "40px", borderRadius: "50%" }}

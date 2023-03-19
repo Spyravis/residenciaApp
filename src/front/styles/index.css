@@ -1,12 +1,11 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+body {
+  background-color: #fff6ea;
+  font-family: 'Open Sans', sans-serif;
+}
 .myMenu div .btn {
   min-width: 170px;
 }
 
-body{
-  background-color: #fff6ea;
-  font-family: 'Open Sans', sans-serif;
-    
+.card-cover {
+  background-position: center;
 }
