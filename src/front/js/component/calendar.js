@@ -145,9 +145,9 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
                 }
               }}
             >
-              <i className="fa-solid fa-chevron-left"></i>
+              <i className="fa-solid fa-chevron-left mx-1"></i>
             </span>
-            <h2 className="current-date">
+            <h2 className="current-date text-center">
               {actualMonth} {currentYear}
             </h2>
             <span
@@ -168,7 +168,7 @@ export const Calendar = ({ selectDate, setSelectDate, setAvailable }) => {
             </span>
           </div>
         </div>
-        <div className="bg-white">
+        <div className="linea-horizontal">
           <br />
         </div>
         <div className="calendar">

@@ -42,7 +42,7 @@ export const UploadView = ({ files, setFiles, photo, setPhoto }) => {
               setFiles(e.target.files);
             }}
           />
-          <button className="btn-primary btn-sm mt-2">Change Photo</button>
+          <button className="btn btn-primary btn-sm mt-2">Cambiar Foto</button>
         </form>
       </div>
     </>

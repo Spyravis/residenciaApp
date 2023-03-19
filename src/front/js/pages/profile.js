@@ -12,8 +12,8 @@ export const Profile = () => {
   const [name, setName] = useState(store.userdata?.name);
   const [surname, setsurname] = useState(store.userdata?.surname);
   const [photo, setPhoto] = useState(store.userdata?.photo);
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState(store.userdata?.email);
+  const [phone, setPhone] = useState(store.userdata?.phone);
   const [files, setFiles] = useState(null);
 
   const [password, setPassword] = useState("");
@@ -147,11 +147,10 @@ export const Profile = () => {
   return (
     <div className="container-fluid body-profile mb-1">
       <LoggedMenu />
-      <div className="container d-flex ">
-        <div className="row mt-5">
-          <div className="col-md-2  mt-3">
-          </div>
-          <div className="col-md-4  mt-3">
+      <div className="d-flex container d-flex mb-4 justify-content-center">
+        <div className="row mt-3 justify-content-center">
+
+          <div className="col-md-5  mt-3">
             <div className="d-flex card justify-content-center text-center ">
               <div className="justify-content-center mt-2 photo">
                 <img
@@ -178,10 +177,7 @@ export const Profile = () => {
 
             <div className="card p-2 mt-2">
               <div className="col-md justify-content-center mt-2 ">
-                <label className=" col-form-label" htmlFor="email">
-                  Email:
-                </label>
-                <div className="col-md">
+                <div className="col-md form-floating">
                   <input
                     value={email}
                     type="email"
@@ -192,22 +188,25 @@ export const Profile = () => {
                       setEmail(e.target.value);
                     }}
                   ></input>
+                  <label className=" col-form-label" htmlFor="email">
+                    <i className="fa-solid fa-envelope"></i> Email:
+                  </label>
                 </div>
               </div>
               <div className="col-md justify-content-center mt-2 ">
-                <label className=" col-form-label" htmlFor="phone">
-                  Phone:
-                </label>
-                <div className="col-md">
+                <div className="col-md form-floating">
                   <input
                     value={phone}
                     className="form-control"
                     name="phone"
-                    placeholder={"New Phone"}
+                    placeholder={phone}
                     onChange={(e) => {
                       setPhone(e.target.value);
                     }}
                   ></input>
+                <label className=" col-form-label" htmlFor="phone">
+                  <i className="fa-solid fa-phone"></i> Phone:
+                </label>
                 </div>
               </div>
               <div className="d-grid card-body mt-2 p-2 my-2">
@@ -221,21 +220,17 @@ export const Profile = () => {
             </div>
           </div>
           {/* ACA EMPIEZA EL CAMBIO DE CONTRASEÑA*/}
-
           <div className="col-md-5  border rounded p-2 px-4 bg-white  mt-3">
-            <h2 className="text-center mt-3">Cambiar Contraseña</h2>
-            <div className="mt-4">
-              <label className=" col-form-label" htmlFor="password">
-                Actual Password:
-              </label>
-              <div className="row mt-1">
-                <div className="col-md-12">
+            <h2 className="text-center mt-3">Modificar Contraseña</h2>
+            <div className="mt-4 ">
+              <div className="row mt-1 ">
+                <div className="col-md-12 form-floating">
                   <input
                     value={password}
                     type="password"
                     className="form-control"
                     name="password"
-                    placeholder="Password"
+                    placeholder="Contraseña Actual"
                     minLength="8"
                     maxLength="20"
                     onChange={(e) => {
@@ -243,21 +238,20 @@ export const Profile = () => {
                       setError(false);
                     }}
                   ></input>
+                 <label className=" col-form-label mx-2" htmlFor="password">
+                    <i className="fa-solid fa-lock mx-2"></i> Contraseña Actual:
+                  </label>
                 </div>
               </div>
             </div>
-
             <div className="row my-3">
-              <label className=" col-form-label" htmlFor="password">
-                New Password:
-              </label>
-              <div className="col-md-12">
+              <div className="col-md-12 form-floating">
                 <input
                   value={newPassword}
                   type="password"
                   className="form-control"
                   name="password"
-                  placeholder="New password"
+                  placeholder="Nueva Contraseña"
                   minLength="8"
                   maxLength="20"
                   onChange={(e) => {
@@ -265,19 +259,19 @@ export const Profile = () => {
                     checkPassword(e.target.value);
                   }}
                 ></input>
+                <label className=" col-form-label mx-2" htmlFor="password">
+              <i className="fa-solid fa-lock mx-2"></i> Nueva Contraseña:
+              </label>
               </div>
             </div>
             <div className="row mt-3">
-              <label className=" col-form-label" htmlFor="Confirm new password">
-                Confirm New Password:
-              </label>
-              <div className="col-md-12">
+              <div className="col-md-12 form-floating">
                 <input
                   value={confirmNewPassword}
                   type="password"
                   className="form-control"
                   name="Confirm new password"
-                  placeholder="Confirm new password"
+                  placeholder="Confirme Nueva Contraseña"
                   minLength="8"
                   maxLength="20"
                   onChange={(e) => {
@@ -289,32 +283,28 @@ export const Profile = () => {
                     }
                   }}
                 ></input>
-                <p className="d-flex flex-column mt-3">
+              <label className=" col-form-label mx-2" htmlFor="Confirm new password">
+               <i className="fa-solid fa-lock mx-2"></i> Confirme Nueva Contraseña:
+              </label>
+                <p className="d-flex flex-column mt-4">
                   <label className="pass-check fw-semibold">
-                    Password must be 8-20 characters long
+                    La contraseña debe tener entre 8-20 caracteres
                   </label>
                   <label className="pass-check fw-semibold">
-                    At least 1 lower case character
+                    Al menos 1 minúscula
                   </label>
                   <label className="pass-check fw-semibold">
-                    At least 1 Upper case character
+                    Al menos 1 mayúscula
                   </label>
                   <label className="pass-check fw-semibold">
-                    At least 1 especial character ( !, @, #, $, %, & ,* )
+                    Al menos 1 caracter especial  ( !, @, #, $, %, & ,* )
                   </label>
                   <label className="pass-check fw-semibold">
-                    At least 1 numerical character
+                  Al menos 1 caracter numérico
                   </label>
                 </p>
               </div>
-              <div className="d-grid col-md-12 mt-2">
-                <button
-                  disabled={!validatePassword}
-                  className="btn btn-success  mt-2"
-                  onClick={updatePassword}
-                >
-                  Update Password
-                </button>
+              <div className="d-grid col-md-12 mt-2 p-1 ">
                 {success ? (
                   <p className="alert alert-warning">Contraseña modificada</p>
                 ) : null}
@@ -323,16 +313,18 @@ export const Profile = () => {
                     Contraseña actual incorrecta
                   </p>
                 ) : null}
+                <button
+                  disabled={!validatePassword}
+                  className="btn btn-success  mt-3 "
+                  onClick={updatePassword}
+                >
+                  Modificar Contraseña
+                </button>
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
-
-
-
     </div >
   );
 };

@@ -7,6 +7,7 @@ import { Context } from "../store/appContext";
 import { generateString } from "../helper/generateRandomString";
 import "../../styles/schuddleVisit.css";
 
+
 export const ShuddleVisit = () => {
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
@@ -57,27 +58,6 @@ export const ShuddleVisit = () => {
     });
     if (response.ok) {
       const data = await response.json();
-    } else {
-      setError(true);
-    }
-  };
-
-  const checkAvalability = async () => {
-    const response = await fetch(
-      process.env.BACKEND_URL + "/api/bookings_availability",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          booking: selectDate + " " + hourStart,
-        }),
-      }
-    );
-    if (response.ok) {
-      const data = await response.json();
       setAvailability(data.response);
       setAvailable(true);
       return true;
@@ -88,6 +68,8 @@ export const ShuddleVisit = () => {
       return false;
     }
   };
+
+
 
   return (
     <div className="row d-flex justify-content-center">
@@ -101,7 +83,7 @@ export const ShuddleVisit = () => {
           />
         </div>
         <div className="col-md-5 align-item-center justify-content-center  p-3">
-          <h2 className="my-2 text-center">Agendar visita</h2>
+          <h2 className="my-2 text-center agendar-visita">Agendar visita</h2>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="online">
               Modalidad:
@@ -142,7 +124,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="resident">
-              Residente:
+              <i className="fa-solid fa-person-cane mx-1"></i> Residente:
             </label>
             <select
               className="form-select"
@@ -164,7 +146,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="user">
-              Usuario:
+            <i className="fa-solid fa-user mx-1"></i> Usuario:
             </label>
             <input
               disabled
@@ -176,7 +158,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="day">
-              <i className="fa-regular fa-calendar"></i> Día:
+              <i className="fa-regular fa-calendar mx-1"></i> Día:
             </label>
             <input
               className="form-control"
@@ -188,7 +170,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="hourStart">
-              <i className="fa-solid fa-clock"></i> Seleccione Horario
+              <i className="fa-solid fa-clock mx-1"></i> Seleccione Horario
             </label>
             <select
               defaultValue="select"
@@ -212,9 +194,9 @@ export const ShuddleVisit = () => {
             <button
               className="btn btn-primary mt-2 "
               onClick={async () => {
-                if (await checkAvalability()) {
+                
                   sendSchuddleVisit();
-                }
+                
               }}
             >
               Confirmar Cita

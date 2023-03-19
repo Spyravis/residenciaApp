@@ -1,6 +1,6 @@
 .calendar-container {
   width: 500px;
-  background: #6D7E9A;
+  background: white;
   border-radius: 10px;
 }
 .calendar-container .div-header {
@@ -11,7 +11,8 @@
 }
 .div-header .current-date {
   font-size: 2rem;
-  font-weight: 500;
+  font-weight: 700;
+
 }
 .div-header .icons span {
   height: 38px;
@@ -66,6 +67,9 @@ ul .days {
 .days li div.inactive {
   color: #7AB0B2;
 }
+.days li:hover div.inactive {
+  color: white;
+}
 
 .calendar div {
   align-items: center;
@@ -85,7 +89,7 @@ ul .days {
 }
 
 .days li:hover::before {
-  background: #f2f2f2;
+  background: #7AB0B2;
 }
 
 .today::before:only-child {
@@ -106,17 +110,21 @@ ul .days {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background-color: #f5f3f3;
+  background-color: lightgray;
 }
 
 .selected :only-child {
-  content: "";
   position: absolute;
+  content: "";
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background-color: #eb9b9b;
+  background-color: #7AB0B2;
+}
+
+.linea-horizontal{
+  background-color: #7AB0B2;
 }
