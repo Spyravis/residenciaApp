@@ -2,25 +2,25 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import navbarLogo from "./../../img/navbarLogo.png";
+import azaharNav from "./../../img/azaharNav.png";
+import "../../styles/navbar.css";
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const { store, actions } = useContext(Context);
 
   return (
-    <nav className="navbar navbar-light bg-light pt-2">
+    <nav className="navbar ">
       <div className="container">
         <Link to="/">
           <span className="navbar-brand mb-0 h1">
             <img
               className=""
-              style={{ width: "auto", height: "70px" }}
-              src={navbarLogo}
+              style={{ width: "auto", height: "50px" }}
+              src="https://res.cloudinary.com/dhqruwnj9/image/upload/v1679248348/LOGO_AZAHAR_2_mbmzcq.png"
             />
           </span>
         </Link>
-
         <div
           className="btn-toolbar"
           role="toolbar"
@@ -38,9 +38,9 @@ export const Navbar = () => {
                 <img
                   className=""
                   style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-                  src={store.userdata.photo}
+                  src={store.userdata.photo ? store.userdata.photo : "https://res.cloudinary.com/dhqruwnj9/image/upload/v1679246283/ad57b11e313616c7980afaa6b9cc6990_iumvqv.jpg"}
                 />
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
                   {store.unreadedMessages}
                   <span className="visually-hidden">Mensajes sin leer</span>
                 </span>
@@ -64,7 +64,7 @@ export const Navbar = () => {
                 aria-label="First group"
               >
                 <Link to="/aboutUs">
-                  <button className="btn btn-warning">About Us</button>
+                  <button className="btn btn-nav ">SOBRE NOSOTROS</button>
                 </Link>
               </div>
               <div
@@ -73,15 +73,15 @@ export const Navbar = () => {
                 aria-label="Second group"
               >
                 <Link to="/contactUs">
-                  <button type="button" className="btn btn-success">
-                    Contact Us
+                  <button type="button" className="btn btn-nav ">
+                    CONTÁCTANOS
                   </button>
                 </Link>
               </div>
               <div className="btn-group" role="group" aria-label="Third group">
                 <Link to="/login">
-                  <button type="button" className="btn btn-primary">
-                    Área Personal
+                  <button type="button" className="btn btn-login-nav">
+                    ÁREA PERSONAL
                   </button>
                 </Link>
               </div>

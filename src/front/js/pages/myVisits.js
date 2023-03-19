@@ -5,24 +5,23 @@ import { Context } from "../store/appContext";
 import { LoggedMenu } from "../component/logged-menu";
 
 export const MyVisits = () => {
-    const navigate = useNavigate();
-    const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
+  const { store, actions } = useContext(Context);
 
-    useEffect(() => {
-        if (!store.userdata.id) {
-            navigate("/login");
-        }
-        actions.getCurrentUser();
-        if (store.userdata.role_user == 2) {
-            actions.getResidentBookings();
-        } else {
-            actions.getUserSchuddle();
-        }
-    }, []);
-    return (
-        <div className="container">
-            <LoggedMenu></LoggedMenu>
-
+  useEffect(() => {
+    if (!store.userdata.id) {
+      navigate("/login");
+    }
+    actions.getCurrentUser();
+    if (store.userdata.role_user == 2) {
+      actions.getResidentBookings();
+    } else {
+      actions.getUserSchuddle();
+    }
+  }, []);
+  return (
+    <div className="container">
+      <LoggedMenu></LoggedMenu>
             <div className="row mt-5">
                 <h3 className="p-3 bg-info bg-opacity-10 border border-info border-start-0 border-end-0">Mis Visitass</h3>
 

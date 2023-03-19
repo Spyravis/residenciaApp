@@ -1,8 +1,14 @@
 """empty message
 
+<<<<<<<< HEAD:migrations/versions/d900b233c4fc_.py
+Revision ID: d900b233c4fc
+Revises: 
+Create Date: 2023-03-16 15:57:47.038965
+========
 Revision ID: d2b53d16cf57
 Revises: 
 Create Date: 2023-03-10 20:10:53.797940
+>>>>>>>> developer:migrations/versions/d2b53d16cf57_.py
 
 """
 from alembic import op
@@ -10,7 +16,11 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
+<<<<<<<< HEAD:migrations/versions/d900b233c4fc_.py
+revision = 'd900b233c4fc'
+========
 revision = 'd2b53d16cf57'
+>>>>>>>> developer:migrations/versions/d2b53d16cf57_.py
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -49,8 +59,12 @@ def upgrade():
     sa.ForeignKeyConstraint(['role_user_id'], ['role_user.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
+<<<<<<<< HEAD:migrations/versions/d900b233c4fc_.py
+    sa.UniqueConstraint('phone')
+========
     sa.UniqueConstraint('phone'),
     sa.UniqueConstraint('photo')
+>>>>>>>> developer:migrations/versions/d2b53d16cf57_.py
     )
     op.create_table('message',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -59,7 +73,10 @@ def upgrade():
     sa.Column('url_attached', sa.String(length=250), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('resident_id', sa.Integer(), nullable=False),
+<<<<<<<< HEAD:migrations/versions/d900b233c4fc_.py
+========
     sa.Column('readed', sa.Boolean(), nullable=False),
+>>>>>>>> developer:migrations/versions/d2b53d16cf57_.py
     sa.ForeignKeyConstraint(['resident_id'], ['resident.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -69,12 +86,32 @@ def upgrade():
     sa.Column('date', sa.DateTime(), nullable=False),
     sa.Column('incidences', sa.Boolean(), nullable=False),
     sa.Column('comments', sa.String(length=250), nullable=True),
+    sa.Column('sugar_level', sa.String(length=80), nullable=False),
+    sa.Column('oxygen_level', sa.String(length=80), nullable=False),
+    sa.Column('cholesterol_level', sa.String(length=80), nullable=False),
+    sa.Column('leukocytes_level', sa.String(length=80), nullable=False),
+    sa.Column('redbloods_level', sa.String(length=80), nullable=False),
+    sa.Column('whitebloods_level', sa.String(length=80), nullable=False),
     sa.Column('resident_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['resident_id'], ['resident.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+<<<<<<<< HEAD:migrations/versions/d900b233c4fc_.py
+    op.create_table('quincenal',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('date', sa.DateTime(), nullable=False),
+    sa.Column('incidences', sa.Boolean(), nullable=False),
+    sa.Column('comments', sa.String(length=250), nullable=True),
+    sa.Column('sugar_level', sa.String(length=80), nullable=False),
+    sa.Column('oxygen_level', sa.String(length=80), nullable=False),
+    sa.Column('cholesterol_level', sa.String(length=80), nullable=False),
+    sa.Column('leukocytes_level', sa.String(length=80), nullable=False),
+    sa.Column('redbloods_level', sa.String(length=80), nullable=False),
+    sa.Column('whitebloods_level', sa.String(length=80), nullable=False),
+    sa.Column('password', sa.String(length=80), nullable=False),
+========
     op.create_table('user_has_booking',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('is_online', sa.Boolean(), nullable=False),
@@ -87,10 +124,33 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user_has_resident',
+>>>>>>>> developer:migrations/versions/d2b53d16cf57_.py
     sa.Column('resident_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['resident_id'], ['resident.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+<<<<<<<< HEAD:migrations/versions/d900b233c4fc_.py
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('user_has_booking',
+    sa.Column('is_online', sa.Boolean(), nullable=False),
+    sa.Column('url', sa.String(length=250), nullable=True),
+    sa.Column('resident_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('calendar_booking_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['calendar_booking_id'], ['calendar_booking.id'], ),
+    sa.ForeignKeyConstraint(['resident_id'], ['resident.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('resident_id', 'calendar_booking_id'),
+    sa.UniqueConstraint('url')
+    )
+    op.create_table('user_has_resident',
+    sa.Column('resident_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['resident_id'], ['resident.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+========
+>>>>>>>> developer:migrations/versions/d2b53d16cf57_.py
     sa.PrimaryKeyConstraint('resident_id', 'user_id')
     )
     # ### end Alembic commands ###
@@ -100,6 +160,10 @@ def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('user_has_resident')
     op.drop_table('user_has_booking')
+<<<<<<<< HEAD:migrations/versions/d900b233c4fc_.py
+    op.drop_table('quincenal')
+========
+>>>>>>>> developer:migrations/versions/d2b53d16cf57_.py
     op.drop_table('night_report')
     op.drop_table('message')
     op.drop_table('user')

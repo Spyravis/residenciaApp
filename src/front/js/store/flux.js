@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       userdata: { residents: [] },
+      partes: {},
       bookings: {},
       messages: {},
       unreadedMessages: "",
