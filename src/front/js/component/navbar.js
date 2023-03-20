@@ -22,13 +22,15 @@ export const Navbar = () => {
           </span>
         </Link>
         <div>
-          <p className="m-auto fs-2">
-            <i className="fas fa-phone mr-3 icono-tel"></i>
-            <span className="num1"> +34</span>
-            <span className="num2"> 634</span>
-            <span className="num3"> 567</span>
-            <span className="num4"> 888 </span>
-          </p>
+          <Link to="tel:+34634567" className="header-phone">
+            <p className="m-auto fs-2">
+              <i className="fas fa-phone mr-3 icono-tel"></i>
+              <span className="num1"> +34</span>
+              <span className="num2"> 634</span>
+              <span className="num3"> 567</span>
+              <span className="num4"> 888 </span>
+            </p>
+          </Link>
         </div>
         <div
           className="btn-toolbar"
