@@ -1,0 +1,27 @@
+.btn-1 {
+  background-color: #7ab0b2;
+  border-color: #7ab0b2;
+  color: black;
+}
+
+.btn-2 {
+  background-color: #b87e93;
+  border-color: #b87e93;
+  color: black;
+}
+
+.card-tittle {
+  color: black;
+}
+
+.nocturno-body {
+  color: #b87e93;
+}
+
+.nocturno-header {
+  color: #6d7e9a;
+}
+
+.nocturno-container {
+  color: #98b193;
+}

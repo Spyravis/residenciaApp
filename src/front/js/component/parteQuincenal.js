@@ -53,13 +53,13 @@ export const ParteQuincenal = () => {
       },
       title: {
         display: true,
-        text: "Chart.js Line Chart",
+        text: "Resumen Quincenal",
       },
     },
   };
 
   return (
-    <div>
+    <div className="container">
       <Line
         options={options}
         data={{
@@ -87,7 +87,7 @@ export const ParteQuincenal = () => {
             },
             {
               label: "Leucocitos",
-              data: partes.map((parte) => parte["leukocytes_level"]),
+              data: partes.map((parte) => parte["leukocytes"]),
               borderColor: "#E3946E",
               backgroundColor: "#E3946E",
             },
