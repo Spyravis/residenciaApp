@@ -12,7 +12,7 @@ export const Footer = () => {
         style={{ backgroundColor: "#E1B393" }}
       >
         <div className="me-5">
-          <span>Get connected with us on social networks:</span>
+          <span>Síguenos en nuestras redes</span>
         </div>
 
         <div>
@@ -22,7 +22,6 @@ export const Footer = () => {
           <Link to="/myHome" className="text-white me-4">
             <i className="fab fa-youtube"></i>
           </Link>
-
           <Link to="/myHome" className="text-white me-4">
             <i className="fab fa-instagram"></i>
           </Link>
@@ -65,7 +64,6 @@ export const Footer = () => {
                   Área personal
                 </Link>
               </p>
-
               <p>
                 <Link to="/aboutUs" className="text-dark">
                   About Us
