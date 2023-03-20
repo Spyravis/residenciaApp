@@ -87,13 +87,15 @@ export const Footer = () => {
                 }}
               />
               <p>
+
                 <i className="fas fa-home mr-3"></i> Charco de las Viñas S/N,<br /> Marbella 29602, ES
+
               </p>
               <p>
                 <i className="fas fa-envelope mr-3"></i> recepcion@residenciaazahar.com
               </p>
               <p>
-                <i className="fas fa-phone mr-3"></i> 952 774 555
+                <i className="fas fa-phone mr-3"></i> + 34 952 774 555
               </p>
             </div>
           </div>

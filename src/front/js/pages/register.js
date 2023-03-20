@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
+import "../../styles/register.css";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -121,18 +122,20 @@ export const Register = () => {
   }, [name, surname, password, confirmPassword, email, phone]);
 
   return (
-    <div className="container-md d-flex  justify-content-center  mt-5">
-      <div className=" col-sm-6 border rounded p-2 ">
-        <h2 className="text-center m-3">Register </h2>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="name">
-            Name:
-          </label>
-          <div className="col">
+    <div className="container-md d-flex  justify-content-center  my-5">
+      <div className=" col-sm-6 border rounded p-2 register-form">
+        <h2 className="text-center my-5">REGISTRO </h2>
+        <div className="row my-3 mx-auto">
+          <div className="col-3">
+            <label className=" col-form-label" htmlFor="name">
+              Nombre:
+            </label>
+          </div>
+          <div className="col-9">
             <input
               className="form-control"
               name="name"
-              placeholder="name"
+              placeholder="Nombre"
               value={name}
               onChange={(e) => {
                 setError(false);
@@ -141,15 +144,18 @@ export const Register = () => {
             ></input>
           </div>
         </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="surname">
-            Surname:
-          </label>
-          <div className="col">
+        <div className="row my-3 mx-auto">
+          <div className="col-3">
+            <label className=" col-form-label" htmlFor="surname">
+              Apellido:
+            </label>
+          </div>
+
+          <div className="col-9">
             <input
               className="form-control"
               name="surname"
-              placeholder="surname"
+              placeholder="Apellido"
               value={surname}
               onChange={(e) => {
                 setError(false);
@@ -158,15 +164,17 @@ export const Register = () => {
             ></input>
           </div>
         </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="phone">
-            Phone:
-          </label>
-          <div className="col">
+        <div className="row my-3 mx-auto">
+          <div className="col-3">
+            <label className=" col-form-label" htmlFor="phone">
+              <i className="fa-solid fa-phone"></i> Teléfono:
+            </label>
+          </div>
+          <div className="col-9">
             <input
               className="form-control"
               name="phone"
-              placeholder="phone"
+              placeholder="Teléfono"
               maxLength="12"
               value={phone}
               onChange={(e) => {
@@ -176,16 +184,18 @@ export const Register = () => {
             ></input>
           </div>
         </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="email">
-            Email:
-          </label>
-          <div className="col">
+        <div className="row my-3 mx-auto">
+          <div className="col-3">
+            <label className=" col-form-label" htmlFor="email">
+              <i className="fa-solid fa-envelope"></i> Email:
+            </label>
+          </div>
+          <div className="col-9">
             <input
               type="email"
               className="form-control"
               name="email"
-              placeholder="email"
+              placeholder="Email"
               minLength="12"
               value={email}
               onChange={(e) => {
@@ -195,16 +205,18 @@ export const Register = () => {
             ></input>
           </div>
         </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="password">
-            Password:
-          </label>
-          <div className="col">
+        <div className="row my-3 mx-auto">
+          <div className="col-3">
+            <label className=" col-form-label" htmlFor="password">
+              <i className="fa-solid fa-lock"></i> Contraseña:
+            </label>
+          </div>
+          <div className="col-9">
             <input
               type="password"
               className="form-control"
               name="password"
-              placeholder="password"
+              placeholder="Contraseña"
               minLength="8"
               maxLength="20"
               value={password}
@@ -216,16 +228,18 @@ export const Register = () => {
             ></input>
           </div>
         </div>
-        <div className="row my-3">
-          <label className=" col-form-label" htmlFor="password">
-            Confirm Password:
-          </label>
-          <div className="col">
+        <div className="row my-3 mx-auto">
+          <div className="col-3">
+            <label className=" col-form-label" htmlFor="password">
+              <i className="fa-solid fa-lock"></i> Confirme Contraseña:
+            </label>
+          </div>
+          <div className="col-9">
             <input
               type="password"
               className="form-control"
               name="confirm password"
-              placeholder="confirm password"
+              placeholder="Confirme Contraseña"
               minLength="8"
               maxLength="20"
               value={confirmPassword}
@@ -239,7 +253,7 @@ export const Register = () => {
                 }
               }}
             ></input>
-            <p className="d-flex flex-column mt-2">
+            <p className="d-flex flex-column mt-2 mx-2">
               <label className="pass-check fw-semibold">
                 At least 8 characters
               </label>
@@ -258,7 +272,7 @@ export const Register = () => {
             </p>
           </div>
         </div>
-        <div>
+        <div className="d-grid my-3">
           <button
             className="btn btn-success btn-lg"
             disabled={!validateInfo}
