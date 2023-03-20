@@ -13,24 +13,24 @@ export const Home = () => {
       <video autoPlay loop id="video" className="img-fluid">
         <source src="https://abeceweb.com/video/pexels-anna-shvets-5516398.mp4" type="video/mp4" />
       </video>
-      <div className="heading row my-3">
-        <div className="img-heading col-4">
-          <img
-            src="https://picsum.photos/300"
-            className="rounded-circle"
-          ></img>
-        </div>
-        <div className="heading-content col-8">
-          <div className="d-flex align-items-center h-100">
-            <div>
-              <h1>Residencia Azahar</h1>
-              <p>Reducir el estrés y el poder relajante, serían algunos de los beneficios de la flor de azahar, por no hablar del rico olor que desprenden los naranjos y los limoneros cuando están floreciendo. Es imposible no cerrar los ojos para disfrutar de esa fragancia embriagadora.
-              </p>
+      <div className="container text-center mt-5">
+        <div className="heading row my-3">
+          <div className="img-heading col-4">
+            <img
+              src="https://picsum.photos/300"
+              className="rounded-circle"
+            ></img>
+          </div>
+          <div className="heading-content col-8">
+            <div className="d-flex align-items-center h-100">
+              <div>
+                <h1>Residencia Azahar</h1>
+                <p>Reducir el estrés y el poder relajante, serían algunos de los beneficios de la flor de azahar, por no hablar del rico olor que desprenden los naranjos y los limoneros cuando están floreciendo. Es imposible no cerrar los ojos para disfrutar de esa fragancia embriagadora.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="container text-center mt-5">
         <div className="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
           <div className="col">
             <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style={{ backgroundImage: 'url("https://residenciaelcarmen.com/wp-content/uploads/2019/10/exteriores-y-jardines-residencia-el-carmen-01-800x800.jpg")' }}>

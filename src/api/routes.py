@@ -284,9 +284,8 @@ from mailchimp_transactional.api_client import ApiClientError
 @api.route("/send_email", methods=['POST'])
 def sending_email():
     subject = request.json.get("subject")
-    message_text = request.json.get("message") 
-
-    mailchimp = MailchimpTransactional.Client(os.environ.get(MAILCHIMP_API_KEY))
+    message_text = request.json.get("message")    
+    mailchimp = MailchimpTransactional.Client("md-54oVbrJrZJhIphFY1kJ-vw")
     message = {
         "from_email": "residenciaapp@abeceweb.com",
         "subject": subject,
