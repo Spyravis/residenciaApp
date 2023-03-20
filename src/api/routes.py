@@ -52,7 +52,7 @@ def quincenal():
 def nocturno():
     user_id = get_jwt_identity()
     night_report = Night_report.query.filter_by(user_id = user_id).order_by(Night_report.date.desc()).first()
-    print(night_report.serialize())
+    #print(night_report.serialize())
     return jsonify({"result":night_report.serialize()})
    
 @api.route('/register', methods=['POST'])
@@ -89,7 +89,7 @@ def current_user_residents():
     for i in (userdata_serialized[0]["residents"]):   
         users = Resident.query.filter_by(id = i["id"])
         users_resindent.extend(x.resident_users() for x in users)    
-    print( users_resindent)
+    #print( users_resindent)
     return jsonify({"response": users_resindent}), 200
 
 #Mensajes por usuario
@@ -113,7 +113,7 @@ def get_resident_messages():
         messages_by_resident = InternalMessages.query.filter_by(resident_id = i["id"])
         messages_serialized.extend([x.serialize() for x in messages_by_resident])
     ordenados = sorted(messages_serialized, key=lambda k: k["id"], reverse = True)
-    print(ordenados)
+    #print(ordenados)
     return jsonify({"response" : ordenados}), 200
 
 @api.route('/messages/send', methods=['POST'])
@@ -155,7 +155,7 @@ def unreaded_messages():
 def delete_message(id):
     message =  InternalMessages.query.get(id)
     db.session.delete(message)
-    print(message)
+    #print(message)
     db.session.commit()
     return jsonify({"response": "Message deleted successfully"}), 200  
 
@@ -299,10 +299,10 @@ def sending_email():
     }
     try:
         response = mailchimp.messages.send({"message":message})
-        print('API called successfully: {}'.format(response))
+      #  print('API called successfully: {}'.format(response))
         return jsonify({"response": "Email sent successfully"}), 200
     except ApiClientError as error:
-        print('An exception occurred: {}'.format(error.text))
+      #  print('An exception occurred: {}'.format(error.text))
         return jsonify({"response": "Email sent error"}), 405
 
 @api.route('/upload', methods=['POST'])

@@ -1,49 +1,71 @@
-.navbar{
-    background-color: #F5CE9A;
+.navbar {
+  background-color: #f5ce9a;
 }
-.btn-login-nav{
-    background-color: #6D7E9A;
-    border-color: #6D7E9A;
-    color: white
+.btn-login-nav {
+  background-color: #6d7e9a;
+  border-color: #6d7e9a;
+  color: white;
 }
-.btn-login-nav:hover{
-    background-color: #B87E93;
-    border-color: #B87E93;
-    color: white
-}
-
-.btn-login-nav:active{
-    background-color: #B87E93;
-    border-color: #B87E93;
-    color: white;
-    box-shadow: none;
+.btn-login-nav:hover {
+  background-color: #b87e93;
+  border-color: #b87e93;
+  color: white;
 }
 
-.btn-login-nav:focus{
-    background-color: #6D7E9A;
-    border-color: #6D7E9A;
-    color: white;
-    box-shadow: none;
+.btn-login-nav:active {
+  background-color: #b87e93;
+  border-color: #b87e93;
+  color: white;
+  box-shadow: none;
 }
 
-.btn-nav{
-    background-color: #F5CE9A;
-    border: #F5CE9A;
-}
-.btn-nav:hover{
-    border: #F5CE9A;
-    color: white;
+.btn-login-nav:focus {
+  background-color: #6d7e9a;
+  border-color: #6d7e9a;
+  color: white;
+  box-shadow: none;
 }
 
-.btn-nav:active{
-    color: white;
-    border: #F5CE9A;
-    box-shadow: none;
+.btn-nav {
+  background-color: #f5ce9a;
+  border: #f5ce9a;
+}
+.btn-nav:hover {
+  border: #f5ce9a;
+  color: white;
 }
 
-.btn-nav:focus{
-    border: none;
-    color: black;
-    outline-color: #F5CE9A ;
-    box-shadow: none;
+.btn-nav:active {
+  color: white;
+  border: #f5ce9a;
+  box-shadow: none;
+}
+
+.btn-nav:focus {
+  border: none;
+  color: black;
+  outline-color: #f5ce9a;
+  box-shadow: none;
+}
+
+.icono-tel {
+  color: #6d7e9a;
+  font-weight: 900;
+}
+
+.num1 {
+  color: #b87e93;
+  font-weight: 600;
+}
+.num2 {
+  color: #b87e93;
+  font-weight: 600;
+}
+.num3 {
+  color: #b87e93;
+  font-weight: 600;
+}
+.num4 {
+  color: #b87e93;
+  font-weight: 600;
 }

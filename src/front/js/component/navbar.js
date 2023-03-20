@@ -15,12 +15,21 @@ export const Navbar = () => {
         <Link to="/">
           <span className="navbar-brand mb-0 h1">
             <img
-              className=""
-              style={{ width: "auto", height: "50px" }}
-              src="https://res.cloudinary.com/dhqruwnj9/image/upload/v1679248348/LOGO_AZAHAR_2_mbmzcq.png"
+              className="logo"
+              style={{ width: "auto", height: "65px" }}
+              src="https://res.cloudinary.com/dhqruwnj9/image/upload/v1679268865/LOGO_AZAHAR_final_smcqci.png"
             />
           </span>
         </Link>
+        <div>
+          <p className="m-auto fs-2">
+            <i className="fas fa-phone mr-3 icono-tel"></i>
+            <span className="num1"> +34</span>
+            <span className="num2"> 634</span>
+            <span className="num3"> 567</span>
+            <span className="num4"> 888 </span>
+          </p>
+        </div>
         <div
           className="btn-toolbar"
           role="toolbar"
@@ -34,11 +43,24 @@ export const Navbar = () => {
                   navigate("/messages");
                 }}
               >
-                <span className="px-2">{store.userdata.role_user == 1 ? <i className="fa-solid fa-people-group" /> : store.userdata.role_user == 2 ? <i className="fa-solid fa-user-nurse" /> : <i className="fa-solid fa-lock" />} {store.userdata.name} {store.userdata.surname}</span>
+                <span className="px-2">
+                  {store.userdata.role_user == 1 ? (
+                    <i className="fa-solid fa-people-group" />
+                  ) : store.userdata.role_user == 2 ? (
+                    <i className="fa-solid fa-user-nurse" />
+                  ) : (
+                    <i className="fa-solid fa-lock" />
+                  )}{" "}
+                  {store.userdata.name} {store.userdata.surname}
+                </span>
                 <img
                   className=""
                   style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-                  src={store.userdata.photo ? store.userdata.photo : "https://res.cloudinary.com/dhqruwnj9/image/upload/v1679246283/ad57b11e313616c7980afaa6b9cc6990_iumvqv.jpg"}
+                  src={
+                    store.userdata.photo
+                      ? store.userdata.photo
+                      : "https://res.cloudinary.com/dhqruwnj9/image/upload/v1679246283/ad57b11e313616c7980afaa6b9cc6990_iumvqv.jpg"
+                  }
                 />
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
                   {store.unreadedMessages}
