@@ -21,11 +21,9 @@ export const Footer = () => {
 					<Link to="/myHome" className="text-white me-4">
 						<i className="fab fa-youtube"></i>
 					</Link>
-					
+
 					<Link to="/myHome" className="text-white me-4">
 						<i className="fab fa-instagram"></i>
-					</Link>
-
 					</Link>
 				</div>
 			</section>
@@ -82,16 +80,16 @@ export const Footer = () => {
 
 				</div>
 			</section>
-		<div
-			className="text-center p-3"
-			style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
-		>
-			© 2023 Copyright:
-			<a className="text-dark" href="https://residenciaapp.com/"
-			>Residencia Azahar</a
+			<div
+				className="text-center p-3"
+				style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
 			>
-		</div>
+				© 2023 Copyright:
+				<a className="text-dark" href="https://residenciaapp.com/"
+				>Residencia Azahar</a
+				>
+			</div>
 
-	</footer>
-);
-
+		</footer>
+	);
+}
