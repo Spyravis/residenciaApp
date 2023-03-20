@@ -25,9 +25,9 @@ export const Navbar = () => {
           <p className="m-auto fs-2">
             <i className="fas fa-phone mr-3 icono-tel"></i>
             <span className="num1"> +34</span>
-            <span className="num2"> 634</span>
-            <span className="num3"> 567</span>
-            <span className="num4"> 888 </span>
+            <span className="num2"> 952</span>
+            <span className="num3"> 774</span>
+            <span className="num4"> 555 </span>
           </p>
         </div>
         <div
