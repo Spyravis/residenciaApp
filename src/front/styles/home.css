@@ -5,3 +5,19 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+.carousel p,
+.carousel h5 {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 0.5rem;
+}
+.card p,
+.card h3 {
+  opacity: 1;
+}
+.card-cover {
+  height: 100vh;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+}

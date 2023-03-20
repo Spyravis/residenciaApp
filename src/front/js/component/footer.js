@@ -33,7 +33,7 @@ export const Footer = () => {
           <div className="row mt-3">
             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
               <Link to="/" className="text-dark">
-                <h6 className="text-uppercase fw-bold">AZAHAR</h6>
+                <h6 className="text-uppercase fw-bold">Residencia Azahar</h6>
               </Link>
               <hr
                 className="mb-4 mt-0 d-inline-block mx-auto"
@@ -66,12 +66,12 @@ export const Footer = () => {
               </p>
               <p>
                 <Link to="/aboutUs" className="text-dark">
-                  About Us
+                  Conócenos
                 </Link>
               </p>
               <p>
                 <Link to="/contactUs" className="text-dark">
-                  Contact Us
+                  Contacto
                 </Link>
               </p>
             </div>
@@ -87,10 +87,12 @@ export const Footer = () => {
                 }}
               />
               <p>
-                <i className="fas fa-home mr-3"></i> Marbella 29600, ES
+
+                <i className="fas fa-home mr-3"></i> Charco de las Viñas S/N,<br /> Marbella 29602, ES
+
               </p>
               <p>
-                <i className="fas fa-envelope mr-3"></i> info@azahar.com
+                <i className="fas fa-envelope mr-3"></i> recepcion@residenciaazahar.com
               </p>
               <p>
                 <i className="fas fa-phone mr-3"></i> + 34 952 774 555

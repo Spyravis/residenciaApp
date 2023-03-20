@@ -2,7 +2,10 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { LoggedMenu } from "../component/logged-menu";
 import { Context } from "../store/appContext";
-
+import slide1 from "../../img/slide1.jpg";
+import slide2 from "../../img/slide2.jpg";
+import slide3 from "../../img/slide3.jpg";
+import logo from "../../img/azahar.png"
 import "../../styles/home.css";
 
 export const Home = () => {
@@ -20,8 +23,10 @@ export const Home = () => {
         <div className="heading row my-3">
           <div className="img-heading col-4">
             <img
-              src="https://res.cloudinary.com/dhqruwnj9/image/upload/v1679328988/Azahar_grande_l5pl7m.png"
-              className="rounded-circle"
+
+              src={logo}
+              className="rounded-circle w-50"
+
             ></img>
           </div>
           <div className="heading-content col-8">
@@ -41,62 +46,33 @@ export const Home = () => {
         </div>
         <div className="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
           <div className="col">
-            <div
-              className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-              style={{
-                backgroundImage:
-                  'url("https://residenciaelcarmen.com/wp-content/uploads/2019/10/exteriores-y-jardines-residencia-el-carmen-01-800x800.jpg")',
-              }}
-            >
-              <div className="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
-                  Experiencia
-                </h3>
-                <p>
-                  Ubicada en Marbella, Residencia Azahar fue fundada en 1999 y
-                  desde entonces nuestros años de experiencia al servicio de
-                  nuestros mayores nos avalan.
-                </p>
+
+
+            <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style={{ backgroundImage: 'linear-gradient(rgba(250,250,250, 0.7),rgba(250,250,250, 0.3)), url("https://residenciaelcarmen.com/wp-content/uploads/2019/10/exteriores-y-jardines-residencia-el-carmen-01-800x800.jpg")' }}>
+              <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Experiencia</h3>
+                <p>Ubicada en Marbella, Residencia Azahar fue fundada en 1999 y desde entonces nuestros años de experiencia al servicio de nuestros mayores nos avalan.</p>
+
               </div>
             </div>
           </div>
           <div className="col">
-            <div
-              className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-              style={{
-                backgroundImage:
-                  'url("https://www.seniorsresidencias.es/wp-content/uploads/2022/04/SENIORS-Residencias-Marbella-1.jpg")',
-              }}
-            >
-              <div className="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
-                  Calidad
-                </h3>
-                <p>
-                  Nuestra mayor satisfacción es la de seguir mereciendo el
-                  respeto de todas las familias que en algún momento han
-                  necesitado de nuestros servicios y que por nuestro centro
-                  residencial han pasado.
-                </p>
+
+            <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style={{ backgroundImage: 'linear-gradient(rgba(250,250,250, 0.7),rgba(250,250,250, 0.3)),url("https://www.seniorsresidencias.es/wp-content/uploads/2022/04/SENIORS-Residencias-Marbella-1.jpg")' }}>
+              <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Calidad</h3>
+                <p>Nuestra mayor satisfacción es la de seguir mereciendo el respeto de todas las familias que en algún momento han necesitado de nuestros servicios y que por nuestro centro residencial han pasado.</p>
+
               </div>
             </div>
           </div>
           <div className="col">
-            <div
-              className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
-              style={{
-                backgroundImage:
-                  'url("https://www.seniorsresidencias.es/wp-content/uploads/2022/04/SENIORS-Residencias-Marbella-5.jpg")',
-              }}
-            >
-              <div className="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
-                  Servicios
-                </h3>
-                <p>
-                  Estamos en condiciones de prestar un servicio completo,
-                  profesional e individualizado para cada residente-usuario.
-                </p>
+
+            <div className="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style={{ backgroundImage: 'linear-gradient(rgba(250,250,250, 0.7),rgba(250,250,250, 0.3)),url("https://www.seniorsresidencias.es/wp-content/uploads/2022/04/SENIORS-Residencias-Marbella-5.jpg")' }}>
+              <div className="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                <h3 className="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Servicios</h3>
+                <p>Estamos en condiciones de prestar un servicio completo, profesional e individualizado para cada residente-usuario.</p>
+
               </div>
             </div>
           </div>
@@ -112,6 +88,7 @@ export const Home = () => {
             </p>
             <p>Señora Haro</p>
           </div>
+
           <div className="col border rounded p-5 m-3">
             <i className="fa fa-comment"></i>
             <p>
@@ -133,6 +110,102 @@ export const Home = () => {
               y empatia por ellos y sus familiares.
             </p>
             <p>Señor Marcial</p>
+
+        <div className="carrousel my-5">
+          <div
+            id="carouselExampleDark"
+            className="carousel carousel-dark slide"
+            data-bs-ride="carousel"
+          >
+            <div className="carousel-indicators">
+              <button
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide-to="0"
+                className="active"
+                aria-current="true"
+                aria-label="Slide 1"
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide-to="1"
+                aria-label="Slide 2"
+              ></button>
+              <button
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide-to="2"
+                aria-label="Slide 3"
+              ></button>
+            </div>
+            <div className="carousel-inner">
+              <div className="carousel-item active" data-bs-interval="10000">
+                <img
+                  src={slide1}
+                  className="d-block w-100 img-fluid"
+                  alt="..."
+                ></img>
+                <div className="carousel-caption d-none d-md-block">
+                  <h5>Localización inmejorable</h5>
+                  <p>
+                    Lugar con encanto, pequeño paraíso en el centro de Marbella.
+                  </p>
+                </div>
+              </div>
+              <div className="carousel-item" data-bs-interval="2000">
+                <img
+                  src={slide2}
+                  className="d-block w-100 img-fluid"
+                  alt="..."
+                ></img>
+                <div className="carousel-caption d-none d-md-block">
+                  <h5>Second slide label</h5>
+                  <p>
+                    Some representative placeholder content for the second
+                    slide.
+                  </p>
+                </div>
+              </div>
+              <div className="carousel-item">
+                <img
+                  src={slide3}
+                  className="d-block w-100 img-fluid"
+                  alt="..."
+                ></img>
+                <div className="carousel-caption d-none d-md-block">
+                  <h5>Third slide label</h5>
+                  <p>
+                    Some representative placeholder content for the third slide.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleDark"
+              data-bs-slide="prev"
+            >
+              <span
+                className="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleDark"
+              data-bs-slide="next"
+            >
+              <span
+                className="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+
           </div>
         </div>
       </div>
