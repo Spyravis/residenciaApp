@@ -110,7 +110,7 @@ export const Home = () => {
               y empatia por ellos y sus familiares.
             </p>
             <p>Señor Marcial</p>
-
+          </div></div>
         <div className="carrousel my-5">
           <div
             id="carouselExampleDark"

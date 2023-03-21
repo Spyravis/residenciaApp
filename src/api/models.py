@@ -149,7 +149,7 @@ class Night_report(db.Model):
             "leukocytes": self.leukocytes_level,
             "redbloods_level": self.redbloods_level,
             "whitebloods_level": self.whitebloods_level,
-            "resident": {"id":resident.id, "name":resident.name},
+            "resident": {"id":resident.id, "name":resident.name, "surname":resident.name},
             "user": {"id":user.id, "name":user.name},           
         }
 

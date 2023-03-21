@@ -46,7 +46,7 @@ export const ParteNocturno = () => {
                 )}
                 <div className="nocturno-body"></div>
                 <u>
-                  <h5>{parte.resident.name}</h5>
+                  <h5>{parte.resident.name} {parte.resident.surname}</h5>
                 </u>{" "}
               </div>
               <p>
@@ -75,7 +75,7 @@ export const ParteNocturno = () => {
               </p>
               <div className="card-title d-flex position bottom-0 start-0">
                 <h6>
-                  <i class="fa-solid fa-circle-exclamation"></i> Observaciones:
+                  <i className="fa-solid fa-circle-exclamation"></i> Observaciones:
                   {parte.comments}
                 </h6>
               </div>
