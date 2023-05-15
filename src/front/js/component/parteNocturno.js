@@ -10,6 +10,7 @@ export const ParteNocturno = () => {
   const [incidencia, setIncidencia] = useState(false);
 
   const [parte, setParte] = useState({ resident: {}, user: {} });
+  const [day, setDay] = useState(new Date().toLocaleDateString());
 
   useEffect(() => {
     getparteNocturno();
@@ -39,199 +40,74 @@ export const ParteNocturno = () => {
                 alt="..."
               />
             </div>
-            <div className="col-md-8">
-              <div className="nocturno-header">
-                <div className="nocturno-container justify-content-center">
-                  Nuevo parte Nocturno
-                  <div className="col-auto">
-                    <label className=" col-form-label" htmlFor="resident">
-                      Residente:
-                    </label>
-                    <select
-                      className="form-select"
-                      name="resident"
-                      onChange={(e) => {
-                        setResident(e.target.value);
-                      }}
-                    >
-                      {store.userdata.residents
-                        ? store.userdata.residents.map((resident, index) => {
-                            return (
-                              <option key={index} value={resident.id}>
-                                {resident.name} {resident.surname}
-                              </option>
-                            );
-                          })
-                        : null}
-                    </select>
-                  </div>
-                  <div className="col-auto">
-                    <label
-                      className=" col-form-label"
-                      htmlFor="incidencia"
-                    ></label>
-                    <div className="col-auto px-3">
-                      <input
-                        type="radio"
-                        id="Incidencia"
-                        name="incidencia"
-                        onChange={(e) => {
-                          setIncidencia(true);
-                        }}
-                      />
-                      <label className="p-2" htmlFor="incidencia">
-                        Incidencia{" "}
-                      </label>
-                      <input
-                        type="radio"
-                        id="SinIncidencia"
-                        name="incidencia"
-                        onChange={(e) => {
-                          setIncidencia(false);
-                        }}
-                      />
-                      <label htmlFor="presencial"> Sin Incidencia </label>
-                    </div>
-                  </div>
-                  <div className="nocturno-body"></div>
-                  <u>
-                    <h5>
-                      {parte.resident.name} {parte.resident.surname}
-                    </h5>
-                  </u>{" "}
-                </div>
-                <p>
-                  <i className="fa-solid fa-chart-line"></i> Azúcar:{" "}
-                  <form>
-                    <div class="mb-3">
-                      <label
-                        for="exampleInputEmail1"
-                        class="form-label"
-                      ></label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                      ></input>
-                    </div>
-                  </form>
-                  {parte.sugar_level}
-                </p>
-                <p>
-                  <i className="fa-solid fa-chart-line"></i> Oxígeno:{" "}
-                  <form>
-                    <div class="mb-3">
-                      <label
-                        for="exampleInputEmail1"
-                        class="form-label"
-                      ></label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                      ></input>
-                    </div>
-                  </form>
-                  {parte.oxygen_level}
-                </p>
-                <p>
-                  <i className="fa-solid fa-chart-line"></i> Colesterol:{" "}
-                  <form>
-                    <div class="mb-3">
-                      <label
-                        for="exampleInputEmail1"
-                        class="form-label"
-                      ></label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                      ></input>
-                    </div>
-                  </form>
-                  {parte.cholesterol_level}
-                </p>
-                <p>
-                  <i className="fa-solid fa-chart-line"></i> Leucocitos:{" "}
-                  <form>
-                    <div class="mb-3">
-                      <label
-                        for="exampleInputEmail1"
-                        class="form-label"
-                      ></label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                      ></input>
-                    </div>
-                  </form>
-                  {parte.leukocytes}
-                </p>
-                <p>
-                  <i className="fa-solid fa-chart-line"></i> Glóbulos rojos:{" "}
-                  <form>
-                    <div class="mb-3">
-                      <label
-                        for="exampleInputEmail1"
-                        class="form-label"
-                      ></label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                      ></input>
-                    </div>
-                  </form>
-                  {parte.redbloods_level}
-                </p>
-                <p>
-                  <i className="fa-solid fa-chart-line"></i> Glóbulos blancos:{" "}
-                  <form>
-                    <div class="mb-3">
-                      <label
-                        for="exampleInputEmail1"
-                        class="form-label"
-                      ></label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                      ></input>
-                    </div>
-                  </form>
-                  {parte.whitebloods_level}
-                </p>
-                <div className="card-title d-flex position bottom-0 start-0">
-                  <h6>
-                    <i className="fa-solid fa-circle-exclamation">
-                      {" "}
-                      Observaciones:
-                    </i>{" "}
-                    <form>
-                      <div class="mb-3">
-                        <label
-                          for="exampleInputEmail1"
-                          class="form-label"
-                        ></label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="exampleInputEmail1"
-                          aria-describedby="emailHelp"
-                        ></input>
-                      </div>
-                    </form>
-                    {parte.comments}
-                  </h6>
-                </div>
+            <div className="col-md-8 p-3">
+              <h4 className="nocturno-container justify-content-center">
+                Nuevo parte Nocturno {day}
+              </h4>
+              <div className="col-auto">
+                <label className=" col-form-label" htmlFor="resident">Residente:</label>
+                <select className="form-select" name="resident" onChange={(e) => {
+                  setResident(e.target.value);
+                }}
+                >
+                  {store.userdata.residents
+                    ? store.userdata.residents.map((resident, index) => {
+                      return (
+                        <option key={index} value={resident.id}>
+                          {resident.name} {resident.surname}
+                        </option>
+                      );
+                    })
+                    : null}
+                </select>
               </div>
+              <div className="col-auto px-3">
+                <input type="radio" id="Incidencia" name="incidencia" onChange={(e) => {
+                  setIncidencia(true);
+                }}
+                />
+                <label className="p-2" htmlFor="incidencia"> Incidencia{" "} </label>
+                <input type="radio" id="SinIncidencia" name="incidencia" onChange={(e) => {
+                  setIncidencia(false);
+                }}
+                />
+                <label htmlFor="SinIncidencia"> Sin Incidencia </label>
+              </div>
+
+
+              <div className="input-group mb-3">
+                <span className="input-group-text col-6" id="basic-addon1"><i className="fa-solid fa-chart-line"></i> Azúcar:</span>
+                <input type="text" className="form-control" placeholder={parte.sugar_level} aria-label="Username" aria-describedby="basic-addon1"></input>
+              </div>
+              <div className="input-group mb-3">
+                <span className="input-group-text col-6" id="basic-addon1"><i className="fa-solid fa-chart-line"></i> Oxígeno:</span>
+                <input type="text" className="form-control" placeholder={parte.oxygen_level} aria-label="Username" aria-describedby="basic-addon1"></input>
+              </div>
+              <div className="input-group mb-3">
+                <span className="input-group-text col-6" id="basic-addon1"><i className="fa-solid fa-chart-line"></i> Colesterol:{" "}</span>
+                <input type="text" className="form-control" placeholder={parte.cholesterol_level} aria-label="Username" aria-describedby="basic-addon1"></input>
+              </div>
+              <div className="input-group mb-3">
+                <span className="input-group-text col-6" id="basic-addon1"><i className="fa-solid fa-chart-line"></i> Leucocitos:{" "}</span>
+                <input type="text" className="form-control" placeholder={parte.leukocytes} aria-label="Username" aria-describedby="basic-addon1"></input>
+              </div>
+
+              <div className="input-group mb-3">
+                <span className="input-group-text col-6" id="basic-addon1"><i className="fa-solid fa-chart-line"></i> Glóbulos rojos:{" "}</span>
+                <input type="text" className="form-control" placeholder={parte.redbloods_level} aria-label="Username" aria-describedby="basic-addon1"></input>
+              </div>
+
+              <div className="input-group mb-3">
+                <span className="input-group-text col-6" id="basic-addon1"><i className="fa-solid fa-chart-line"></i> Glóbulos blancos:{" "}</span>
+                <input type="text" className="form-control" placeholder={parte.whitebloods_level} aria-label="Username" aria-describedby="basic-addon1"></input>
+              </div>
+
+              <div className="mb-3">
+                <label for="exampleFormControlTextarea1" className="form-label"><i className="fa-solid fa-circle-exclamation"></i>Observaciones:</label>
+                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3">{parte.comments}</textarea></div>
+              <button className="btn btn-agendar-visita mt-2 " onClick={async () => { enviarParte(); }}>
+                Enviar Parte
+              </button>
             </div>
           </div>
         </div>

@@ -74,7 +74,7 @@ export const ShuddleVisit = () => {
   return (
     <div className="row d-flex justify-content-center">
       <LoggedMenu />
-      <div className="body-schuddle row justify-content-md-center ">
+      <div className="body-schuddle container row justify-content-md-center ">
         <div className="calendar col-md-5  ">
           <Calendar
             selectDate={selectDate}
@@ -146,7 +146,7 @@ export const ShuddleVisit = () => {
           </div>
           <div className="col-auto">
             <label className=" col-form-label" htmlFor="user">
-            <i className="fa-solid fa-user mx-1"></i> Usuario:
+              <i className="fa-solid fa-user mx-1"></i> Usuario:
             </label>
             <input
               disabled
@@ -194,9 +194,9 @@ export const ShuddleVisit = () => {
             <button
               className="btn btn-agendar-visita mt-2 "
               onClick={async () => {
-                
-                  sendSchuddleVisit();
-                
+
+                sendSchuddleVisit();
+
               }}
             >
               Confirmar Cita
