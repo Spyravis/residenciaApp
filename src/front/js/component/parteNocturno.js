@@ -62,16 +62,17 @@ export const ParteNocturno = () => {
                 </select>
               </div>
               <div className="col-auto px-3">
-                <input type="radio" id="Incidencia" name="incidencia" onChange={(e) => {
+                <input type="radio" id="incidencia" name="incidencia" onChange={(e) => {
                   setIncidencia(true);
                 }}
                 />
                 <label className="p-2" htmlFor="incidencia"> Incidencia{" "} </label>
-                <input type="radio" id="SinIncidencia" name="incidencia" onChange={(e) => {
+
+                <input type="radio" id="sinIncidencia" name="incidencia" onChange={(e) => {
                   setIncidencia(false);
                 }}
                 />
-                <label htmlFor="SinIncidencia"> Sin Incidencia </label>
+                <label htmlFor="sinIncidencia"> Sin Incidencia </label>
               </div>
 
 
