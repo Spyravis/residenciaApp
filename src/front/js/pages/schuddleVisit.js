@@ -72,9 +72,9 @@ export const ShuddleVisit = () => {
 
 
   return (
-    <div className="row d-flex justify-content-center">
+    <div className="row container d-flex justify-content-center">
       <LoggedMenu />
-      <div className="body-schuddle container row justify-content-md-center ">
+      <div className="body-schuddle row justify-content-md-center ">
         <div className="calendar col-md-5  ">
           <Calendar
             selectDate={selectDate}
