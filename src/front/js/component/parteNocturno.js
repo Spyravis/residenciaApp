@@ -8,6 +8,7 @@ export const ParteNocturno = () => {
   const { store, actions } = useContext(Context);
   const [resident, setResident] = useState("");
   const [incidencia, setIncidencia] = useState(false);
+  const [error, setError] = useState("");
 
   const [parte, setParte] = useState({ resident: {}, user: {} });
   const [day, setDay] = useState(new Date().toLocaleDateString());
@@ -28,6 +29,9 @@ export const ParteNocturno = () => {
     const data = await response.json();
     setParte(data.result);
   };
+  const enviarParte = () => {
+    setError(<p className="alert alert-success mt-2">Parte generado correctamente</p>)
+  }
   if (store.userdata.role_user == 2) {
     return (
       <div className="container d-flex justify-content-center align-item-center p-5">
@@ -104,11 +108,14 @@ export const ParteNocturno = () => {
               </div>
 
               <div className="mb-3">
-                <label for="exampleFormControlTextarea1" className="form-label"><i className="fa-solid fa-circle-exclamation"></i>Observaciones:</label>
+                <label htmlFor="exampleFormControlTextarea1" className="form-label"><i className="fa-solid fa-circle-exclamation"></i>Observaciones:</label>
                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="3">{parte.comments}</textarea></div>
               <button className="btn btn-agendar-visita mt-2 " onClick={async () => { enviarParte(); }}>
                 Enviar Parte
               </button>
+
+              {error}
+
             </div>
           </div>
         </div>
