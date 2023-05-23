@@ -24,7 +24,7 @@ export const Worker = () => {
 
     return (
         <div className="row mt-5">
-            <h3 className="p-3 bg-info bg-opacity-10 border border-info border-start-0 border-end-0">Mis Residentes</h3>
+            <h3 className="p-3 bg-info bg-opacity-10 border border-info border-start-0 border-end-0">Mis Residentes - Información de familiares</h3>
             {Object.keys(residentdata).map((resident, index) => {
                 return (
                     <div className="row my-2" key={index}>

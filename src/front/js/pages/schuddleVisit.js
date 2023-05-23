@@ -72,7 +72,7 @@ export const ShuddleVisit = () => {
 
 
   return (
-    <div className="row container d-flex justify-content-center">
+    <div className="container">
       <LoggedMenu />
       <div className="body-schuddle row justify-content-md-center ">
         <div className="calendar col-md-5  ">
