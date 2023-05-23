@@ -135,6 +135,7 @@ export const ParteNocturno = () => {
             </div>
             <div className="col-md-8">
               <div className="nocturno-header">
+                {day}
                 <div className="nocturno-container justify-content-center">
                   {parte.incidences ? (
                     <h1>Noche con incidencia</h1>
@@ -172,13 +173,13 @@ export const ParteNocturno = () => {
                   <i className="fa-solid fa-chart-line"></i> Glóbulos blancos:{" "}
                   {parte.whitebloods_level}
                 </p>
-                <div className="card-title d-flex position bottom-0 start-0">
-                  <h6>
-                    <i className="fa-solid fa-circle-exclamation"></i>{" "}
-                    Observaciones:
-                    {parte.comments}
-                  </h6>
-                </div>
+
+                <h6>
+                  <i className="fa-solid fa-circle-exclamation"></i>{" "}
+                  Observaciones:
+                  <p>{parte.comments}</p>
+                </h6>
+
               </div>
             </div>
           </div>
